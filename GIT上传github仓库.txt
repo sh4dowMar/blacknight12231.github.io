@@ -32,4 +32,19 @@ git commit -m “try again” 提交文件到本地库，-m后面是提交注释的内容
 git remote add origin git@github.com:fang-king/Selenium.git 关联远程github上刚创建的库
 git push -u origin master -f 将刚刚添加的文件push到github。
 刷新GitHub界面 看到刚刚添加的文件
+四、后续上传代码步骤
+git init 将文件夹设置为本地仓库，只有这样才可以把本地的文件传入github仓库
+git remote add origin git@github.com:fang-king/Selenium.git??将本地仓库与github仓库进行关联
+git?pull?origin?master ?将GitHub上仓库的内容pull到本地仓库，两者保持一致
+git add 需要上传的文件 ???添加文件到本地库
+git commit -m “try again” 提交文件到本地库
+git push origin master 上传文件
+如果要上传的文件是在一个新的文件夹里，那么就需要执行前3步，将新文件夹作为本地仓库与github关联；
+如果要上传的文件是在之前的文件夹里，那么之前已经关联过了，只需要直接执行后3步就可以了。
+五、删除远程仓库里的文件
+进入本地仓库：
+git pull origin master ?本地同步远程仓库，将远程仓库里的内容拉下来
+git rm -r --cached 文件名 ??删除文件
+git commit -m “delete dir”??提交并添加说明
+git push origin master 将本次更改更新到github项目上去
 
