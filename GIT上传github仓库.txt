@@ -1,0 +1,35 @@
+一、新建代码库
+注册好github登录后，首先先在网页上新建代码库。
+二、添加SSH公钥
+为了把本地的仓库传到github，还需要配置ssh key，说白了就是为了把本地的代码上传到github。
+1.安装git
+在本地创建仓库，随便找一个盘新建一个文件夹作为本地仓库，文件夹名称随意，新建好后留着后续使用。
+2、添加SSH Key
+首先在本地创建ssh key。在刚刚新建好的文件夹内点击右键Git Bash Here进入git命令行。
+ssh-keygen -t rsa -C "your_email"
+回车之后会要求确认路径和输入密码，直接一路回车就行。
+成功的话会在~/下生成.ssh文件夹，进去打开id_rsa.pub，复制里面的key
+或者直接在命令行内输入cat ~/.ssh/id_rsa.pub，就会出现key，右键复制key。
+复制好后回到网页，点击右上角的setting，左侧菜单切换到SSH and GPG keys，点击New SSH key。
+将key粘贴至框内，点击add ssh key
+为了验证是否成功，在git bash下输入：
+ssh -T git@github.com
+如果是第一次的会提示是否continue，输入yes就会看到：You’ve successfully authenticated, but GitHub does not provide shell access,表示已成功连上github了。
+三、把本地仓库传到github
+初次使用首先需要做一些初始化的工作：
+将github上的代码库克隆到本地
+git clone git@github.com:user name/仓库名.git
+克隆成功的话在新建的文件夹内会有一个和github上的代码库重名的一个文件夹。
+在git命令行内输入以下代码：引号内的填写你注册github时的用户名和密码。
+git config --global user.name "your name"
+git config --global user.email "your_email@163.com"
+在之前新建的文件夹内，右键git bash here，添加远程地址：
+git remote add origin git@github.com:user name/仓库名.git?
+接下来就要通过git将代码上传至远程服务器了。
+先使用git init 初始化仓库
+再输入git add 文件加后缀名， 添加文件到本地库，也可以添加所有文件 git add .( .前有一个空格)
+git commit -m “try again” 提交文件到本地库，-m后面是提交注释的内容
+git remote add origin git@github.com:fang-king/Selenium.git 关联远程github上刚创建的库
+git push -u origin master -f 将刚刚添加的文件push到github。
+刷新GitHub界面 看到刚刚添加的文件
+
