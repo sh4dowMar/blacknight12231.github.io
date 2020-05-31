@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="xss," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="xss构造剖析1.XSS-filter为了防御跨站脚本攻击。开发人员会在web应用中设计一个XSS Filter,即跨站脚本过滤器，用于分析用户提交的输入，并消除潜在的跨站脚本攻击，恶意的HTML或简单的HTML格式错误等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xss学习日记(二）">
+<meta property="og:url" content="http://yoursite.com/2019/11/01/note2/index.html">
+<meta property="og:site_name" content="Blacknight">
+<meta property="og:description" content="xss构造剖析1.XSS-filter为了防御跨站脚本攻击。开发人员会在web应用中设计一个XSS Filter,即跨站脚本过滤器，用于分析用户提交的输入，并消除潜在的跨站脚本攻击，恶意的HTML或简单的HTML格式错误等">
+<meta property="article:published_time" content="2019-11-01T07:49:00.000Z">
+<meta property="article:modified_time" content="2020-05-02T05:55:40.630Z">
+<meta property="article:author" content="blacknight">
+<meta property="article:tag" content="xss">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/01/note2/"/>
+
+
+
+
+
+  <title>xss学习日记(二） | Blacknight</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Blacknight</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Peace & Love</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-友情链接">
+          <a href="/links/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
+            
+            友情链接
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/01/note2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="blacknight">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blacknight">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">xss学习日记(二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-01T15:49:00+08:00">
+                2019-11-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">web安全</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/11/01/note2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/11/01/note2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="xss构造剖析"><a href="#xss构造剖析" class="headerlink" title="xss构造剖析"></a>xss构造剖析</h2><h4 id="1-XSS-filter"><a href="#1-XSS-filter" class="headerlink" title="1.XSS-filter"></a>1.XSS-filter</h4><p>为了防御跨站脚本攻击。开发人员会在web应用中设计一个XSS Filter,即<strong>跨站脚本过滤器</strong>，用于分析用户提交的输入，并消除潜在的跨站脚本攻击，恶意的HTML或简单的HTML格式错误等<a id="more"></a><br>它实际上是一段精心编写的过滤函数，下列是phpcms中的过滤代码文件global.func.php中的一段代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">    <span class="variable">$parm1</span> = Array(<span class="string">'javascript'</span>, <span class="string">'vbscript'</span>, <span class="string">'expression'</span>, <span class="string">'applet'</span>, <span class="string">'meta'</span>, <span class="string">'xml'</span>, <span class="string">'blink'</span>, <span class="string">'link'</span>, <span class="string">'script'</span>, <span class="string">'embed'</span>, <span class="string">'object'</span>, <span class="string">'iframe'</span>, <span class="string">'frame'</span>, <span class="string">'frameset'</span>, <span class="string">'ilayer'</span>, <span class="string">'layer'</span>, <span class="string">'bgsound'</span>, <span class="string">'title'</span>, <span class="string">'base'</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="variable">$parm2</span> = Array(<span class="string">'onabort'</span>, <span class="string">'onactivate'</span>, <span class="string">'onafterprint'</span>, <span class="string">'onafterupdate'</span>, <span class="string">'onbeforeactivate'</span>, <span class="string">'onbeforecopy'</span>, <span class="string">'onbeforecut'</span>, <span class="string">'onbeforedeactivate'</span>, <span class="string">'onbeforeeditfocus'</span>, <span class="string">'onbeforepaste'</span>, <span class="string">'onbeforeprint'</span>, <span class="string">'onbeforeunload'</span>, <span class="string">'onbeforeupdate'</span>, <span class="string">'onblur'</span>, <span class="string">'onbounce'</span>, <span class="string">'oncellchange'</span>, <span class="string">'onchange'</span>, <span class="string">'onclick'</span>, <span class="string">'oncontextmenu'</span>, <span class="string">'oncontrolselect'</span>, <span class="string">'oncopy'</span>, <span class="string">'oncut'</span>, <span class="string">'ondataavailable'</span>, <span class="string">'ondatasetchanged'</span>, <span class="string">'ondatasetcomplete'</span>, <span class="string">'ondblclick'</span>, <span class="string">'ondeactivate'</span>, <span class="string">'ondrag'</span>, <span class="string">'ondragend'</span>, <span class="string">'ondragenter'</span>, <span class="string">'ondragleave'</span>, <span class="string">'ondragover'</span>, <span class="string">'ondragstart'</span>, <span class="string">'ondrop'</span>, <span class="string">'onerror'</span>, <span class="string">'onerrorupdate'</span>, <span class="string">'onfilterchange'</span>, <span class="string">'onfinish'</span>, <span class="string">'onfocus'</span>, <span class="string">'onfocusin'</span>, <span class="string">'onfocusout'</span>, <span class="string">'onhelp'</span>, <span class="string">'onkeydown'</span>, <span class="string">'onkeypress'</span>, <span class="string">'onkeyup'</span>, <span class="string">'onlayoutcomplete'</span>, <span class="string">'onload'</span>, <span class="string">'onlosecapture'</span>, <span class="string">'onmousedown'</span>, <span class="string">'onmouseenter'</span>, <span class="string">'onmouseleave'</span>, <span class="string">'onmousemove'</span>, <span class="string">'onmouseout'</span>, <span class="string">'onmouseover'</span>, <span class="string">'onmouseup'</span>, <span class="string">'onmousewheel'</span>, <span class="string">'onmove'</span>, <span class="string">'onmoveend'</span>, <span class="string">'onmovestart'</span>, <span class="string">'onpaste'</span>, <span class="string">'onpropertychange'</span>, <span class="string">'onreadystatechange'</span>, <span class="string">'onreset'</span>, <span class="string">'onresize'</span>, <span class="string">'onresizeend'</span>, <span class="string">'onresizestart'</span>, <span class="string">'onrowenter'</span>, <span class="string">'onrowexit'</span>, <span class="string">'onrowsdelete'</span>, <span class="string">'onrowsinserted'</span>, <span class="string">'onscroll'</span>, <span class="string">'onselect'</span>, <span class="string">'onselectionchange'</span>, <span class="string">'onselectstart'</span>, <span class="string">'onstart'</span>, <span class="string">'onstop'</span>, <span class="string">'onsubmit'</span>, <span class="string">'onunload'</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="variable">$parm</span> = array_merge(<span class="variable">$parm1</span>, <span class="variable">$parm2</span>); </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="keyword">for</span> (<span class="variable">$i</span> = 0; <span class="variable">$i</span> &lt; sizeof(<span class="variable">$parm</span>); <span class="variable">$i</span>++) &#123; </span><br><span class="line"></span><br><span class="line"> <span class="variable">$pattern</span> = <span class="string">'/'</span>; </span><br><span class="line"></span><br><span class="line"> <span class="keyword">for</span> (<span class="variable">$j</span> = 0; <span class="variable">$j</span> &lt; strlen(<span class="variable">$parm</span>[<span class="variable">$i</span>]); <span class="variable">$j</span>++) &#123; </span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (<span class="variable">$j</span> &gt; 0) &#123; </span><br><span class="line"></span><br><span class="line"> <span class="variable">$pattern</span> .= <span class="string">'('</span>; </span><br><span class="line"></span><br><span class="line"> <span class="variable">$pattern</span> .= <span class="string">'(&amp;#[x|X]0([9][a][b]);?)?'</span>; </span><br><span class="line"></span><br><span class="line"> <span class="variable">$pattern</span> .= <span class="string">'|(&amp;#0([9][10][13]);?)?'</span>; </span><br><span class="line"></span><br><span class="line"> <span class="variable">$pattern</span> .= <span class="string">')?'</span>; </span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="variable">$pattern</span> .= <span class="variable">$parm</span>[<span class="variable">$i</span>][<span class="variable">$j</span>]; </span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="variable">$pattern</span> .= <span class="string">'/i'</span>;</span><br><span class="line"></span><br><span class="line"> <span class="variable">$string</span> = preg_replace(<span class="variable">$pattern</span>, <span class="string">' '</span>, <span class="variable">$string</span>); </span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="built_in">return</span> <span class="variable">$string</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码的作用是过滤XSS跨站代码，程序在处理输入变量时使用该函数，就可过滤常见的跨站脚本。<br>但它依旧存在被绕过的可能，下列从攻的角度展示一些绕过XSS Filter的测试用例。</p>
+<h4 id="1-利用-lt-gt-标记注射Html-Javascript"><a href="#1-利用-lt-gt-标记注射Html-Javascript" class="headerlink" title="(1)利用&lt;&gt;标记注射Html/Javascript"></a>(1)利用&lt;&gt;标记注射Html/Javascript</h4><p>如<code>&lt;script&gt;alert;&lt;/script&gt;或&lt;script&gt;shellcode&lt;/script&gt;</code><br>因此，XSS Filter最先要进行过滤和转义的就是“&lt;&gt;”和<code>&lt;script&gt;</code>等字符。</p>
+<h6 id="2-利用HTML标签属性值执行XSS。"><a href="#2-利用HTML标签属性值执行XSS。" class="headerlink" title="(2)利用HTML标签属性值执行XSS。"></a>(2)利用HTML标签属性值执行XSS。</h6><p>如下代码:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;table background=<span class="string">"javescript:alert(/XSS/)"</span>&gt;&lt;/table&gt;</span><br><span class="line">&lt;img scr=<span class="string">"javescript:alert('XSS')"</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>在IE6浏览器中运行上述代码会弹出对话框，即攻击成功，但它具有一定的局限性，即只能在支持javascript:[code]伪协议的浏览器运行。<br>通常只有引用文件的属性才能触发跨站脚本，我们可以使用以下属性来测试XSS</p>
+<p>href=</p>
+<p>lowsrc=</p>
+<p>bgsound=</p>
+<p>background=</p>
+<p>value=</p>
+<p>action=</p>
+<p>dynsrc=<br>所以，要防御基于属性值的XSS，就要过滤javascript等关键字，另外还有其他允许值如Vbscript<br>（3）空格回车Tab</p>
+<p>XSS Filter把敏感的输入字符列入黑名单处理，可以利用空格、回车和Tab键绕过 例：</p>
+<p>&lt;img src=”javas</p>
+<p>script:</p>
+<p>alert(/xss/)”&gt;</p>
+<h4 id="4）对标签属性值转码"><a href="#4）对标签属性值转码" class="headerlink" title="(4）对标签属性值转码"></a>(4）对标签属性值转码</h4><p>对普通HTML标记的属性值过滤，还可以通过编码处理来绕过。</p>
+<p>Tab符的ASCII码&amp;#9、换行符&amp;#10、回车符&amp;#13可以插入任意地方</p>
+<p>为了防范标签纸属性编码的XSS，最好也过滤&amp;#/等字符</p>
+<h4 id="5）产生自己的事件"><a href="#5）产生自己的事件" class="headerlink" title="(5）产生自己的事件"></a>(5）产生自己的事件</h4><p>不能依靠属性值跨站，通过事件，如click、mouseover、load等，响应事件的函数叫事件处理函数例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=<span class="string">"#"</span> onerror=alert(/xss/)&gt;</span><br></pre></td></tr></table></figure>
+
+<p>onerror是IMG标记的一个事件，页面发生错误，该事件被激活。上例，解释IMG标记时，加载src属性引用的图片地址，若图片不存在就触发onerror事件。其他事件：onResume</p>
+<p>onReverse</p>
+<p>onRowDelete</p>
+<p>onRowInseted<br>等</p>
+<h4 id="6）利用CSS跨站"><a href="#6）利用CSS跨站" class="headerlink" title="(6）利用CSS跨站"></a>(6）利用CSS跨站</h4><p>CSS中使用expression同样可以触发XSS。例：</p>
+<div style="width: expression(alert('xss'));">
+
+<p>脚本代码通常被嵌入到style标签/属性中。style属性可以和任意字符的标签结合，所以不只要过滤标签，还必须对style属性值进行过滤。</p>
+<p>例:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=<span class="string">"list-style-image:url(javascript:alert(‘xss’))"</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;img style=<span class="string">"background-image:url(javascript：alert('xss'))"</span>&gt;  等同于</span><br><span class="line"></span><br><span class="line">&lt;img src=<span class="string">" javascript:alert('xss')"</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>此外，可以使用<link>标签引用CSS，除<link>标签外，网页中引用外部CSS还可以利用@import导入，例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;style <span class="built_in">type</span>=<span class="string">'test/css'</span>/&gt;import url(http://.../xss.css);&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p>@import还可以直接执行JS代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line"></span><br><span class="line">@import <span class="string">'javascript:alert("xss")'</span>;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p>因此，包含expression、javascript、import等敏感字符的样式表也要进行过滤。</p>
+<h4 id="7）扰乱过滤规则"><a href="#7）扰乱过滤规则" class="headerlink" title="(7）扰乱过滤规则"></a>(7）扰乱过滤规则</h4><p>转换大小写、大小写混淆、不用双引号用单引号、不使用引号。IMG标记和src属性之间没有空格</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img/src=<span class="string">"javascript:alert('xss');"</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>利用expression跨站时，可以构造不同的全角字符。<br>运用/**/来注释字符，样式标签中的\和结束符\0。<br>将CSS关键字转码，e转\65，改变编码中0的数量\065、\0065<br>利用浏览器解析HTML注释存在的问题来执行JS，例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--&lt;img src=<span class="string">"--&gt;&lt;img src=x onerror=alert(1)//"</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>纯文本标签造成的混乱标记，例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;&lt;img src=<span class="string">"&lt;/style&gt;&lt;img src=x onerror=alert(1)//"</span>&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="利用字符编码"><a href="#利用字符编码" class="headerlink" title="利用字符编码"></a>利用字符编码</h4><p>字符编码在跨站脚本中经常用到，透过这种技巧，不仅能让XSS绕过服务端的过滤，还能更好的隐藏shellcode<br>具体内容推荐博客<br><a href="https://blog.csdn.net/Fly_hps/article/details/82944455" target="_blank" rel="noopener">https://blog.csdn.net/Fly_hps/article/details/82944455</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/xss/" rel="tag"><i class="fa fa-tag"></i> xss</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/26/note1/" rel="next" title="xss学习日记(一)">
+                <i class="fa fa-chevron-left"></i> xss学习日记(一)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/02/note3/" rel="prev" title="xss学习日记(三）">
+                xss学习日记(三） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="blacknight" />
+            
+              <p class="site-author-name" itemprop="name">blacknight</p>
+              <p class="site-description motion-element" itemprop="description">愿有人陪你颠沛流离</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/b14cknight" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:blacknight12231@gmail.com" target="_blank" title="Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1536396719" target="_blank" title="QQ联系">
+                      
+                        <i class="fa fa-fw fa-qq"></i>QQ联系</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/qq_43756333" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-copyright"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crypto/" rel="tag">crypto</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql%E6%B3%A8%E5%85%A5/" rel="tag">sql注入</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xss/" rel="tag">xss</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" rel="tag">信息搜集</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag">反序列化</a><span class="tag-list-count">2</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+
+          
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+      <!-- modify icon to fire by szw -->
+      <i class="fa fa-history fa-" aria-hidden="true"></i>
+      近期文章
+    </div>
+    <ul class="links-of-blogroll-list">
+      
+      
+        <li class="recent_posts_li">
+          <a href="/2020/05/30/note14/" title="反序列化字符串逃逸实战" target="_blank">反序列化字符串逃逸实战</a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/2020/05/26/note13/" title="PHP中的public、protected、private" target="_blank">PHP中的public、protected、private</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#xss构造剖析"><span class="nav-number">1.</span> <span class="nav-text">xss构造剖析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-XSS-filter"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.XSS-filter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-利用-lt-gt-标记注射Html-Javascript"><span class="nav-number">1.0.2.</span> <span class="nav-text">(1)利用&lt;&gt;标记注射Html&#x2F;Javascript</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-利用HTML标签属性值执行XSS。"><span class="nav-number">1.0.2.0.1.</span> <span class="nav-text">(2)利用HTML标签属性值执行XSS。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4）对标签属性值转码"><span class="nav-number">1.0.3.</span> <span class="nav-text">(4）对标签属性值转码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5）产生自己的事件"><span class="nav-number">1.0.4.</span> <span class="nav-text">(5）产生自己的事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6）利用CSS跨站"><span class="nav-number">1.0.5.</span> <span class="nav-text">(6）利用CSS跨站</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7）扰乱过滤规则"><span class="nav-number">1.0.6.</span> <span class="nav-text">(7）扰乱过滤规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用字符编码"><span class="nav-number">1.0.7.</span> <span class="nav-text">利用字符编码</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        ﻿<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa star"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">blacknight</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">10.6k</span>
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-anchor"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom">Hosted by <a target="_blank" href="">GitHub Pages</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+
+<script type="text/javascript"
+color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+    <script src="//blog.i0bin.cn/libs/valine/av-min.js"></script>
+    <script src='//blog.i0bin.cn/libs/valine/Valine.min.js'></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+        appKey: '0RbmT7aNG8nj44MHrGMt9JFk',
+        placeholder: 'tell me your thoughts',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<script src="/live2d-widget/autoload.js"></script>
