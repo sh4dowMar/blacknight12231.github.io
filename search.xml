@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>初识Node.js</title>
+      <link href="/2020/06/28/note17/"/>
+      <url>/2020/06/28/note17/</url>
+      
+        <content type="html"><![CDATA[<h3 id="什么是Node-js以及为什么要用node-js"><a href="#什么是Node-js以及为什么要用node-js" class="headerlink" title="什么是Node.js以及为什么要用node.js"></a>什么是Node.js以及为什么要用node.js</h3><p>通过翻阅官方手册，得到以下信息</p><blockquote><ul><li>Node.js 是一个开源与跨平台的 JavaScript 运行时环境。</li><li>Node.js 在浏览器外运行 V8 JavaScript 引擎（Google Chrome 的内核）。</li></ul></blockquote><p>由此我们可以简单认为，node.js是一个让JavaScript脱离浏览器之外运行的环境或语言解释器。</p><p>其主要具有以下几个特征：</p><h4 id="服务器端JavaScript处理"><a href="#服务器端JavaScript处理" class="headerlink" title="服务器端JavaScript处理"></a>服务器端JavaScript处理</h4><p>node.js的出现使得javascript代码实现了脱离客户端执行，与传统的web开发者前端使用js，后端服务器使用另一种语言如php，python相比，node.js给开发者提供了一个编写后端服务器代码的环境，实现了一定程度上的前后端统一，使得开发者无需学习另一门完全不同的语言，其高度的代码复用性，也大大提升了开发者的效率。</p><h4 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h4><p>传统的服务器每次一个新用户连到你的网站上时，服务器就得开一个连接。每个连接都需要占一个进程，这些进程大部分时间都是闲着的，因此很容易造成内存浪费，而node.js仅仅使用一个线程。当有用户连接了，就触发一个内部事件，通过非阻塞 I/O、事件驱动机制，使得这种模式正常运转。</p><h4 id="非阻断-异步I-O"><a href="#非阻断-异步I-O" class="headerlink" title="非阻断/异步I/O"></a>非阻断/异步I/O</h4><p>在传统的单线程处理机制中，在执行了访问数据库代码之后，整个线程都将暂停下来，等待数据库返回结果，才能执行后面的代码。也就是说，I/O阻塞了代码的执行，极大地降低了程序的执行效率。而node.js进行I/O操作的时候，将调取后面其他部分的计算，直至I/O完成，然后再进行原来部分I/O操作后的后续计算。通俗的描述就是在一件事没做完之前不要停下来，继续做下一件。</p><h4 id="事件驱动"><a href="#事件驱动" class="headerlink" title="事件驱动"></a>事件驱动</h4><p>非阻断I/O需要事件驱动机制的配合才能顺利运转。在Node.js中，客户端请求建立连接，提交数据等行为，会触发相应的事件，服务器只在用户那边有事件发生的时候才响应。接收到请求，就把它关闭然后进行处理，然后去服务下一个请求。这样，保证了非阻断I/O的顺利进行，提升了效率。</p><p>通过采用单线程，非阻断I/O，事件驱动的模型，node.js在减少内存开销的同时，也大大提升了处理业务的效率。</p><h3 id="Node-js的使用方法"><a href="#Node-js的使用方法" class="headerlink" title="Node.js的使用方法"></a>Node.js的使用方法</h3><h4 id="命令行运行node-js脚本"><a href="#命令行运行node-js脚本" class="headerlink" title="命令行运行node.js脚本"></a>命令行运行node.js脚本</h4><p>安装node.js后，只需在命令行输入node即可进入交互环境</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200628164911.png" alt=""></p><p>可以直接在命令行中执行js代码</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200628165757.png" alt=""></p><p>也可执行目录下js脚本</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200628171300.png" alt=""></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> web安全 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Node.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>xmctf平台部分web</title>
       <link href="/2020/06/24/note16/"/>
       <url>/2020/06/24/note16/</url>
