@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="serialize," />
 
 
 
@@ -79,14 +79,26 @@
 
 
 
-<meta name="description" content="愿有人陪你颠沛流离">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Blacknight">
-<meta property="og:url" content="http://yoursite.com/tags/python/index.html">
+<meta name="description" content="python的序列化和反序列化问题主要涉及两个模块：pickle，json">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python序列化和反序列化">
+<meta property="og:url" content="http://yoursite.com/2020/07/10/python_serialize/index.html">
 <meta property="og:site_name" content="Blacknight">
-<meta property="og:description" content="愿有人陪你颠沛流离">
+<meta property="og:description" content="python的序列化和反序列化问题主要涉及两个模块：pickle，json">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710134953.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710135217.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710135647.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710135849.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710150440.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710150639.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710151244.png">
+<meta property="og:image" content="c:/Users/15363/AppData/Roaming/Typora/typora-user-images/image-20200710151612475.png">
+<meta property="article:published_time" content="2020-07-10T07:30:00.000Z">
+<meta property="article:modified_time" content="2020-07-10T07:28:44.867Z">
 <meta property="article:author" content="blacknight">
+<meta property="article:tag" content="serialize">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710134953.png">
 
 
 
@@ -116,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/python/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/10/python_serialize/"/>
 
 
 
 
 
-  <title>标签: python | Blacknight</title>
+  <title>python序列化和反序列化 | Blacknight</title>
   
 
 
@@ -141,7 +153,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -259,54 +271,280 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>python<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/10/python_serialize/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="blacknight">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blacknight">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2020/04/26/note9/" itemprop="url">
-              
-                <span itemprop="name">安恒四月春季战[not RSA]</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">python序列化和反序列化</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-04-26T20:30:00+08:00"
-              content="2020-04-26" >
-          04-26
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-10T15:30:00+08:00">
+                2020-07-10
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/07/10/python_serialize/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/07/10/python_serialize/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  668
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>python的序列化和反序列化问题主要涉及两个模块：pickle，json</p>
+<a id="more"></a>
+
+<h3 id="Pickle"><a href="#Pickle" class="headerlink" title="Pickle"></a>Pickle</h3><p>翻阅手册</p>
+<blockquote>
+<p>模块 pickle实现了对一个 Python 对象结构的二进制序列化和反序列化。 “pickling” 是将 Python 对象及其所拥有的层次结构转化为一个字节流的过程，而 “unpickling” 是相反的操作，会将（来自一个 binary file 或者 bytes-like object的）字节流转化回一个对象层次结构。 pickling（和 unpickling）也被称为“序列化”, “编组” 或者 “平面化”。而为了避免混乱，此处采用术语 “封存 (pickling)” 和 “解封 (unpickling)”。</p>
+</blockquote>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>pickle所使用的数据格式仅可用于 Python</li>
+<li>pickle格式使用二进制存储</li>
+<li>存储之后人类不可读</li>
+<li>存在风险</li>
+</ul>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><h5 id="pickle-dump"><a href="#pickle-dump" class="headerlink" title="pickle.dump"></a>pickle.dump</h5><p>将对象序列化（即封存）并写入已打开的文件中。</p>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"></span><br><span class="line">f = open(<span class="string">'test.txt'</span>,<span class="string">'wb'</span>)  </span><br><span class="line">data = &#123;<span class="string">'e1'</span>:<span class="string">'python'</span>,<span class="string">'e2'</span>:<span class="string">'serialize'</span>,<span class="string">'e3'</span>:<span class="string">'is'</span>,<span class="string">'e4'</span>:<span class="string">'good'</span>&#125;</span><br><span class="line">pickle.dump(data,f)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710134953.png" alt=""></p>
+<h5 id="pickle-dumps"><a href="#pickle-dumps" class="headerlink" title="pickle.dumps"></a>pickle.dumps</h5><p>将对象序列化</p>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"> </span><br><span class="line">data = &#123;<span class="string">'e1'</span>:<span class="string">'python'</span>,<span class="string">'e2'</span>:<span class="string">'serialize'</span>,<span class="string">'e3'</span>:<span class="string">'is'</span>,<span class="string">'e4'</span>:<span class="string">'good'</span>&#125;</span><br><span class="line">result = pickle.dumps(data)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710135217.png" alt=""></p>
+<h5 id="pickle-load"><a href="#pickle-load" class="headerlink" title="pickle.load"></a>pickle.load</h5><p>从文件中读取序列化字符串并反序列化</p>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"></span><br><span class="line">f = open(<span class="string">'test.txt'</span>,<span class="string">'rb'</span>)</span><br><span class="line">result = pickle.load(f)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710135647.png" alt=""></p>
+<h5 id="pickle-loads"><a href="#pickle-loads" class="headerlink" title="pickle.loads"></a>pickle.loads</h5><p>将序列化字符串反序列化</p>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"> </span><br><span class="line">data = &#123;<span class="string">'e1'</span>:<span class="string">'python'</span>,<span class="string">'e2'</span>:<span class="string">'serialize'</span>,<span class="string">'e3'</span>:<span class="string">'is'</span>,<span class="string">'e4'</span>:<span class="string">'good'</span>&#125;</span><br><span class="line">result = pickle.dumps(data)</span><br><span class="line">print(result)</span><br><span class="line">reverse = pickle.loads(result)</span><br><span class="line">print(reverse)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710135849.png" alt=""></p>
+<h3 id="Json"><a href="#Json" class="headerlink" title="Json"></a>Json</h3><blockquote>
+<p>JSON (JavaScript Object Notation)，是一个受 JavaScript 的对象字面量语法启发的轻量级数据交换格式，尽管它不仅仅是一个严格意义上的 JavaScript 的字集 。</p>
+</blockquote>
+<p>JSON序列化：将Python内置的数据类型序列化为JSON格式，用来数据存储或数据交换。</p>
+<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>人类可读</li>
+<li>采用文本序列化格式，输出 unicode 文本</li>
+<li>可互操作，在Python系统之外广泛使用</li>
+<li>相比pickle较为安全</li>
+</ul>
+<h4 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h4><p>方法名和pickle相同，但主要是类型的转换</p>
+<h5 id="json-dumps"><a href="#json-dumps" class="headerlink" title="json.dumps"></a>json.dumps</h5><p>将dict类型的数据转成str</p>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json  </span><br><span class="line">  </span><br><span class="line">data = &#123;<span class="string">'name'</span>:<span class="string">'python'</span>,<span class="string">'sex'</span>:<span class="string">'boy'</span>,<span class="string">'age'</span>:<span class="number">18</span>&#125;  </span><br><span class="line">      </span><br><span class="line">result = json.dumps(data)   </span><br><span class="line"></span><br><span class="line">print(type(data))</span><br><span class="line">print(result)</span><br><span class="line">print(type(result))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710150440.png" alt=""></p>
+<h5 id="json-dump"><a href="#json-dump" class="headerlink" title="json.dump"></a>json.dump</h5><p>将dict类型的数据转换类型，并写入到json文件中</p>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json  </span><br><span class="line">  </span><br><span class="line">data = &#123;<span class="string">'name'</span>:<span class="string">'python'</span>,<span class="string">'sex'</span>:<span class="string">'boy'</span>,<span class="string">'age'</span>:<span class="number">18</span>&#125;  </span><br><span class="line">      </span><br><span class="line">filetest = (<span class="string">'test.txt'</span>)  </span><br><span class="line"></span><br><span class="line">result = json.dumps(data)   </span><br><span class="line"><span class="keyword">with</span> open(filetest, <span class="string">"w"</span>) <span class="keyword">as</span> f:  </span><br><span class="line">  f.write(result)  </span><br><span class="line">  f.close()  </span><br><span class="line">  </span><br><span class="line">json.dump(data, open(filetest, <span class="string">"w"</span>))</span><br></pre></td></tr></table></figure>
+
+<p>写入前需先dumps转换成类型，直接存入会报错</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710150639.png" alt=""></p>
+<h5 id="json-loads"><a href="#json-loads" class="headerlink" title="json.loads"></a>json.loads</h5><p>将str类型的数据转成dict</p>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json  </span><br><span class="line">  </span><br><span class="line">data = &#123;<span class="string">'name'</span>:<span class="string">'python'</span>,<span class="string">'sex'</span>:<span class="string">'boy'</span>,<span class="string">'age'</span>:<span class="number">18</span>&#125;  </span><br><span class="line">      </span><br><span class="line">result = json.dumps(data) </span><br><span class="line">reverse = json.loads(result)  </span><br><span class="line"></span><br><span class="line">print(type(data))</span><br><span class="line">print(result)</span><br><span class="line">print(type(result))</span><br><span class="line">print(reverse)</span><br><span class="line">print(type(reverse))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200710151244.png" alt=""></p>
+<h5 id="json-load"><a href="#json-load" class="headerlink" title="json.load"></a>json.load</h5><p>从文件中读取数据，将str类型的数据转成dict</p>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json  </span><br><span class="line"> </span><br><span class="line">filetest = (<span class="string">'test.txt'</span>)  </span><br><span class="line"> </span><br><span class="line">result = json.load(open(filetest))   </span><br><span class="line"> </span><br><span class="line">print(result) </span><br><span class="line">print(type(result))</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:/Users/15363/AppData/Roaming/Typora/typora-user-images/image-20200710151612475.png" alt="image-20200710151612475"></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/serialize/" rel="tag"><i class="fa fa-tag"></i> serialize</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/08/CTFshow_36D_wp/" rel="next" title="CTFshow36D杯web复现">
+                <i class="fa fa-chevron-left"></i> CTFshow36D杯web复现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -314,6 +552,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -334,8 +579,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -354,7 +608,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -365,7 +619,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -376,7 +630,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -422,7 +676,7 @@
 <div class="widget-wrap">
     <div id="myCanvasContainer" class="widget tagcloud">
         <canvas width="250" height="250" id="resCanvas" style="width=100%">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RCE/" rel="tag">RCE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bypass/" rel="tag">bypass</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crypto/" rel="tag">crypto</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/phar/" rel="tag">phar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/serialize/" rel="tag">serialize</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssi/" rel="tag">ssi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssrf/" rel="tag">ssrf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssti/" rel="tag">ssti</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xss/" rel="tag">xss</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xxe/" rel="tag">xxe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" rel="tag">信息搜集</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RCE/" rel="tag">RCE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bypass/" rel="tag">bypass</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crypto/" rel="tag">crypto</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/phar/" rel="tag">phar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/serialize/" rel="tag">serialize</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssi/" rel="tag">ssi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssrf/" rel="tag">ssrf</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssti/" rel="tag">ssti</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xss/" rel="tag">xss</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xxe/" rel="tag">xxe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" rel="tag">信息搜集</a><span class="tag-list-count">1</span></li></ul>
         </canvas>
     </div>
 </div>
@@ -440,11 +694,11 @@
       
       
         <li class="recent_posts_li">
-          <a href="/2020/07/08/CTFshow_36D_wp/" title="CTFshow36D杯web复现" target="_blank">CTFshow36D杯web复现</a>
+          <a href="/2020/07/10/python_serialize/" title="python序列化和反序列化" target="_blank">python序列化和反序列化</a>
         </li>
       
         <li class="recent_posts_li">
-          <a href="/2020/07/03/BJD2020_web_wp/" title="BJDCTF2020web复现" target="_blank">BJDCTF2020web复现</a>
+          <a href="/2020/07/08/CTFshow_36D_wp/" title="CTFshow36D杯web复现" target="_blank">CTFshow36D杯web复现</a>
         </li>
       
     </ul>
@@ -463,6 +717,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pickle"><span class="nav-number">1.</span> <span class="nav-text">Pickle</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法"><span class="nav-number">1.2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#pickle-dump"><span class="nav-number">1.2.1.</span> <span class="nav-text">pickle.dump</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pickle-dumps"><span class="nav-number">1.2.2.</span> <span class="nav-text">pickle.dumps</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pickle-load"><span class="nav-number">1.2.3.</span> <span class="nav-text">pickle.load</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pickle-loads"><span class="nav-number">1.2.4.</span> <span class="nav-text">pickle.loads</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Json"><span class="nav-number">2.</span> <span class="nav-text">Json</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特点-1"><span class="nav-number">2.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法-1"><span class="nav-number">2.2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#json-dumps"><span class="nav-number">2.2.1.</span> <span class="nav-text">json.dumps</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#json-dump"><span class="nav-number">2.2.2.</span> <span class="nav-text">json.dump</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#json-loads"><span class="nav-number">2.2.3.</span> <span class="nav-text">json.loads</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#json-load"><span class="nav-number">2.2.4.</span> <span class="nav-text">json.load</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -492,7 +762,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">19k</span>
+    <span title="Site words total count">19.7k</span>
   
 </div>
 
@@ -633,6 +903,10 @@ color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="//cdn.bootcss.com/canv
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
