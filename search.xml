@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>初探CBC字节翻转攻击</title>
+      <link href="/2020/07/15/CBC_thinking/"/>
+      <url>/2020/07/15/CBC_thinking/</url>
+      
+        <content type="html"><![CDATA[<p>前几天复现NPUCTF碰到了一道CBC字节翻转的问题，因为从来没接触过，单独学习一下</p><a id="more"></a><h3 id="CBC加密"><a href="#CBC加密" class="headerlink" title="CBC加密"></a>CBC加密</h3><p>参考： <a href="https://zh.wikipedia.org/wiki/%E5%88%86%E7%BB%84%E5%AF%86%E7%A0%81%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F" target="_blank" rel="noopener">wiki百科</a><br>            <a href="https://blog.csdn.net/chengqiuming/article/details/82288851" target="_blank" rel="noopener">CBC模式解读</a></p><p>1976年，IBM发明了<strong>密码分组链接</strong>（CBC，Cipher-block chaining）模式。在CBC模式中，每个明文块先与前一个密文块进行异或后，再进行加密。在这种方法中，每个密文块都依赖于它前面的所有明文块。同时，为了保证每条消息的唯一性，在第一个块中需要使用初始化向量。</p><p>其加解密示意图如下</p><p><img src="https://img-blog.csdn.net/20180901170843459?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NoZW5ncWl1bWluZw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p><p>若第一个块的下标为1，则CBC模式的加密过程为</p><ol><li>首先将明文分组(常见的以16字节为一组)，位数不足的使用特殊字符填充。</li><li>生成一个随机的初始化向量(IV)和一个密钥。</li><li>将IV和第一组明文异或。</li><li>用密钥对3中异或后产生的密文加密。</li><li>用4中产生的密文对第二组明文进行异或操作。</li><li>用密钥对5中产生的密文加密。</li><li>重复4-7，到最后一组明文。</li><li>将IV和加密后的密文拼接在一起，得到最终的密文。</li></ol><p>而其解密过程则为</p><ol><li>从密文中提取出IV，然后将密文分组。</li><li>使用密钥对第一组的密文解密，然后和IV进行异或得到明文。</li><li>使用密钥对第二组密文解密，然后和2中的密文异或得到明文。</li><li>重复2-3，直到最后一组密文。</li></ol><p>CBC是最为常用的工作模式。它的主要缺点在于加密过程是串行的，无法被并行化，而且消息必须被填充到块大小的整数倍。解决后一个问题的一种方法是利用密文窃取。</p><p>注意在加密时，明文中的微小改变会导致其后的全部密文块发生改变，而在解密时，从两个邻接的密文块中即可得到一个明文块。因此，解密过程可以被并行化，而解密时，密文中一位的改变只会导致其对应的明文块完全改变和下一个明文块中对应位发生改变，不会影响到其它明文的内容。</p><h3 id="CBC字节翻转攻击"><a href="#CBC字节翻转攻击" class="headerlink" title="CBC字节翻转攻击"></a>CBC字节翻转攻击</h3><p>参考： <a href="https://blog.csdn.net/csu_vc/article/details/79619309" target="_blank" rel="noopener">CBC翻转攻击，了解一下！</a><br>            <a href="https://blog.csdn.net/include_heqile/article/details/79942993" target="_blank" rel="noopener">实验吧 简单的登录题 CBC字节翻转攻击</a><br>            <a href="https://www.jianshu.com/p/b2e8b2819d78" target="_blank" rel="noopener">CBC字节翻转攻击</a></p><p>攻击流程图(解密过程)</p><p><img src="http://drops.xmd5.com/full/157b4078de6a8615e7c4be958d4d89164f1810e9.jpg" alt="enter image description here"></p><p>图中我们可以得出下一块明文Plaintext是由前一块Ciphertext产生的，如果我们改变前一块Ciphertext中的一个字节，改变后的Ciphertext和下一块解密后的密文异或处理，就可以得到一个不同的明文，而这个明文是我们可以控制的。利用这一点，我们就可以欺骗服务端或者绕过过滤器。</p><h3 id="Padding-oracle-attack"><a href="#Padding-oracle-attack" class="headerlink" title="Padding oracle attack"></a>Padding oracle attack</h3><p>参考： <a href="https://www.freebuf.com/articles/web/15504.html" target="_blank" rel="noopener">我对Padding Oracle攻击的分析和思考</a><br>            <a href="https://www.freebuf.com/articles/database/151167.html" target="_blank" rel="noopener">Padding oracle attack详细解析</a></p><p>看的一脸懵逼，做个简单的摘录。。。</p><p>首先了解<strong>分组密码的填充模式</strong>，分组密码Block Cipher需要在加载前确保每个每组的长度都是分组长度的整数倍。一般情况下，明文的最后一个分组很有可能会出现长度不足分组的长度，这个时候，普遍的做法是在最后一个分组后填充一个固定的值，这个值的大小为填充的字节总数。即假如最后还差4个字符，则填充0x04。这就是padding。</p><p><img src="https://image.3001.net/uploads/image/20131028/20131028140730_78503.png" alt="img"></p><p>而这时如果最后的Padding不正确，比如显示的是0x03但只填充了两个，则解密程序往往会抛出异常(Padding Error)。利用应用的错误回显，我们就可以判断出Paddig是否正确。</p><p>而Padding Oracle Attack，是一种针对CBC链接模式的攻击，和具体的加密算法无关。它的核心是通过密文的中间值从而得到正确的密文，</p><p>过程：</p><blockquote><p>（1）假设我们捕获到了传输的密文并且我们知道是CBC模式采用的什么加密算法，我们把密文按照加密算法的要求分好组，然后对倒数第二组密文进行构造；</p><p>（2）先假定明文只填充了一字节，对倒数第二组密文的最后一字节从0x00到0xff逐个赋值并逐个向服务器提交，直到服务返回值表示构造后的密文可以正常解密，这意味着构造后的密文作为中间值（图中黄色的那一行）解密最后一组明文，明文的最后一位是0x01（如图所示），也就是说构造的倒数第二组密文的最后一字节与最后一组密文对应中间值（绿色的那一行）的最后一位相异或的结果是0x01；</p><p><img src="https://image.3001.net/images/20171019/15083441758558.png!small" alt="Padding oracle attack详细解析"></p><p>（3）利用异或运算的性质，我们把我们构造的密文的最后一字节与0x01异或便可得到最后一位密文解密后的中间值是什么，这里我们设为M1，这一过程其实就是对应下图CBC解密过程中红圈圈出来的地方，1就是我们想要得到的中间值，二就是我们构造的密文也就是最后一组密文的IV值，我们已经知道了plaintext的最后一字节是0x01，从图中可以看到它是由我们构造的IV值与中间值的最后一字节异或得到的；</p><p><img src="https://image.3001.net/images/20171019/15083453084853.png!small" alt="Padding oracle attack详细解析"></p><p>（4）再假定明文填充了两字节也就是明文最后两字节是0x02，接着构造倒数第二组密文，我们把M1与0x02异或可以得到填充两字节时密文的最后一位应该是什么，这时候我们只需要对倒数第二位进行不断地赋值尝试（也是从0x00到0xff），当服务器返回值表示可以正常解密时，我们把此时的倒数第二位密文的取值与0x02异或便可得到最后一组密文倒数第二字节对应的中间值；</p><p>（5）后再构造出倒数第三倒数第四直到得到最后一组密文的中间值，把这个中间值与截获的密文的倒数第二位异或便可得到最后一组分组的明文；</p><p>（6）舍弃掉最后一组密文，只提交第一组到倒数第二组密文，通过构造倒数第三组密文得到倒数第二组密文的铭文，最后我们便可以得到全部的明文</p></blockquote><p>晕乎乎的看了一天没咋看懂，就当扩充个知识面吧。。。。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 密码学 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CBC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>GKCTF2020部分web复现</title>
       <link href="/2020/07/14/GKCTF2020_web/"/>
       <url>/2020/07/14/GKCTF2020_web/</url>
