@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>sqlmap脚本速查</title>
+      <link href="/2020/07/20/sqlmap_temper/"/>
+      <url>/2020/07/20/sqlmap_temper/</url>
+      
+        <content type="html"><![CDATA[<p>把自己tamper里的脚本用法在网上搜了下</p><a id="more"></a><table><thead><tr><th align="left">脚本名称</th><th>作用说明</th></tr></thead><tbody><tr><td align="left">apostrophemask.py</td><td>将引号替换成UTF-8，用于过滤单引号</td></tr><tr><td align="left">apostrphenullencode.py</td><td>用非法双字节Unicode字符替换单引号</td></tr><tr><td align="left">appendnullbyte.py</td><td>在有效负荷的结束位置加载零字节字符编码</td></tr><tr><td align="left">base64encode.py</td><td>替换成base64编码</td></tr><tr><td align="left">between.py</td><td>用not between 0 and替换大于号，用between and替换等于号</td></tr><tr><td align="left">bluecoat.py</td><td>在SQL语句之后用有效的随机空白替换空格符，随后用like替换等于号</td></tr><tr><td align="left">chardoubleencode.py</td><td>对给定的payload全部字符使用双重url编码</td></tr><tr><td align="left">charencode.py</td><td>对给定的payload全部字符使用URL编码，例如SE-&gt; ％53％45</td></tr><tr><td align="left">charunicodeencode.py</td><td>字符串Unicode编码，例如SE-&gt;％u0053％u0045</td></tr><tr><td align="left">charunicodeescape.py</td><td>Unicode转义给定有效负载中的未编码字符，例如SE-&gt; \ u0053 \ u0045</td></tr><tr><td align="left">commalesslimit.py</td><td>用’LIMIT N OFFSET M’替换（MySQL）实例，例如’LIMIT M,N’</td></tr><tr><td align="left">commalessmid.py</td><td>用’MID（A FROM B FOR C）’替换（MySQL）实例，例如’MID(A,B,C)’</td></tr><tr><td align="left">commentbeforeparentheses.py</td><td>在括号前加（内联）注释（例如（（-&gt; / ** /（）</td></tr><tr><td align="left">concat2concatws.py</td><td>用’CONCAT_WS(MID(CHAR(0),0,0),A,B)’ 等价物替换（MySQL）实例，例如’CONCAT(A,B)’</td></tr><tr><td align="left">equaltolike.py</td><td>将等号替换为like</td></tr><tr><td align="left">escapequotes.py</td><td>斜杠转义单引号和双引号</td></tr><tr><td align="left">greatest.py</td><td>绕过对大于号的过滤，用GREATEST替换大于号</td></tr><tr><td align="left">halfversionedmorekeywords.py</td><td>当数据库为MySQL时绕过防火墙，在每个关键字之前添加MySQL版本注释</td></tr><tr><td align="left">hex2char.py</td><td>替换每个（MySQL）0x等效的CONCAT（CHAR（），…）编码字符串</td></tr><tr><td align="left">htmlencode.py</td><td>HTML编码所有非字母数字字符</td></tr><tr><td align="left">ifnull2casewhenisnull.py-</td><td>替换’IFNULL( A，B)’与’CASE WHEN ISNULL（A）THEN（B）ELSE（A）END’对应</td></tr><tr><td align="left">ifnull2ifsnull.py</td><td>绕过对ifnull的过滤，替换类似IFNULL(A,B)为IF(ISNULL(A),B,A)</td></tr><tr><td align="left">informationschemacomment.py</td><td>在所有出现的（MySQL）“information_schema”标识符的末尾添加一个内联注释（/ ** /）</td></tr><tr><td align="left">least.py</td><td>用’LEAST’对应替换大于运算符（’&gt;’）</td></tr><tr><td align="left">lowercase.py</td><td>用小写值替换每个关键字字符</td></tr><tr><td align="left">luanginx.py</td><td>LUA-Nginx WAF绕过（例如Cloudflare）</td></tr><tr><td align="left">modsecurityversioned.py</td><td>包含带有（MySQL）版本注释的完整查询</td></tr><tr><td align="left">multiplespaces.py</td><td>围绕SQL关键字添加多个空格</td></tr><tr><td align="left">modsecurityversioned.py</td><td>过滤空格，使用MySQL内联注释的方式进行注入</td></tr><tr><td align="left">modsecurityzeroversioned.py</td><td>使用MySQL内联注释的方式进行注入</td></tr><tr><td align="left">multiplespaces.py</td><td>在SQL关键字周围添加多个空格</td></tr><tr><td align="left">nonrecursivereplacement.py</td><td>作为双重查询语句，用双重语句替换预定义的SQL关键字</td></tr><tr><td align="left">overlongutf8.py</td><td>将给定有效载荷中的所有（非字母数字）字符转换为超长UTF8</td></tr><tr><td align="left">overlongutf8more.py</td><td>将给定有效载荷中的所有字符转换为超长UTF8</td></tr><tr><td align="left">percentage.py</td><td>在每个字符前面添加一个百分号（’％’）</td></tr><tr><td align="left">plus2concat.py</td><td>替换加号运算符（’+’）与（MsSQL）函数CONCAT（）对应</td></tr><tr><td align="left">plus2fnconcat.py</td><td>用（MsSQL）ODBC函数{fn CONCAT（）}替换加号（’+’）对应项</td></tr><tr><td align="left">randomcase.py</td><td>随机大小写</td></tr><tr><td align="left">randomcomments.py</td><td>用/**/分割SQL关键字</td></tr><tr><td align="left">securesphere.py</td><td>追加特制的字符串</td></tr><tr><td align="left">sp_password.py</td><td>从DBMS日志的自动模糊处理的有效载荷追加sp_password</td></tr><tr><td align="left">space2comment.py</td><td>将空格替换成/**/</td></tr><tr><td align="left">space2dash.py</td><td>用短划线注释（’-‘）替换空格字符（’’），后跟一个随机字符串和一个新的行（’\ n’）</td></tr><tr><td align="left">space2hash.py</td><td>将空格替换为#号，并添加一个随机字符串和换行符</td></tr><tr><td align="left">space2morecomment.py</td><td>替换（MySQL）带注释’/ ** _ ** /‘ 的空格字符（’’）实例</td></tr><tr><td align="left">space2moreshash.py</td><td>将空格替换为#号，并添加一个随机字符串和换行符</td></tr><tr><td align="left">space2mssqlblank.py(mssql)</td><td>将空格替换成其他空符号</td></tr><tr><td align="left">space2mysqlblank.py</td><td>将空格替换为其他空白符号(适用于MySQL)</td></tr><tr><td align="left">space2mysqlhash.py</td><td>将空格替换为–，并添加一个换行符</td></tr><tr><td align="left">space2mssqlhash.py</td><td>将空格替换为#号，并添加一个换行符</td></tr><tr><td align="left">space2plus.py</td><td>用+号代替空格</td></tr><tr><td align="left">space2randomblank.py</td><td>将空格替换为其他有效字符</td></tr><tr><td align="left">substring2leftright.py</td><td>用LEFT和RIGHT替换PostgreSQL SUBSTRING</td></tr><tr><td align="left">symbolicologic.py</td><td>用其符号对应物（&amp;&amp;和||）替换AND和OR逻辑运算符</td></tr><tr><td align="left">unionalltounion.py</td><td>用UNION SELECT对应项替换UNION ALL SELECT的实例</td></tr><tr><td align="left">unmagicquotes.py</td><td>用一个多字节组合和末尾通用注释一起替换空格</td></tr><tr><td align="left">uppercase.py</td><td>用大写值替换每个关键字字符</td></tr><tr><td align="left">unionalltounion.py</td><td>将union all select 替换成union select</td></tr><tr><td align="left">varnish.py</td><td>附加HTTP标头’X-originating-IP’以绕过Varnish防火墙</td></tr><tr><td align="left">versionedkeywords.py</td><td>用（MySQL）版本注释将每个非功能性关键字括起来</td></tr><tr><td align="left">versionedmorekeywords.py</td><td>每个关键字包含（MySQL）版本注释</td></tr><tr><td align="left">xforwardedfor.py</td><td>附加伪造的HTTP标头’X-Forwarded-For’</td></tr></tbody></table><p>​<br>​    </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> tool </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> sqlmap </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>61dctfweb复现</title>
       <link href="/2020/07/19/61dctf_web/"/>
       <url>/2020/07/19/61dctf_web/</url>
