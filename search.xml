@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>metasploit学习笔记（一）</title>
+      <link href="/2020/07/22/msf_note1/"/>
+      <url>/2020/07/22/msf_note1/</url>
+      
+        <content type="html"><![CDATA[<p>缓缓拿起桌上当了几个月垫子的metasploit渗透测试指南。</p><a id="more"></a><h3 id="Metasploit的一些术语"><a href="#Metasploit的一些术语" class="headerlink" title="Metasploit的一些术语"></a>Metasploit的一些术语</h3><p>渗透攻击exploit：攻击者或渗透攻击者利用系统、应用或服务中的安全漏洞所进行的攻击行为<br>攻击载荷payload：我们期望目标系统在被渗透攻击之后去执行的代码，在Metasploit框架中可以自由的选择、传送和植入<br>shellcode：在渗透攻击时作为攻击载荷运行的由汇编语言编写的一组机器指令<br>模块(Module)：一个模块是指Metasploit框架中所使用的一段软件代码组件<br>监听器(Listener)：Metasploit中用来等待连入网络连接的组件</p><h3 id="Metasploit功能程序"><a href="#Metasploit功能程序" class="headerlink" title="Metasploit功能程序"></a>Metasploit功能程序</h3><h4 id="MSF攻击载荷生成器"><a href="#MSF攻击载荷生成器" class="headerlink" title="MSF攻击载荷生成器"></a>MSF攻击载荷生成器</h4><p>MSF攻击载荷生成器允许你能够生成shellcode、可执行代码和其他更多，也可以让它们在框架软件之外的渗透代码中进行使用。2015年开始Metasploit弃用了早期版本的msfpayload，转而使用集成了攻击载荷生成和编码的msfvenom替代</p><p>查看msfvenom配置选项命令是：msfvenom -h</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722222447.png" alt=""></p><h4 id="MSF编码器"><a href="#MSF编码器" class="headerlink" title="MSF编码器"></a>MSF编码器</h4><p>Metasploit中包含了一系列可用于不同场景下的编码器，一些编码器在你只能使用字母和数字字符来构造攻击载荷时非常有用。在2015年之后的版本，msfpayload和msfencode被一起弃用，编码的功能也一同集成于msfvenom。</p><p>如果需要查看有哪些可用的编码器以及他们的等级，可以使用命令：msfvenom -l encoders</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722223442.png" alt=""></p><h4 id="Nasm-shell"><a href="#Nasm-shell" class="headerlink" title="Nasm shell"></a>Nasm shell</h4><p>Nasm_shell.rb是一个帮助我们了解汇编代码含义的功能程序，比如我们可以运行程序请求汇编命令的opcode操作码</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722223927.png" alt=""></p><h3 id="Metasploit使用数据库"><a href="#Metasploit使用数据库" class="headerlink" title="Metasploit使用数据库"></a>Metasploit使用数据库</h3><h4 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h4><p>Metasploit提供多种数据库的支持，帮助渗透测试人员在进行复杂渗透测试工作时记录操作</p><p>以PostgreSQL为例</p><p>启动数据库子系统</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;postgresql start</span><br></pre></td></tr></table></figure><p>连接数据库需要用户名，密码，主机名以及想要使用的数据库名，postgresql的默认用户名是postgres，密码是toor，如忘记密码，可输入命令<code>sudo -u postgres psql</code>登录postgresql，再输入<code>ALTER USER postgres WITH PASSWORD &#39;newpassword&#39;;</code>修改密码即可</p><p>在metasploit中和postgresql使用msf作为数据库名建立连接</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db_connect postgres:password@127.0.0.1&#x2F;msf</span><br></pre></td></tr></table></figure><p>待metasploit生成必须数据表后会返回终端指令符等待指令</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722225301.png" alt=""></p><p>执行<code>db_status</code>命令确认数据连接是否正确</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722225416.png" alt=""></p><h4 id="将数据导入metasploit"><a href="#将数据导入metasploit" class="headerlink" title="将数据导入metasploit"></a>将数据导入metasploit</h4><p>执行nmap生成基本xml报告</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -Pn -sS -A -oX data.xml 192.168.48.0&#x2F;24</span><br></pre></td></tr></table></figure><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722225937.png" alt=""></p><p>执行<code>db_import</code>命令将文件导入数据库中</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722230042.png" alt=""></p><p>执行<code>hosts</code>命令核实导入的结果</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722230126.png" alt=""></p><h3 id="高级扫描技巧：TCP空闲扫描"><a href="#高级扫描技巧：TCP空闲扫描" class="headerlink" title="高级扫描技巧：TCP空闲扫描"></a>高级扫描技巧：TCP空闲扫描</h3><p>这种扫描让我们冒充网络上另一台主机的IP地址，对目标进行更为隐秘的扫描</p><p>使用metasploit框架的<code>scanner/ip/ipidseq</code>模块寻找满足TCP空闲扫描要求的空闲主机</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722230602.png" alt=""></p><p>RHOSTS参数可以使用IP段(如192.168.1.100-192.168.1.200)，也可以使用CIDR(无类型域间选路)地址块(如192.168.1.0/24)和多个CIDR地址块(192.168.1.0/24，192.168.2.0/24)，以及每行包含一个ip地址的IP列表文本文件</p><p>THREADS设定扫描的线程数</p><p>现在将RHOSTS设定为192.168.48.0/24，THREADS设定为50运行扫描</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722231324.png" alt=""></p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722231344.png" alt=""></p><p>Incremental代表IP帧标识发生断档即该主机可用于空闲扫描，在nmap中使用<code>-sI</code>选项指定扫描获取的192.168.48.2作为空闲主机对目标主机进行扫描</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722231924.png" alt=""></p><h3 id="在MSF终端中运行nmap"><a href="#在MSF终端中运行nmap" class="headerlink" title="在MSF终端中运行nmap"></a>在MSF终端中运行nmap</h3><p>metasploit能够和nmap结合使用，首先保证数据库连接成功</p><p>输入<code>db_nmap</code>命令，它能使得MSF运行nmap并自动将nmap结果存储到msf数据库中</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722232638.png" alt=""></p><p>可以执行<code>services</code>命令查看数据库中关于系统运行服务的扫描结果</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722232746.png" alt=""></p><h3 id="使用metasploit进行端口扫描"><a href="#使用metasploit进行端口扫描" class="headerlink" title="使用metasploit进行端口扫描"></a>使用metasploit进行端口扫描</h3><p>除了使用nmap等第三方扫描器，metaspliot的辅助模块中也包含了几款内建的端口扫描器</p><p>执行<code>search portscan</code>命令查看metasploit框架提供的端口扫描工具</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722233541.png" alt=""></p><p>使用syn端口扫描器对单个主机进行扫描</p><p>输入<code>use scanner/portscan/syn</code>，设定RHOSTS和THREADS执行扫描</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722235703.png" alt=""></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 渗透测试 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> metasploit </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>sqlmap脚本速查</title>
       <link href="/2020/07/20/sqlmap_temper/"/>
       <url>/2020/07/20/sqlmap_temper/</url>
