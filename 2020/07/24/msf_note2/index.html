@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="metasploit,nessus," />
 
 
 
@@ -79,14 +79,38 @@
 
 
 
-<meta name="description" content="愿有人陪你颠沛流离">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Blacknight">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+<meta name="description" content="基本的漏洞扫描">
+<meta property="og:type" content="article">
+<meta property="og:title" content="metasploit学习笔记（二）">
+<meta property="og:url" content="http://yoursite.com/2020/07/24/msf_note2/index.html">
 <meta property="og:site_name" content="Blacknight">
-<meta property="og:description" content="愿有人陪你颠沛流离">
+<meta property="og:description" content="基本的漏洞扫描">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724104530.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724110548.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724133724.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724133810.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724133931.png">
+<meta property="og:image" content="c:%5CUsers%5C15363%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200724175038720.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724175613.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724175729.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724181109.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724181509.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724181721.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724182623.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724182720.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724184540.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724184809.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724190018.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724190248.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724190548.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724190708.png">
+<meta property="article:published_time" content="2020-07-24T15:30:00.000Z">
+<meta property="article:modified_time" content="2020-07-24T11:09:09.530Z">
 <meta property="article:author" content="blacknight">
+<meta property="article:tag" content="metasploit">
+<meta property="article:tag" content="nessus">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724104530.png">
 
 
 
@@ -116,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2020/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/07/24/msf_note2/"/>
 
 
 
 
 
-  <title>归档 | Blacknight</title>
+  <title>metasploit学习笔记（二） | Blacknight</title>
   
 
 
@@ -141,7 +165,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -259,411 +283,258 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/24/msf_note2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="blacknight">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blacknight">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">metasploit学习笔记（二）</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-24T23:30:00+08:00">
+                2020-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 27 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2020">2020</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/07/24/msf_note2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/07/24/msf_note2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/24/msf_note2/" itemprop="url">
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">metasploit学习笔记（二）</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  449
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-24T23:30:00+08:00"
-              content="2020-07-24" >
-          07-24
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/22/msf_note1/" itemprop="url">
-              
-                <span itemprop="name">metasploit学习笔记（一）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-22T23:30:00+08:00"
-              content="2020-07-22" >
-          07-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <h3 id="基本的漏洞扫描"><a href="#基本的漏洞扫描" class="headerlink" title="基本的漏洞扫描"></a>基本的漏洞扫描</h3><a id="more"></a>
 
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/20/sqlmap_temper/" itemprop="url">
-              
-                <span itemprop="name">sqlmap脚本速查</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-20T15:30:00+08:00"
-              content="2020-07-20" >
-          07-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+<h4 id="使用nessus进行扫描"><a href="#使用nessus进行扫描" class="headerlink" title="使用nessus进行扫描"></a>使用nessus进行扫描</h4><p>安装配置nessus，官网下载对应版本安装：<a href="http://www.tenable.com/products/nessus/nessus-plugins/obtain-an-activation-code" target="_blank" rel="noopener">http://www.tenable.com/products/nessus/nessus-plugins/obtain-an-activation-code</a></p>
+<p>获取激活码激活，创建用户名并进行安装</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724104530.png" alt=""></p>
+<p>创建Nessus扫描策略，自定义Plugins</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724110548.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724133724.png" alt=""></p>
+<p>新建扫描</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724133810.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724133931.png" alt=""></p>
+<p>开始任务，等待一会扫描完毕</p>
+<p><img src="C:%5CUsers%5C15363%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200724175038720.png" alt="image-20200724175038720"></p>
+<h4 id="将扫描结果导入Metaspliot框架中"><a href="#将扫描结果导入Metaspliot框架中" class="headerlink" title="将扫描结果导入Metaspliot框架中"></a>将扫描结果导入Metaspliot框架中</h4><p>保持数据库连接状态</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724175613.png" alt=""></p>
+<p>点击export导出报告文件，生成以.nessus的可以被metasploit解析的格式</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724175729.png" alt=""></p>
+<p>使用<code>db_import</code>命令将文件导入数据库中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724181109.png" alt=""></p>
+<p>执行hosts命令验证主机和漏洞数据是否导入，这里生成简要列表，包含了ip，探测到的服务数量以及漏洞数量</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724181509.png" alt=""></p>
+<p>如果想显示详细的漏洞列表，可以输入不包含任何参数的vulns命令</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724181721.png" alt=""></p>
+<h4 id="Metasploit使用Nessus扫描"><a href="#Metasploit使用Nessus扫描" class="headerlink" title="Metasploit使用Nessus扫描"></a>Metasploit使用Nessus扫描</h4><p>执行<code>load nessus</code>命令载入Nessus插件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724182623.png" alt=""></p>
+<p><code>nessus_help</code>查看Nessus插件支持的命令</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724182720.png" alt=""></p>
+<p>开始扫描前，必须使用<code>nessus connect username:password@127.0.0.1:8843</code>命令登录到你的Nessus服务器上</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724184540.png" alt=""></p>
+<p>启动扫描时需要指定一个已经定义的扫描策略的ID号，可以使用<code>nessus_policy_list</code>列出服务器上所有已经定义的扫描策略</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724184809.png" alt=""></p>
+<p>输入<code>nessus_scan_new</code>命令，并在后面加上扫描策略的ID号、扫描任务的名字、任务描述以及目标的IP地址</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724190018.png" alt=""></p>
+<p>这里出现本来出现了错误，后来参考了<a href="https://github.com/rapid7/metasploit-framework/issues/11117找到解决方法" target="_blank" rel="noopener">https://github.com/rapid7/metasploit-framework/issues/11117找到解决方法</a></p>
+<p>创建好扫描之后输入<code>nessus_scan_launch ID</code>执行扫描任务</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724190248.png" alt=""></p>
+<p>running代表正在执行，completed代表扫描结束</p>
+<p>扫描结束后，可以使用<code>nessus_db_import</code>命令将指定扫描任务的报告导入到Metasploit数据库中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724190548.png" alt=""></p>
+<p>同样可以使用<code>host</code>命令查看数据</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200724190708.png" alt=""></p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/19/61dctf_web/" itemprop="url">
-              
-                <span itemprop="name">61dctfweb复现</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-19T20:30:00+08:00"
-              content="2020-07-19" >
-          07-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/15/CBC_thinking/" itemprop="url">
-              
-                <span itemprop="name">初探CBC字节翻转攻击</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-15T19:30:00+08:00"
-              content="2020-07-15" >
-          07-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/14/GKCTF2020_web/" itemprop="url">
-              
-                <span itemprop="name">GKCTF2020部分web复现</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-14T17:30:00+08:00"
-              content="2020-07-14" >
-          07-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/12/NPUCTF2020_web/" itemprop="url">
-              
-                <span itemprop="name">NPUCTF2020web部分复现</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-12T12:30:00+08:00"
-              content="2020-07-12" >
-          07-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/10/python_serialize/" itemprop="url">
-              
-                <span itemprop="name">python序列化和反序列化</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-10T15:30:00+08:00"
-              content="2020-07-10" >
-          07-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/08/CTFshow_36D_wp/" itemprop="url">
-              
-                <span itemprop="name">CTFshow36D杯web复现</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-08T19:30:00+08:00"
-              content="2020-07-08" >
-          07-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/07/03/BJD2020_web_wp/" itemprop="url">
-              
-                <span itemprop="name">BJDCTF2020web复现</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-07-03T14:30:00+08:00"
-              content="2020-07-03" >
-          07-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/metasploit/" rel="tag"><i class="fa fa-tag"></i> metasploit</a>
+          
+            <a href="/tags/nessus/" rel="tag"><i class="fa fa-tag"></i> nessus</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/22/msf_note1/" rel="next" title="metasploit学习笔记（一）">
+                <i class="fa fa-chevron-left"></i> metasploit学习笔记（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2020/page/2/">2</a><a class="page-number" href="/archives/2020/page/3/">3</a><a class="extend next" rel="next" href="/archives/2020/page/2/">&gt;&gt;</a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -671,6 +542,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -691,8 +569,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -820,6 +707,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本的漏洞扫描"><span class="nav-number">1.</span> <span class="nav-text">基本的漏洞扫描</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用nessus进行扫描"><span class="nav-number">1.1.</span> <span class="nav-text">使用nessus进行扫描</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将扫描结果导入Metaspliot框架中"><span class="nav-number">1.2.</span> <span class="nav-text">将扫描结果导入Metaspliot框架中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Metasploit使用Nessus扫描"><span class="nav-number">1.3.</span> <span class="nav-text">Metasploit使用Nessus扫描</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -990,6 +893,10 @@ color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="//cdn.bootcss.com/canv
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

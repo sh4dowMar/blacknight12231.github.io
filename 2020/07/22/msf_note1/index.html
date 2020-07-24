@@ -101,8 +101,12 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722232746.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722233541.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722235703.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200723203548.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200723204619.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200723205209.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200723212827.png">
 <meta property="article:published_time" content="2020-07-22T15:30:00.000Z">
-<meta property="article:modified_time" content="2020-07-22T15:57:48.099Z">
+<meta property="article:modified_time" content="2020-07-24T10:25:16.664Z">
 <meta property="article:author" content="blacknight">
 <meta property="article:tag" content="metasploit">
 <meta name="twitter:card" content="summary">
@@ -386,7 +390,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  1.7k
                 </span>
               
 
@@ -402,7 +406,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  6
                 </span>
               
             </div>
@@ -456,6 +460,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722230042.png" alt=""></p>
 <p>执行<code>hosts</code>命令核实导入的结果</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722230126.png" alt=""></p>
+<p>如果想删除数据库中的数据，可以使用<code>hosts -d</code>删除现有的数据</p>
 <h3 id="高级扫描技巧：TCP空闲扫描"><a href="#高级扫描技巧：TCP空闲扫描" class="headerlink" title="高级扫描技巧：TCP空闲扫描"></a>高级扫描技巧：TCP空闲扫描</h3><p>这种扫描让我们冒充网络上另一台主机的IP地址，对目标进行更为隐秘的扫描</p>
 <p>使用metasploit框架的<code>scanner/ip/ipidseq</code>模块寻找满足TCP空闲扫描要求的空闲主机</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722230602.png" alt=""></p>
@@ -477,6 +482,23 @@
 <p>使用syn端口扫描器对单个主机进行扫描</p>
 <p>输入<code>use scanner/portscan/syn</code>，设定RHOSTS和THREADS执行扫描</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200722235703.png" alt=""></p>
+<h3 id="针对性扫描"><a href="#针对性扫描" class="headerlink" title="针对性扫描"></a>针对性扫描</h3><p>针对性扫描是指寻找目标网络中存在的已知可利用漏洞或能够轻松获取后门的特定操作系统，服务，软件以及配置缺陷</p>
+<h4 id="服务器消息块协议扫描"><a href="#服务器消息块协议扫描" class="headerlink" title="服务器消息块协议扫描"></a>服务器消息块协议扫描</h4><p>Metasploit可以利用它的smb_version模块来遍历一个网络并获取windows系统的版本号</p>
+<p>执行扫描如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200723203548.png" alt=""></p>
+<h4 id="搜寻配置不当的Microsoft-SQL-Server"><a href="#搜寻配置不当的Microsoft-SQL-Server" class="headerlink" title="搜寻配置不当的Microsoft SQL Server"></a>搜寻配置不当的Microsoft SQL Server</h4><p>MS SQL通常作为常用软件如(Microsoft Visual Studio)安装的先决条件被自动的安装在系统上，导致很多管理员会忽略该服务软件的存在，如此一来，这种情况下安装的MS SQL服务器软件通常没有实际的用处，也很少安装补丁程序</p>
+<p>MS SQ:安装后默认监听在TCP端口1433或使用随机的动态TCP端口，Metaspliot提供了一个mssql_ping模块帮助你找到MS SQL服务器监听的TCP端口</p>
+<p>执行扫描如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200723204619.png" alt=""></p>
+<h4 id="SSH服务器扫描"><a href="#SSH服务器扫描" class="headerlink" title="SSH服务器扫描"></a>SSH服务器扫描</h4><p>使用ssh_version模块识别目标服务器上运行的SSH版本</p>
+<p>执行如下：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200723205209.png" alt=""></p>
+<h4 id="FTP扫描"><a href="#FTP扫描" class="headerlink" title="FTP扫描"></a>FTP扫描</h4><p>FTP服务器通常是进入一个目标网络最便捷的途径，使用ftp_version模块对FTP服务进行扫描</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200723212827.png" alt=""></p>
+<p>成功识别FTP服务器，之后可以使用scanner/ftp/anonymous模块检查一下这台FTP服务器是否允许匿名用户登录</p>
+<h4 id="简单网管协议扫描"><a href="#简单网管协议扫描" class="headerlink" title="简单网管协议扫描"></a>简单网管协议扫描</h4><p>简单网管协议(SNMP)通常用于网络设备中，用来报告带宽利用率、冲突率和以及其他信息，但一些操作系统也包含SNMP服务器软件，主要用来提供类似CPU利用率、空闲内存和其他系统状态</p>
+<p>可访问的SNMP服务器能够泄露某些特点系统的相当多的信息，甚至导致设备被远程攻陷。例如，如果能得到既有可读可写的Cisco路由器SNMP团体字符串，便可以下载整个路由器的配置，对其进行i修改并传回路由器中</p>
+<p>Metasploit框架中包含一个内置的辅助模块scanner/snmp/snmp_enum。我们可以尝试对一个ip或一段ip使用字典来猜解SNMP团体字符串。</p>
 
       
     </div>
@@ -516,6 +538,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/24/msf_note2/" rel="prev" title="metasploit学习笔记（二）">
+                metasploit学习笔记（二） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -605,7 +631,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -627,7 +653,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -673,7 +699,7 @@
 <div class="widget-wrap">
     <div id="myCanvasContainer" class="widget tagcloud">
         <canvas width="250" height="250" id="resCanvas" style="width=100%">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CBC/" rel="tag">CBC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSP/" rel="tag">CSP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RCE/" rel="tag">RCE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typecho/" rel="tag">Typecho</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bypass/" rel="tag">bypass</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crypto/" rel="tag">crypto</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hashpump/" rel="tag">hashpump</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/metasploit/" rel="tag">metasploit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/phar/" rel="tag">phar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/serialize/" rel="tag">serialize</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlmap/" rel="tag">sqlmap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssi/" rel="tag">ssi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssrf/" rel="tag">ssrf</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssti/" rel="tag">ssti</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xpath/" rel="tag">xpath</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xss/" rel="tag">xss</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xxe/" rel="tag">xxe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" rel="tag">信息搜集</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CBC/" rel="tag">CBC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSP/" rel="tag">CSP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSRF/" rel="tag">CSRF</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RCE/" rel="tag">RCE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Typecho/" rel="tag">Typecho</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bypass/" rel="tag">bypass</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/crypto/" rel="tag">crypto</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hashpump/" rel="tag">hashpump</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/metasploit/" rel="tag">metasploit</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nessus/" rel="tag">nessus</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/phar/" rel="tag">phar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/" rel="tag">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/serialize/" rel="tag">serialize</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlmap/" rel="tag">sqlmap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssi/" rel="tag">ssi</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssrf/" rel="tag">ssrf</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssti/" rel="tag">ssti</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xpath/" rel="tag">xpath</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xss/" rel="tag">xss</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xxe/" rel="tag">xxe</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" rel="tag">信息搜集</a><span class="tag-list-count">1</span></li></ul>
         </canvas>
     </div>
 </div>
@@ -691,11 +717,11 @@
       
       
         <li class="recent_posts_li">
-          <a href="/2020/07/22/msf_note1/" title="metasploit学习笔记（一）" target="_blank">metasploit学习笔记（一）</a>
+          <a href="/2020/07/24/msf_note2/" title="metasploit学习笔记（二）" target="_blank">metasploit学习笔记（二）</a>
         </li>
       
         <li class="recent_posts_li">
-          <a href="/2020/07/20/sqlmap_temper/" title="sqlmap脚本速查" target="_blank">sqlmap脚本速查</a>
+          <a href="/2020/07/22/msf_note1/" title="metasploit学习笔记（一）" target="_blank">metasploit学习笔记（一）</a>
         </li>
       
     </ul>
@@ -724,7 +750,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Metasploit的一些术语"><span class="nav-number">1.</span> <span class="nav-text">Metasploit的一些术语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metasploit功能程序"><span class="nav-number">2.</span> <span class="nav-text">Metasploit功能程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MSF攻击载荷生成器"><span class="nav-number">2.1.</span> <span class="nav-text">MSF攻击载荷生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MSF编码器"><span class="nav-number">2.2.</span> <span class="nav-text">MSF编码器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nasm-shell"><span class="nav-number">2.3.</span> <span class="nav-text">Nasm shell</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metasploit使用数据库"><span class="nav-number">3.</span> <span class="nav-text">Metasploit使用数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#连接数据库"><span class="nav-number">3.1.</span> <span class="nav-text">连接数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将数据导入metasploit"><span class="nav-number">3.2.</span> <span class="nav-text">将数据导入metasploit</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级扫描技巧：TCP空闲扫描"><span class="nav-number">4.</span> <span class="nav-text">高级扫描技巧：TCP空闲扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在MSF终端中运行nmap"><span class="nav-number">5.</span> <span class="nav-text">在MSF终端中运行nmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用metasploit进行端口扫描"><span class="nav-number">6.</span> <span class="nav-text">使用metasploit进行端口扫描</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Metasploit的一些术语"><span class="nav-number">1.</span> <span class="nav-text">Metasploit的一些术语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metasploit功能程序"><span class="nav-number">2.</span> <span class="nav-text">Metasploit功能程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MSF攻击载荷生成器"><span class="nav-number">2.1.</span> <span class="nav-text">MSF攻击载荷生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MSF编码器"><span class="nav-number">2.2.</span> <span class="nav-text">MSF编码器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nasm-shell"><span class="nav-number">2.3.</span> <span class="nav-text">Nasm shell</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metasploit使用数据库"><span class="nav-number">3.</span> <span class="nav-text">Metasploit使用数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#连接数据库"><span class="nav-number">3.1.</span> <span class="nav-text">连接数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将数据导入metasploit"><span class="nav-number">3.2.</span> <span class="nav-text">将数据导入metasploit</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级扫描技巧：TCP空闲扫描"><span class="nav-number">4.</span> <span class="nav-text">高级扫描技巧：TCP空闲扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在MSF终端中运行nmap"><span class="nav-number">5.</span> <span class="nav-text">在MSF终端中运行nmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用metasploit进行端口扫描"><span class="nav-number">6.</span> <span class="nav-text">使用metasploit进行端口扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#针对性扫描"><span class="nav-number">7.</span> <span class="nav-text">针对性扫描</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务器消息块协议扫描"><span class="nav-number">7.1.</span> <span class="nav-text">服务器消息块协议扫描</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#搜寻配置不当的Microsoft-SQL-Server"><span class="nav-number">7.2.</span> <span class="nav-text">搜寻配置不当的Microsoft SQL Server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSH服务器扫描"><span class="nav-number">7.3.</span> <span class="nav-text">SSH服务器扫描</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FTP扫描"><span class="nav-number">7.4.</span> <span class="nav-text">FTP扫描</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单网管协议扫描"><span class="nav-number">7.5.</span> <span class="nav-text">简单网管协议扫描</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -759,7 +785,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">27.6k</span>
+    <span title="Site words total count">28.7k</span>
   
 </div>
 
