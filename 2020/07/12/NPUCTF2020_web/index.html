@@ -62,6 +62,8 @@
                 
                     <a class="menu-item" href="/tags">Tags</a>
                 
+                    <a class="menu-item" href="/links">Friends</a>
+                
                     <a class="menu-item" href="/about">About</a>
                 
                 <input id="switch_default" type="checkbox" class="switch_default">
@@ -86,6 +88,8 @@
                     <a class="menu-item" href="/categories">Categories</a>
                 
                     <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
                 
                     <a class="menu-item" href="/about">About</a>
                 
@@ -323,7 +327,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://yoursite.com/2020/07/12/NPUCTF2020_web/">http://yoursite.com/2020/07/12/NPUCTF2020_web/</a></span>
+                        <span><a href="http://blacknight.top/2020/07/12/NPUCTF2020_web/">http://blacknight.top/2020/07/12/NPUCTF2020_web/</a></span>
                     </p>
                 
                 
@@ -332,11 +336,6 @@
                         <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
                     </p>
                 
-                
-                     <p class="copyright-item">
-                         <span>Slogan:</span>
-                         <span>Do you believe in <strong>DESTINY</strong>?</span>
-                     </p>
                 
 
             </section>
@@ -372,6 +371,29 @@
             <a class="next" rel="next" href="/2020/07/10/python_serialize/">python序列化和反序列化</a>
             
         </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
 
 
     </article>

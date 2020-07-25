@@ -269,9 +269,9 @@
             
             <tag> bypass </tag>
             
-            <tag> ssrf </tag>
-            
             <tag> RCE </tag>
+            
+            <tag> ssrf </tag>
             
         </tags>
       
