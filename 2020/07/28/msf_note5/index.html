@@ -227,9 +227,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;download.sysinternals.com&#x2F;files&#x2F;ProcessExplorer.zip</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728113424.png" alt=""></p>
-<p>接着指定模板文件生成攻击载荷</p>
+<p>接着指定模板文件生成攻击载荷，这样就可以得到自定义模板的可执行程序</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728113626.png" alt=""></p>
-<p>虽然现在病毒库日益强大，但补发一些不重视安全性的用户仍然使用着旧版本的病毒库</p>
 <h4 id="隐秘的启动一个攻击载荷"><a href="#隐秘的启动一个攻击载荷" class="headerlink" title="隐秘的启动一个攻击载荷"></a>隐秘的启动一个攻击载荷</h4><p>如果用户运行了你的后门执行文件但却什么都没发生，很容易就会引起怀疑，为了避免被目标察觉，可以在启动攻击载荷的同时，让宿主程序也正常的运行起来</p>
 <p>MSF中使用选项-k会配置攻击载荷在一个独立线程中启动，这样宿主程序在执行时不会收到影响。</p>
 <p>以ssh客户端Putty为例</p>
@@ -244,7 +243,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728121123.png" alt=""></p>
 <p>使用<strong>-5</strong>选项对我们的可执行文件进行压缩并加壳</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200728121426.png" alt=""></p>
-<p>可以看见upx将我们的原始攻击文件体积进行了压缩。</p>
+<p>可以看见upx将我们的原始攻击文件体积进行了压缩，这样加壳过后的文件就可以一定程度上降低被杀毒软件检测的风险。</p>
 
         </div>
 
@@ -290,6 +289,8 @@
             </div>
         </section>
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/08/06/Zer0pts2020_web/">Zer0pts2020web复现</a>
             
             
             <a class="next" rel="next" href="/2020/07/27/msf_note4/">meterpreter基本使用</a>

