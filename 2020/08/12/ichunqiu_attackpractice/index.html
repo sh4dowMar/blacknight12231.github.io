@@ -295,7 +295,32 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200812132108.png" alt=""></p>
 <p>那么[email {${`cat flag`}}]读取flag即可</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200812131711.png" alt=""></p>
-<p>还有10个level太肝了。。。。再次留个坑。。。</p>
+<h3 id="level10"><a href="#level10" class="headerlink" title="level10"></a>level10</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200813131426.png" alt=""></p>
+<p>了解一下TOCTOU。【参考：<a href="http://13.58.107.157/archives/6124" target="_blank" rel="noopener">Windows 0day任意文件读取漏洞POC分析</a>】</p>
+<p>TOCTOU是Time of Check Versus Time of Use的缩写，即文件访问竞态条件漏洞，该漏洞主要原理为应用运行的过程中，在某个操作之前，比如读文件，都会检查一下文件是否存在与是否具有权限，在检查与真正的读取之间的间隔就是一个可以被利用的竞争条件（Race Condition），在这个间隔中我们可以将需要越权读取的文件替换成自己的文件，使其检查过程通过，这样就可以越权读取其他用户的文件。</p>
+<p>flag文件夹下有token，可执行的flag10和flag，flag和token没权限访问，但flag10可以发送文件到主机，看下它的调用过程</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200813141647.png" alt=""></p>
+<p>用到了一个access函数，access函数判断当前用户是否有操作文件的权限（uid判断），如果当前用户没有针对该文件的权限，则打印ERROR，有则open。但这里存在一个问题，引用wp中作者原话</p>
+<blockquote>
+<p>在早期的单处理操作系统中，这样的代码可能是严谨的，出发点也是好的——因为单处理的话，进程执行完毕后才发生切换。但是在多任务的操作系统中有这样一个问题：在用access检查文件后，这个程序可能受到其他程序的干扰或者发生进程切换，在进程发生切换之后，进程失去了执行流程，并且在它还未再次获得执行时，它欲操作的文件发生改变——邪恶源头是因为access和open都是通过文件路径字符串作为参数的，这个路径可能是一个链接文件。在Linux中，假设要access一个/tmp/lx文件，在access后、open之前，/tmp/lx被替换成了一个链接文件，指向了其他文件（如/etc/passwd），如果这个进程有对/etc/passwd操作的权限，它最终所操作的并不是真正的/tmp/lx，而是/etc/passwd。</p>
+</blockquote>
+<p>简单地说就是access之后，在open文件之前把原来要open的文件链接到一个我们期望的文件。来操作一下</p>
+<p>这里就用这一台靶机，用xshell开三个窗口即可，这里简称x1,x2,x3</p>
+<p>x1在有权限创建文件的目录下新建一个文件，这里以/tmp/token为例，然后再新建一个执行脚本的文件，不停的改掉token10的指向，内容如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200813193843.png" alt=""></p>
+<p>赋予权限并执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200813193929.png" alt=""></p>
+<p>x2使用nc命令监听自己的18211（./flag10发送文件的端口，测试得知）准备接受文件，这里用-k来保持持续的链接状态</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200813194931.png" alt=""></p>
+<p>x3同样在tmp目录下新建一个文件yy，内容如下（红框部分为接受文件的地址）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200813194039.png" alt=""></p>
+<p>这里的nice命令是更改优先序来执行程序，它的数值是-20到19，数字越大级别越低，把flag10的优先级变为最低，就有机会在access之后，open之前介入进程改掉/tmp/token10的指向</p>
+<p>同样赋予权限并执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200813195135.png" alt=""></p>
+<p>这时执行后可以看到随着不停的将token10指向flag，token被读取</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200813195411.png" alt=""></p>
+<p>token就是flag10用户的密码，登录即得flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200813200207.png" alt=""></p>
 
         </div>
 
