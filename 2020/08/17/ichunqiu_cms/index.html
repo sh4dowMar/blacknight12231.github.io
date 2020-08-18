@@ -309,6 +309,39 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200817225623.png" alt=""></p>
 <p>得到flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200817225748.png" alt=""></p>
+<h3 id="信息泄露"><a href="#信息泄露" class="headerlink" title="信息泄露"></a>信息泄露</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818135541.png" alt=""></p>
+<p>Joomla，扫个目录，有后台还有phpmyadmin页面，但后台登录就500，只有尝试爆破phpmyadmin，无果</p>
+<p>然后瞄wp，说是原题有个提示，可以下载到网站的源码，目录下有个configuration.php文件，直接请求下吧</p>
+<p>configuration.php空白，加个~泄露出了文件信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class JConfig &#123;</span><br><span class="line">	public $offline &#x3D; &#39;0&#39;;</span><br><span class="line">	public $offline_message &#x3D; &#39;This site is down for maintenance.&lt;br &#x2F;&gt; Please check back again soon.&#39;;</span><br><span class="line">	public $display_offline_message &#x3D; &#39;1&#39;;</span><br><span class="line">	public $offline_image &#x3D; &#39;&#39;;</span><br><span class="line">	public $sitename &#x3D; &#39;web2&#39;;</span><br><span class="line">	public $editor &#x3D; &#39;tinymce&#39;;</span><br><span class="line">	public $captcha &#x3D; &#39;0&#39;;</span><br><span class="line">	public $list_limit &#x3D; &#39;20&#39;;</span><br><span class="line">	public $access &#x3D; &#39;1&#39;;</span><br><span class="line">	public $debug &#x3D; &#39;0&#39;;</span><br><span class="line">	public $debug_lang &#x3D; &#39;0&#39;;</span><br><span class="line">	public $dbtype &#x3D; &#39;mysqli&#39;;</span><br><span class="line">	public $host &#x3D; &#39;localhost&#39;;</span><br><span class="line">	public $user &#x3D; &#39;root&#39;;</span><br><span class="line">	public $password &#x3D; &#39;9550bef955f9&#39;;</span><br><span class="line">	public $db &#x3D; &#39;web&#39;;</span><br><span class="line">	public $dbprefix &#x3D; &#39;m9w42_&#39;;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>可以看到直接给了mysql的数据库，用户名，密码等信息，这样就可以登录phpmyadmin了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818145408.png" alt=""></p>
+<p>在web中找到joomla管理员后台的密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818150007.png" alt=""></p>
+<p>但可能环境有问题还是500登不上去，pass吧，看了下wp后面是登录进去之后可以编辑模板插入一句话木马，提交之后根据标题提示，用菜刀连接<code>template/atomic/index.php</code>即可getshell</p>
+<h3 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h3><p>又是个discuz</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818152548.png" alt=""></p>
+<p>依旧扫后台，爆破走一套</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818152745.png" alt=""></p>
+<p>其他没啥，robots.txt爆出了一些文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818153246.png" alt=""></p>
+<p>待续。。。</p>
+<h3 id="session欺骗"><a href="#session欺骗" class="headerlink" title="session欺骗"></a>session欺骗</h3><p>首页底部得知是zzcms并且后台管理入口就在底部</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818184938.png" alt=""></p>
+<p>密码不知道，扫一波目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818185512.png" alt=""></p>
+<p>并且这些目录都是有查看权限的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818185637.png" alt=""></p>
+<p>百度到了一个<a href="https://www.seebug.org/vuldb/ssvid-97130" target="_blank" rel="noopener">任意用户密码修改漏洞</a>，试下</p>
+<p>首先抓包/admin/ZC_Password请求，改成post请求，再在body处加上payload：<code>name=admin&amp;newpass=123333&amp;newpass1=123333&amp;&amp;submit=%E7%99%BB+%E5%BD%95</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818190340.png" alt=""></p>
+<p>发包，成功登录后台</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818190452.png" alt=""></p>
+<p>左侧找到添加下载，可以上传一句话木马，并直接返回了路径</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818190854.png" alt=""></p>
+<p>那么直接上菜刀，getshell，flag在html目录下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818191055.png" alt=""></p>
 
         </div>
 
