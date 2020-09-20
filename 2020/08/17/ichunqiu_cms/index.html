@@ -16,7 +16,7 @@
 
 
 
-<title>i春秋刷题——实验综合 | Blacknight</title>
+<title>i春秋刷题——cms实验 | Blacknight</title>
 
 
 
@@ -177,7 +177,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">i春秋刷题——实验综合</h1>
+            <h1 class="post-title">i春秋刷题——cms实验</h1>
             
                 <div class="post-meta">
                     
@@ -342,51 +342,6 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818190854.png" alt=""></p>
 <p>那么直接上菜刀，getshell，flag在html目录下</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200818191055.png" alt=""></p>
-<h3 id="我很简单，请不要欺负我"><a href="#我很简单，请不要欺负我" class="headerlink" title="我很简单，请不要欺负我"></a>我很简单，请不要欺负我</h3><p>第一题wvs是一个漏洞扫描工具</p>
-<p>第二题：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819093619.png" alt=""></p>
-<p>一个asp网站，用旁注检测工具检测到有注入</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819105424.png" alt=""></p>
-<p>一把梭得到admin密码，md5解密得admin888</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819105542.png" alt=""></p>
-<p>登录到后台</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819105859.png" alt=""></p>
-<p>试着上传shell，把上传文件限制加上一条php，找下有没有上传点</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819111142.png" alt=""></p>
-<p>无果，百度下，采用修改配置文件的方法获取WebShell</p>
-<p>在系统设置将网站首页改为一句话木马</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819112528.png" alt=""></p>
-<p>菜刀连接inc/config.asp（配置文件位置），连接密码是#，成功getshell</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819112709.png" alt=""></p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819112805.png" alt=""></p>
-<p>应该是要获取服务器管理员密码，也就是提权。</p>
-<p>尝试pr提权，首先上传pr.exe到，那就先找有写入权限得目录</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819113243.png" alt=""></p>
-<p>切换虚拟终端，拒绝访问，可能是被管理员移除了cmd，那么上传cmd.exe</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819113744.png" alt=""></p>
-<p>使用pr.exe执行命令，<code>PR.exe &quot;net user blacknight 123456 /add&quot;</code>添加用户</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819115243.png" alt=""></p>
-<p>给添加的用户赋予管理员权限，<code>PR.exe &quot;net localgroup Administrators blacknight /add&quot;</code></p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819115251.png" alt=""></p>
-<p>然后尝试开启远程登录权限，上传3389批处理文件</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819120513.png" alt=""></p>
-<p>再pr运行3389.exe</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819120655.png" alt=""></p>
-<p>现在尝试cmd运行mstsc启动远程连接程序，ipconfig查看靶机地址，连接成功，输入刚才创建的用户名密码登录</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819120859.png" alt=""></p>
-<p>那么现在获取本地哈希了，工具cain可以获取本地hash并支持爆破，首先找个目录上传</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819121046.png" alt=""></p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819121353.png" alt=""></p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819121411.png" alt=""></p>
-<p>安装之后打开，注意这里要选不受限的方式</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819121629.png" alt=""></p>
-<p>再获取本地密码哈希</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819121728.png" alt=""></p>
-<p>右键导出即可看到各个用户的密码哈希</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819121915.png" alt=""></p>
-<p>把administrator的哈希放到在线网站破解即可（”:”后面的数值）</p>
-<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200819122225.png" alt=""></p>
-<p>完成</p>
 
         </div>
 
@@ -429,7 +384,7 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/08/24/ciscn_online/">CISCN初赛web总结</a>
+                <a class="prev" rel="prev" href="/2020/08/24/ciscn_online/">CISCN2020初赛web总结</a>
             
             
             <a class="next" rel="next" href="/2020/08/12/ichunqiu_attackpractice/">i春秋刷题——Exploit-Exercises:Nebula</a>
