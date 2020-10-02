@@ -16,7 +16,7 @@
 
 
 
-<title>Archives | Blacknight</title>
+<title>CTFSHOWweb月饼杯web3引发的问题 | Blacknight</title>
 
 
 
@@ -303,107 +303,161 @@
     }
 </script>
         <div class="main">
-            <div class="post-wrap archive">
+            <div class="container">
     
     
-        
 
-        
-            <h3>2020</h3>
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/31/buu7%E2%80%94%E2%80%94%5Bwangdingbei%202020%20%E9%9D%92%E9%BE%99%E7%BB%84%5DAreUSerialz/">网鼎杯2020青龙组——AreUSerialz</a>
-            <span class="archive-item-date">May 31, 2020</span>
-        </article>
     
-        
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">CTFSHOWweb月饼杯web3引发的问题</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 2, 2020&nbsp;&nbsp;19:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/CTF/">CTF</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>起因是平台上羽师傅出的一道环境变量截取和linux通配符的题，原题是平台月饼杯的web3_莫负婵娟。</p>
+<p>简单介绍一下环境变量截取构造。</p>
+<p>我们都知道linux中有个环境变量<code>$PATH</code>，它决定了shell将到哪些目录中寻找命令或程序，一般是这样</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201002163306.png" alt=""></p>
+<p>而linux中，我们是可以通过<code>$</code>和<code>{}</code>来提取环境变量中某个或者某些字符串的，比如</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201002163837.png" alt=""></p>
+<p>因此，按照这种构造方式，我们就可以构造出诸如ls，cat之类的命令，从而达到命令执行的目的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201002164158.png" alt=""></p>
+<p>当然还有更多的截取方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$&#123;file#*&#x2F;&#125;：删掉第一个 &#x2F; 及其左边的字符串：dir1&#x2F;dir2&#x2F;dir3&#x2F;my.file.txt</span><br><span class="line">$&#123;file##*&#x2F;&#125;：删掉最后一个 &#x2F;  及其左边的字符串：my.file.txt</span><br><span class="line">$&#123;file#*.&#125;：删掉第一个 .  及其左边的字符串：file.txt</span><br><span class="line">$&#123;file##*.&#125;：删掉最后一个 .  及其左边的字符串：txt</span><br><span class="line">$&#123;file%&#x2F;*&#125;：删掉最后一个  &#x2F;  及其右边的字符串：&#x2F;dir1&#x2F;dir2&#x2F;dir3</span><br><span class="line">$&#123;file%%&#x2F;*&#125;：删掉第一个 &#x2F;  及其右边的字符串：(空值)</span><br><span class="line">$&#123;file%.*&#125;：删掉最后一个  .  及其右边的字符串：&#x2F;dir1&#x2F;dir2&#x2F;dir3&#x2F;my.file</span><br><span class="line">$&#123;file%%.*&#125;：删掉第一个  .   及其右边的字符串：&#x2F;dir1&#x2F;dir2&#x2F;dir3&#x2F;my</span><br></pre></td></tr></table></figure>
+
+<p>具体请看<a href="https://www.shuzhiduo.com/A/B0zqQamGzv/" target="_blank" rel="noopener">参考</a>，这里只讨论其中一两种方式</p>
+<p>按照上述方法，可以构造得到payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?ip&#x3D;0;$&#123;PATH:5:1&#125;$&#123;PATH:2:1&#125;  &#x2F;&#x2F;0;ls</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip&#x3D;0;$&#123;PATH:14:1&#125;$&#123;PATH:5:1&#125; ????.??? &#x2F;&#x2F;0;nl ????.??? (通配符匹配)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201002164338.png" alt=""></p>
+<p>但这种截取环境变量的方式在做羽师傅续出的web入门题月饼杯web3’s revenge出了问题。</p>
+<p>首先打开题目直接是到了月饼杯web3的第二关，并且查看源码提示了信息是命令执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201002165244.png" alt=""></p>
+<p>那么有了上道题的经验，有没有可能再次构造出相应的payload呢，不妨试一下</p>
+<p>首先fuzz一下题目过滤了哪些字符</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201002165451.png" alt=""></p>
+<p>发现，除了几个<code>?</code>,<code>{}</code>,<code>~</code>,<code>#</code>符号之外，只允许输入大写字母，显然之前用数字截取的方式不再适用</p>
+<p>那么注意点放到了这几个仅存的字符上，首先是<code>~</code>，在实际测试中发现当使用取反对变量进行截取，可以输出变量中的最后一位，比如</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201002170118.png" alt=""></p>
+<p>而有些环境变量比如<code>$SHELL</code>，<code>$SHLVL</code>在大多数环境中是通用的，因此我们就多了几个可以利用的字母</p>
+<p>再看到<code>#</code>号，上面的参考文章中已经知道，<code>#</code>可以用来截取变量，比如说<code>echo ${var#*//}</code>是删除左边字符，保留右边字符。而当我再把<code>#</code>号放到变量左边时，有了意外的结果</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201002171138.png" alt=""></p>
+<p>得到了数字！而且9正是<code>$PATH</code>中我想要的数字中字母<code>l</code>的位置，那么如果我们把这个截取字符串作为截取过程中<code>:</code>的参数，这个截取有没有效呢，答案是肯定的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201002171950.png" alt=""></p>
+<p>nice了，那么现在就可以构造了，看着几个固定的环境变量，构造出了下面的payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;PATH:~A&#125;$&#123;PATH:$&#123;#SHELL&#125;:$&#123;SHLVL:~A&#125;&#125;  &#x2F;&#x2F;nl</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;PATH:$&#123;#SHELL&#125;:$&#123;SHLVL:~A&#125;&#125;$&#123;PATH:$&#123;#_&#125;:$&#123;SHLVL:~A&#125;&#125; &#x2F;&#x2F;ls</span><br></pre></td></tr></table></figure>
+
+<p>ps：值得提醒的是，有些环境变量在具体的环境中数值是不一样的，所以有可能失效，所有要视自己的环境而定，我这测试了两台虚拟机</p>
+<p>在命令行试了下可以看到是有效的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201002172932.png" alt=""></p>
+<p>那么问题就来了，把payload传进入打不通（难受。。。。）</p>
+<p>后来问了出题人也说payload没问题，docker可以打通，可能就是php的问题，后来在php中试了下，确实有问题</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201002204235.png" alt=""></p>
+<p>搜了下这个报错，大概是与linux shell使用的是/bin/sh，还是/bin/bash有关系。。。。</p>
+<p>那也没办法处理只好到这里了，虽然没做出来，好在也算学到了个新姿势</p>
+
+        </div>
 
         
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/10/02/CTFshow_webfirst_wp/">http://www.blacknight.top/2020/10/02/CTFshow_webfirst_wp/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
 
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/31/buu8%E2%80%94%E2%80%94%5Banxunbei%202019%5Deasy_web/">安洵杯2019——easy_web</a>
-            <span class="archive-item-date">May 31, 2020</span>
-        </article>
-    
+            </section>
         
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/linux%E5%8F%98%E9%87%8F%E6%88%AA%E5%8F%96/"># linux变量截取</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/09/27/cs_learn_note/">cobalt_strike基本使用</a>
+            
+        </section>
 
-        
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
 
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/30/buu6%E2%80%94%E2%80%94%5BGXYCTF2019%5D%E7%A6%81%E6%AD%A2%E5%A5%97%E5%A8%83/">GXYCTF2019——禁止套娃</a>
-            <span class="archive-item-date">May 30, 2020</span>
-        </article>
-    
-        
 
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/29/buu5%E2%80%94%E2%80%94%5B0CTF%202016%5Dpiapiapia/">0CTF2016——piapiapia</a>
-            <span class="archive-item-date">May 29, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/28/buu4%E2%80%94%E2%80%94%5BZJCTF%202019%5DNiZhuanSiWei/">ZJCTF2019——NiZhuanSiWei</a>
-            <span class="archive-item-date">May 28, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/27/buu3%E2%80%94%E2%80%94%5Bwangdingbei%202018%5DFakebook/">网鼎杯2018——Fakebook</a>
-            <span class="archive-item-date">May 27, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/26/buu2%E2%80%94%E2%80%94%5B%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98%202019%5DPHP/">极客大挑战2019——PHP</a>
-            <span class="archive-item-date">May 26, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/26/note13/">PHP中的public、protected、private</a>
-            <span class="archive-item-date">May 26, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/25/buu1%E2%80%94%E2%80%94%5BHCTF%202018%5DWarmUp/">HCTF2018——WarmUp</a>
-            <span class="archive-item-date">May 25, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/23/note12/">PHP反序列化初总结</a>
-            <span class="archive-item-date">May 23, 2020</span>
-        </article>
-    
-    
-    <nav class="pagination">
-        <a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/archives/page/6/">6</a><a class="page-number" href="/archives/page/7/">7</a>
-    </nav>
-
+    </article>
 </div>
+
         </div>
         <footer id="footer" class="footer">
     <div class="copyright">
