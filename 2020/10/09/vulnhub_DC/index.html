@@ -404,7 +404,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010164321.png" alt=""></p>
 <p>百度下有挺多getshell教程，msf搜索下有没有集成相关漏洞</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010185012.png" alt=""></p>
-<h3 id="获取会话"><a href="#获取会话" class="headerlink" title="获取会话"></a>获取会话</h3><p>挨个试，试到第五个成功获取session</p>
+<h3 id="msf获取会话"><a href="#msf获取会话" class="headerlink" title="msf获取会话"></a>msf获取会话</h3><p>挨个试，试到第五个成功获取session</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010190300.png" alt=""></p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010190354.png" alt=""></p>
 <p>python建立交互式shell，在当前目录下找到flag1，并且下一步提示在配置文件里</p>
@@ -414,7 +414,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010190844.png" alt=""></p>
 <p>在站点的default目录下找到了一个settings.php，查看后得到数据库用户名和密码以及下一步的提示</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010192213.png" alt=""></p>
-<h3 id="获取网站用户名和密码"><a href="#获取网站用户名和密码" class="headerlink" title="获取网站用户名和密码"></a>获取网站用户名和密码</h3><p>尝试登录mysql</p>
+<h3 id="重置网站管理员密码"><a href="#重置网站管理员密码" class="headerlink" title="重置网站管理员密码"></a>重置网站管理员密码</h3><p>尝试登录mysql</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010192720.png" alt=""></p>
 <p>drupaldb库里有张user表，在里面找到用户名以及hash处理后的密码</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010192839.png" alt=""></p>
@@ -430,7 +430,7 @@
 <h3 id="管理员登录"><a href="#管理员登录" class="headerlink" title="管理员登录"></a>管理员登录</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010202038.png" alt=""></p>
 <p>在dashboard里找到flag3</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010202158.png" alt=""></p>
-<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><p>根目录下发现home目录下有flag4文件</p>
+<h3 id="SUID提权"><a href="#SUID提权" class="headerlink" title="SUID提权"></a>SUID提权</h3><p>根目录下发现home目录下有flag4文件</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010202518.png" alt=""></p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010202837.png" alt=""></p>
 <p>提示我们要提权，我们查看下系统内核</p>
@@ -442,7 +442,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010203959.png" alt=""></p>
 <p>我们可以看到文件是具有root权限的</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010204258.png" alt=""></p>
-<p>随便找一个文件借用其权限执行命令</p>
+<p>我们可以利用其权限执行命令，常用的是find命令，它有一个<code>-exec</code>选项，可以让我们执行shell命令</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;usr&#x2F;bin&#x2F;find flag1.txt -exec whoami \;			#这里的文件必须是能找到的</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010204952.png" alt=""></p>
@@ -456,7 +456,79 @@
 <p>读取flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010205930.png" alt=""></p>
 <p>完成</p>
-<h2 id="DC-2"><a href="#DC-2" class="headerlink" title="DC-2"></a>DC-2</h2>
+<h2 id="DC-2"><a href="#DC-2" class="headerlink" title="DC-2"></a>DC-2</h2><h3 id="信息搜集-1"><a href="#信息搜集-1" class="headerlink" title="信息搜集"></a>信息搜集</h3><p>扫描端口，ssh端口被改了下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011104346.png" alt=""></p>
+<p>访问80端口发现被重定向，那么修改一下hosts文件即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011192301.png" alt=""></p>
+<p>修改之后目录扫描发现一些wordpress的目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011195458.png" alt=""></p>
+<p>并且whatweb扫出来了wordpress4.7.10，挺老的版本了，应该有洞</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011195224.png" alt=""></p>
+<p>在菜单栏得到flag1<br><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011192334.png" alt=""></p>
+<h3 id="bp-wpscan爆破用户名和密码"><a href="#bp-wpscan爆破用户名和密码" class="headerlink" title="bp||wpscan爆破用户名和密码"></a>bp||wpscan爆破用户名和密码</h3><p>提示说需要用cewl，说我们需要用某个账号登录来得到下一个flag</p>
+<p>百度下cewl是一个kali自带的根据网站深度自动生成字典的工具，<a href="https://www.freebuf.com/articles/network/190128.html" target="_blank" rel="noopener">简单了解一下咋用</a>，试着生成一个字典</p>
+<p>输入下列命令之后，爬虫会根据指定的URL和深度进行爬取，然后打印出可用于密码破解的字典：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cewl http:&#x2F;&#x2F;www.ignitetechnologies.in&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011193356.png" alt=""></p>
+<p>加上-w参数保存结果到文件</p>
+<p>有了可能包含了密码的字典，那么现在需要一个用户名，菜单栏里有个ourpeople，但点进去发现貌似是一种似英文而不是英文的东西，信息搜集失败</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011194712.png" alt=""></p>
+<p><code>/wp-admin/</code>进去看下后台，后台的检验方式可以爆破出用户账号</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011200809.png" alt=""></p>
+<p>抓包爆破出这几个</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011200940.png" alt=""></p>
+<p>用intruder的cluster bomb模式爆破下，用户名添加这三个，密码加载上之前cewl得到的字典，爆破出来两个</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011201328.png" alt=""></p>
+<p>后来在看wp时了解到还有种获得用户名的方法</p>
+<p>wpscan是一款专业针对WordPress安全扫描仪，学着用下</p>
+<p><code>wpscan --url http://dc-2</code>进行信息扫描</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011205919.png" alt=""></p>
+<p><code>wpscan --url http://dc-2 -e u</code>进行用户名枚举</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011210124.png" alt=""></p>
+<p>再使用cewl爬取的密码文件进行爆破账号密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url http:&#x2F;&#x2F;dc-2 -U u.txt -P aa.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011210434.png" alt=""></p>
+<p>这样也可以得到用户名密码</p>
+<p>登录看看，在jerry用户上找到flag2</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011204747.png" alt=""></p>
+<h3 id="hydra爆破ssh登录"><a href="#hydra爆破ssh登录" class="headerlink" title="hydra爆破ssh登录"></a>hydra爆破ssh登录</h3><p>用wpscan扫了下主题和插件漏洞没啥发现，试着hydra用刚得到的字典爆破下ssh，发现tom用户可以登录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012165255.png" alt=""></p>
+<p>那么ssh登录</p>
+<p>操作发现一些命令被移除，但vi可以用</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012173544.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012173707.png" alt=""></p>
+<p>提示提权，但开启了rbash限制</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012190012.png" alt=""></p>
+<h3 id="rbash逃逸"><a href="#rbash逃逸" class="headerlink" title="rbash逃逸"></a>rbash逃逸</h3><p>google了下相关信息，大概学到了两种方法适用</p>
+<p>一种是利用vi提权</p>
+<p>先后在vi的命令模式下执行以下两条指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:set shell&#x3D;&#x2F;bin&#x2F;sh</span><br><span class="line">:shell</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012194239.png" alt=""></p>
+<p>一种是利用BASH_CMDS，它是含有命令的内部散列表的数组，我们可以添加元素，然后执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012194627.png" alt=""></p>
+<p>ps：另外还学到了一个自动补全命令<code>compgen -c</code>，通过这个我们可以得知当前可以使用的命令</p>
+<p>但我们逃逸了之后还是会发现无法执行命令，原因是环境变量中命令调取的路径被改变了，我们执行<code>export PATH=/usr/bin:/usr/sbin:/bin:/sbin</code>把路径改回来，就可以正常执行命令了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012195359.png" alt=""></p>
+<p>find命令寻找flag文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012195458.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012195600.png" alt=""></p>
+<p>虽然说没hints，但最后说了一句git出去，也就是git提权了</p>
+<h3 id="git提权"><a href="#git提权" class="headerlink" title="git提权"></a>git提权</h3><p>tom用户里找不到更多信息了，之前找不到的su命令可以用了，利用之前的密码切换到jerry，百度些git提权的信息学习了下</p>
+<p>linux中more和less命令允许我们以分页的方式查看文本文件，如果我们在这种分页状态下输入诸如<code>!&#39;ls&#39;</code>的指令，引号之中的命令就会执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012204556.png" alt=""></p>
+<p>而git中正好有一个<code>-p</code>选项支持用分页的方式阅读帮助信息，这种模式和more，less命令的模式相同</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012204830.png" alt=""></p>
+<p>我们执行<code>sudo -l</code>查看sudo的权限，这里提示我们git命令是root权限并且是不需要密码的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012205821.png" alt=""></p>
+<p>那么sudo执行<code>git -p</code>，在分页模式下执行<code>!&#39;/bin/sh&#39;</code>即可获取一个root权限的shell</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012210142.png" alt=""></p>
+<p><code>find</code>查找flag，找到最后一个flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012210247.png" alt=""></p>
+<p>完成</p>
+<h2 id="DC-3"><a href="#DC-3" class="headerlink" title="DC-3"></a>DC-3</h2>
         </div>
 
         
@@ -488,12 +560,6 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
-                    
-                        <a href="/tags/SUID%E6%8F%90%E6%9D%83/"># SUID提权</a>
-                    
-                        <a href="/tags/drupal/"># drupal</a>
-                    
-                        
                 </span>
             </div>
             <div>
