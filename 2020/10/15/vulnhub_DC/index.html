@@ -381,7 +381,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 9, 2020&nbsp;&nbsp;23:30:00</a>
+                        Date: <a href="#">October 15, 2020&nbsp;&nbsp;23:30:00</a>
                         </span>
                     
                     
@@ -493,7 +493,7 @@
 <p>这样也可以得到用户名密码</p>
 <p>登录看看，在jerry用户上找到flag2</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201011204747.png" alt=""></p>
-<h3 id="hydra爆破ssh登录"><a href="#hydra爆破ssh登录" class="headerlink" title="hydra爆破ssh登录"></a>hydra爆破ssh登录</h3><p>用wpscan扫了下主题和插件漏洞没啥发现，试着hydra用刚得到的字典爆破下ssh，发现tom用户可以登录</p>
+<h3 id="爆破ssh登录"><a href="#爆破ssh登录" class="headerlink" title="爆破ssh登录"></a>爆破ssh登录</h3><p>用wpscan扫了下主题和插件漏洞没啥发现，试着hydra用刚得到的字典爆破下ssh，发现tom用户可以登录</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012165255.png" alt=""></p>
 <p>那么ssh登录</p>
 <p>操作发现一些命令被移除，但vi可以用</p>
@@ -528,7 +528,78 @@
 <p><code>find</code>查找flag，找到最后一个flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201012210247.png" alt=""></p>
 <p>完成</p>
-<h2 id="DC-3"><a href="#DC-3" class="headerlink" title="DC-3"></a>DC-3</h2>
+<h2 id="DC-3"><a href="#DC-3" class="headerlink" title="DC-3"></a>DC-3</h2><h3 id="信息搜集-2"><a href="#信息搜集-2" class="headerlink" title="信息搜集"></a>信息搜集</h3><p>端口只开了一个80</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013182820.png" alt=""></p>
+<p>探测到的是bootstrap框架</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013183219.png" alt=""></p>
+<p>后台地址</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013183904.png" alt=""></p>
+<p>打开网址得知系统是joomla</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013184023.png" alt=""></p>
+<p>用xray扫出了一个cve</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013190406.png" alt=""></p>
+<h3 id="cve得到用户名密码"><a href="#cve得到用户名密码" class="headerlink" title="cve得到用户名密码"></a>cve得到用户名密码</h3><p>github上找到这个cve的<a href="https://github.com/stefanlucas/Exploit-Joomla" target="_blank" rel="noopener">poc</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013190824.png" alt=""></p>
+<p>成功得到管理员hash后的密码，试着放到john里爆破，得snoopy</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013191041.png" alt=""></p>
+<h3 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h3><p>登录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013192829.png" alt=""></p>
+<p>看能不能找到上传点getshell</p>
+<p>模板处找到上传点</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013202337.png" alt=""></p>
+<p>点击new file生成一个php文件，将一句话代码写入，蚁剑连接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013203556.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013204931.png" alt=""></p>
+<p>或者这里用msf也行，它直接集成了这个cve，设置payload之后expliot可以直接getshell，方便又快捷</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013205935.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013205759.png" alt=""></p>
+<h3 id="double-fdput提权"><a href="#double-fdput提权" class="headerlink" title="double_fdput提权"></a>double_fdput提权</h3><p>查看下系统内核是16年的ubuntu</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013210149.png" alt=""></p>
+<p>发现有git，下载个linux漏洞检测工具试试</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013220810.png" alt=""></p>
+<p>执行脚本列出了几个可能的漏洞</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013220935.png" alt=""></p>
+<p>并且给了各个漏洞的利用脚本，一个个试，两个脏牛直接导致会话崩溃，第三个成功提权</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013230508.png" alt=""></p>
+<p>wget把给的脚本文件下载下来解压，进入exploit目录，运行compile.sh，执行doubleput，成功得到root权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013230712.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013230739.png" alt=""></p>
+<p>find搜索flag，完成</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201013230940.png" alt=""></p>
+<h2 id="DC-4"><a href="#DC-4" class="headerlink" title="DC-4"></a>DC-4</h2><h3 id="信息搜集-3"><a href="#信息搜集-3" class="headerlink" title="信息搜集"></a>信息搜集</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015161042.png" alt=""></p>
+<p>ssh开着，80服务一个登录框</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015161312.png" alt=""></p>
+<h3 id="获取敏感信息"><a href="#获取敏感信息" class="headerlink" title="获取敏感信息"></a>获取敏感信息</h3><p>也没挂啥服务，一边丢burp，万能密码直接进来了。。。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015165826.png" alt=""></p>
+<p>进来是个命令执行界面，内置了几个命令，抓包有任意命令执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015170238.png" alt=""></p>
+<p>搜索一番发现jim用户下有个备份文件夹，里面有一个旧密码的txt</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015171121.png" alt=""></p>
+<h3 id="ssh爆破"><a href="#ssh爆破" class="headerlink" title="ssh爆破"></a>ssh爆破</h3><p>用得到的旧密码试着爆破jim用户的ssh密码，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015184232.png" alt=""></p>
+<p>登录，home目录下有个奇怪的邮件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015185042.png" alt=""></p>
+<p>翻目录，在var下的mail目录下找到一封邮件，得到Charles的密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015185138.png" alt=""></p>
+<p>那么切换用户，得知teehee命令是不需要root权限的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015185531.png" alt=""></p>
+<h3 id="teehee提权"><a href="#teehee提权" class="headerlink" title="teehee提权"></a>teehee提权</h3><p>看看这个是干啥的，–help查看帮助</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015190503.png" alt=""></p>
+<p>注意到<code>-a</code>参数可以直接在文件末尾加上字符串</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015190419.png" alt=""></p>
+<p>那么尝试往passwd写入一个账户</p>
+<p><code>/etc/passwd</code> 各个字段的含义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username:password:User ID:Group ID:comment:home directory:shell</span><br></pre></td></tr></table></figure>
+
+<p>写入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blacknight::0:0:::&#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+
+<p>密码我们直接置空，uid和gid都是0，也就是root用户，也就是说覆盖了root账户，密码为0</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015191710.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015191728.png" alt=""></p>
+<p>根目录执行find命令找到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015191815.png" alt=""></p>
+
         </div>
 
         
@@ -542,7 +613,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://www.blacknight.top/2020/10/09/vulnhub_DC/">http://www.blacknight.top/2020/10/09/vulnhub_DC/</a></span>
+                        <span><a href="http://www.blacknight.top/2020/10/15/vulnhub_DC/">http://www.blacknight.top/2020/10/15/vulnhub_DC/</a></span>
                     </p>
                 
                 
