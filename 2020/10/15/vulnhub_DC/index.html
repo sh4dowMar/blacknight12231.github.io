@@ -430,7 +430,7 @@
 <h3 id="管理员登录"><a href="#管理员登录" class="headerlink" title="管理员登录"></a>管理员登录</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010202038.png" alt=""></p>
 <p>在dashboard里找到flag3</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010202158.png" alt=""></p>
-<h3 id="SUID提权"><a href="#SUID提权" class="headerlink" title="SUID提权"></a>SUID提权</h3><p>根目录下发现home目录下有flag4文件</p>
+<h3 id="SUID-find提权"><a href="#SUID-find提权" class="headerlink" title="SUID_find提权"></a>SUID_find提权</h3><p>根目录下发现home目录下有flag4文件</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010202518.png" alt=""></p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201010202837.png" alt=""></p>
 <p>提示我们要提权，我们查看下系统内核</p>
@@ -599,7 +599,42 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015191728.png" alt=""></p>
 <p>根目录执行find命令找到flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201015191815.png" alt=""></p>
+<h2 id="DC-5"><a href="#DC-5" class="headerlink" title="DC-5"></a>DC-5</h2><h3 id="信息搜集-4"><a href="#信息搜集-4" class="headerlink" title="信息搜集"></a>信息搜集</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018104818.png" alt=""></p>
+<p>111端口之前以及提到可能会造成拒绝服务攻击，36018不知道啥服务</p>
+<p>扫下目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018133147.png" alt=""></p>
+<p>探测指纹也就一个nginx，没啥框架</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018105246.png" alt=""></p>
+<p>访问80服务，几个页面都是一大堆文字，就一个</p>
+<p>整个网站就这么一个页面可以交互，抓包看看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018134143.png" alt=""></p>
+<p>发现每次发包，copyright的年份都会变化，之前也扫到了一个footer.php，访问下正是这个部分</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018134754.png" alt=""></p>
+<h3 id="日志注入"><a href="#日志注入" class="headerlink" title="日志注入"></a>日志注入</h3><p>那么猜想thankyou.php应该是require或者include了一个footer.php，那么就可能存在文件包含漏洞</p>
+<p>验证一下确实存在，参数。。。嗯猜出来或者fuzz一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018141800.png" alt=""></p>
+<p>那么日志就可以包含到了，直接往日志里写入shell</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018215946.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018215932.png" alt=""></p>
+<p>我这直接nc一个端口连一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018220603.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018220648.png" alt=""></p>
+<p>转换程交互式shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &#39;import pty; pty.spawn(&quot;&#x2F;bin&#x2F;bash&quot;)&#39;</span><br></pre></td></tr></table></figure>
 
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018220803.png" alt=""></p>
+<h3 id="SUID-screen4-5-0提权"><a href="#SUID-screen4-5-0提权" class="headerlink" title="SUID_screen4.5.0提权"></a>SUID_screen4.5.0提权</h3><p>没找到啥其他可疑文件，找找suid，发现有个奇怪的screen</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018225001.png" alt=""></p>
+<p>百度一波</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018225143.png" alt=""></p>
+<p>并且看到该版本可以提权，搜索相关漏洞</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201018231351.png" alt=""></p>
+<p>跟着<a href="https://blog.csdn.net/qq_45555226/article/details/105207724#4.screen%204.5.0%E5%AD%98%E5%9C%A8%E7%9D%80%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E41154.sh%EF%BC%88%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9%EF%BC%8C%E6%8F%90%E5%89%8D%E7%BC%96%E8%AF%91%EF%BC%8C%E4%BB%A5%E5%8F%8A%3Aset%20ff%3Dunix%EF%BC%89%EF%BC%9B" target="_blank" rel="noopener">文章</a>复现即可</p>
+<p>最后得到root权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201020223146.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201020223350.png" alt=""></p>
+<p>tips:这里的几个shellcode是用nc传过去的，在看wp的过程中学到了使用vsftps进行文件下载，<a href="https://plat.wgpsec.org/knowledge/view/3556fde8add14a628cc1dcb546a7d2b0" target="_blank" rel="noopener">参考文章</a></p>
+<h2 id="DC-6"><a href="#DC-6" class="headerlink" title="DC-6"></a>DC-6</h2>
         </div>
 
         
