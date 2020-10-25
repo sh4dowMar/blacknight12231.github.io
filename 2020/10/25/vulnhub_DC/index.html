@@ -381,7 +381,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 15, 2020&nbsp;&nbsp;23:30:00</a>
+                        Date: <a href="#">October 25, 2020&nbsp;&nbsp;23:30:00</a>
                         </span>
                     
                     
@@ -634,7 +634,89 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201020223146.png" alt=""></p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201020223350.png" alt=""></p>
 <p>tips:这里的几个shellcode是用nc传过去的，在看wp的过程中学到了使用vsftps进行文件下载，<a href="https://plat.wgpsec.org/knowledge/view/3556fde8add14a628cc1dcb546a7d2b0" target="_blank" rel="noopener">参考文章</a></p>
-<h2 id="DC-6"><a href="#DC-6" class="headerlink" title="DC-6"></a>DC-6</h2>
+<h2 id="DC-6"><a href="#DC-6" class="headerlink" title="DC-6"></a>DC-6</h2><h3 id="信息搜集-5"><a href="#信息搜集-5" class="headerlink" title="信息搜集"></a>信息搜集</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201021082719.png" alt=""></p>
+<p>又是一波重定向，修改hosts搞定，打开80页面是熟悉的wordpress界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201021084351.png" alt=""></p>
+<h3 id="爆破后台"><a href="#爆破后台" class="headerlink" title="爆破后台"></a>爆破后台</h3><p>wpscan扫一波发现了几个用户名，尝试爆破无果，回去看看还有提示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022195328.png" alt=""></p>
+<p>说是把rockyou.txt里的包含k01的密码提取出来，那就试试用这个爆破，还真出来一个</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022195308.png" alt=""></p>
+<p>登陆后台，注意到有个插件，大概是记录网站活动的东西</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022200809.png" alt=""></p>
+<h3 id="getshell-1"><a href="#getshell-1" class="headerlink" title="getshell"></a>getshell</h3><p>百度得知这个插件是被爆过洞的，<a href="http://www.oniont.cn/index.php/archives/257.html" target="_blank" rel="noopener">参考文章</a></p>
+<p>这里存在着命令执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022201629.png" alt=""></p>
+<p>那么直接连个shell</p>
+<p>输入框有长度限制，抓个包构造</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022201831.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022201853.png" alt=""></p>
+<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><p>home目录下有个txt，获得graham的密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022202106.png" alt=""></p>
+<p>sudo -l得知有个jens用户的backups.sh免密</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022203444.png" alt=""></p>
+<p>并且当前用户还对文件有写入权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022203402.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022203938.png" alt=""></p>
+<p>执行看看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022204018.png" alt=""></p>
+<p>那么直接nc连下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022204150.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022204306.png" alt=""></p>
+<p>又发现nmap可以root免密执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022204333.png" alt=""></p>
+<p>那么直接创建一个脚本，利用nmap执行脚本获得一个root用户的shell</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022205021.png" alt=""></p>
+<p>得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022205113.png" alt=""></p>
+<h2 id="DC-7"><a href="#DC-7" class="headerlink" title="DC-7"></a>DC-7</h2><h3 id="信息搜集-6"><a href="#信息搜集-6" class="headerlink" title="信息搜集"></a>信息搜集</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201023093929.png" alt=""></p>
+<p>框架是drupal</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201023095330.png" alt=""></p>
+<p>没啥公开洞，登录密码爆破无果。</p>
+<h3 id="社工"><a href="#社工" class="headerlink" title="社工"></a>社工</h3><p>注意到网页底部有个标识</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025164815.png" alt=""></p>
+<p>github搜到相关信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025164722.png" alt=""></p>
+<p>配置文件中得到用户名和密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025165021.png" alt=""></p>
+<p>登录不上，ssh连接成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025165155.png" alt=""></p>
+<h3 id="drush命令修改用户名密码"><a href="#drush命令修改用户名密码" class="headerlink" title="drush命令修改用户名密码"></a>drush命令修改用户名密码</h3><p>用户目录下有个mbox，查看信息大概是个定时任务提醒</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025211400.png" alt=""></p>
+<p>来到opt目录，查看backup脚本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025203443.png" alt=""></p>
+<p>注意到里面有个drush命令，百度一波，得知是操作drupal的工具，可以直接修改用户名密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025210616.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025211256.png" alt=""></p>
+<p>这里注意要到html目录下运行，只有这个目录是www-data权限，不然会提示权限不够</p>
+<p>改好了密码登录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025211638.png" alt=""></p>
+<h3 id="getshell-2"><a href="#getshell-2" class="headerlink" title="getshell"></a>getshell</h3><p>backups.sh脚本是root用户执行的，并且www-data可以改</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025215839.png" alt=""></p>
+<p>那么考虑怎么拿到www-data的shell</p>
+<p>翻阅后台，本来想生成一个php页面，但百度得知<a href="https://www.drupal.org/project/php" target="_blank" rel="noopener">drupal默认</a>是移除了php页面生成的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025212439.png" alt=""></p>
+<p>想要创建一个php页面必须在线安装或着下载离线包</p>
+<p>点击安装模块</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025212954.png" alt=""></p>
+<p>输入下载地址，点击install</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025213048.png" alt=""></p>
+<p>激活</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025213122.png" alt=""></p>
+<p>找到模块勾选</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025213302.png" alt=""></p>
+<p>点击install</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025214430.png" alt=""></p>
+<p>回到创建页面，发现已经可以创建php页面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025214817.png" alt=""></p>
+<p>监听端口，save访问，成功getshell</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025215016.png" alt=""></p>
+<h3 id="提权-1"><a href="#提权-1" class="headerlink" title="提权"></a>提权</h3><p>注意到之前的脚本是root用户执行的，并且www-data可以改，那么直接往里面加内容连shell</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025215653.png" alt=""></p>
+<p>等一会即可获取root权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025220112.png" alt=""></p>
+<p>得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025220258.png" alt=""></p>
+<h2 id="DC-8"><a href="#DC-8" class="headerlink" title="DC-8"></a>DC-8</h2>
         </div>
 
         
@@ -648,7 +730,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://www.blacknight.top/2020/10/15/vulnhub_DC/">http://www.blacknight.top/2020/10/15/vulnhub_DC/</a></span>
+                        <span><a href="http://www.blacknight.top/2020/10/25/vulnhub_DC/">http://www.blacknight.top/2020/10/25/vulnhub_DC/</a></span>
                     </p>
                 
                 
