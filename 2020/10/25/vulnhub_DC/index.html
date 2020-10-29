@@ -680,7 +680,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025165021.png" alt=""></p>
 <p>登录不上，ssh连接成功</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025165155.png" alt=""></p>
-<h3 id="drush命令修改用户名密码"><a href="#drush命令修改用户名密码" class="headerlink" title="drush命令修改用户名密码"></a>drush命令修改用户名密码</h3><p>用户目录下有个mbox，查看信息大概是个定时任务提醒</p>
+<h3 id="drush修改用户名密码"><a href="#drush修改用户名密码" class="headerlink" title="drush修改用户名密码"></a>drush修改用户名密码</h3><p>用户目录下有个mbox，查看信息大概是个定时任务提醒</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025211400.png" alt=""></p>
 <p>来到opt目录，查看backup脚本</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025203443.png" alt=""></p>
@@ -716,7 +716,115 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025220112.png" alt=""></p>
 <p>得到flag</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025220258.png" alt=""></p>
-<h2 id="DC-8"><a href="#DC-8" class="headerlink" title="DC-8"></a>DC-8</h2>
+<h2 id="DC-8"><a href="#DC-8" class="headerlink" title="DC-8"></a>DC-8</h2><h3 id="信息搜集-7"><a href="#信息搜集-7" class="headerlink" title="信息搜集"></a>信息搜集</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025224729.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025225000.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025232138.png" alt=""></p>
+<p>xray监听放着，点几下网站，直接爆出了sql注入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025225126.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025225417.png" alt=""></p>
+<h3 id="sqlmap获取用户名密码"><a href="#sqlmap获取用户名密码" class="headerlink" title="sqlmap获取用户名密码"></a>sqlmap获取用户名密码</h3><p>sqlmap一把梭</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025231519.png" alt=""></p>
+<p>john试着爆破下，admin没爆破出，得到john用户的密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025231655.png" alt=""></p>
+<h3 id="getshell-3"><a href="#getshell-3" class="headerlink" title="getshell"></a>getshell</h3><p>试着寻找webshell注入点</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027194322.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027194407.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027194538.png" alt=""></p>
+<p>这里没成功，看了下wp说是要在php代码之前加一些文字</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027194946.png" alt=""></p>
+<p>这样再试下，点击submit</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027195233.png" alt=""></p>
+<p>成功弹到了shell</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027195553.png" alt=""></p>
+<h3 id="提权-2"><a href="#提权-2" class="headerlink" title="提权"></a>提权</h3><p>这里的目录文件大概是和dc1一样的，有重置密码脚本，站点下的配置文件也直接给出了数据库密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027200337.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027200417.png" alt=""></p>
+<p>可以直接重置管理员密码，但我们需要的是提权</p>
+<p>寻找特权文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find &#x2F; -user root -perm -4000 -print 2&gt;&#x2F;dev&#x2F;null</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027200513.png" alt=""></p>
+<p>发现一个可疑的命令exim4，百度下相关信息，得知可以<a href="https://www.csdn.net/gather_2b/Mtjacg3sODEzOTAtYmxvZwO0O0OO0O0O.html" target="_blank" rel="noopener">提权</a></p>
+<p>查看版本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027201039.png" alt=""></p>
+<p>查找相关漏洞</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027201114.png" alt=""></p>
+<p>复制相关脚本到本地，再本地python搭个http服务，目标机shell上把脚本wget下来</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027201519.png" alt=""></p>
+<p>查看脚本使用说明</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027201857.png" alt=""></p>
+<p>但执行不了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027202134.png" alt=""></p>
+<p>大概是因为脚本是在windows上编写完成传到Linux服务器上的，是dos格式，而shell脚本格式必须是unix才行，验证方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat -A filename，如果输出结果中行末尾是^M$，则是dos格式，如果行末尾只是$，则是unix格式</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027202452.png" alt=""></p>
+<p>在<a href="https://blog.csdn.net/weixin_39309402/article/details/99732688" target="_blank" rel="noopener">博客</a>中找到解决办法</p>
+<p>在本机上将脚本通过vim的<code>: set ff=unix</code>转换为unix格式，再wget到目标主机</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027202704.png" alt=""></p>
+<p>再赋予权限执行，成功拿到root权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027203215.png" alt=""></p>
+<p>得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027203654.png" alt=""></p>
+<h2 id="DC-9"><a href="#DC-9" class="headerlink" title="DC-9"></a>DC-9</h2><h3 id="信息搜集-8"><a href="#信息搜集-8" class="headerlink" title="信息搜集"></a>信息搜集</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027224107.png" alt=""></p>
+<p>xray扫出个sql注入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027224040.png" alt=""></p>
+<p>sqlmap一把梭</p>
+<p>users库里的Userstaff表里存储着用户名和密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029190241.png" alt=""></p>
+<p>Staff库的User表里找到管理员密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029160504.png" alt=""></p>
+<p>md5网站看下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029160547.png" alt=""></p>
+<h3 id="22端口敲门"><a href="#22端口敲门" class="headerlink" title="22端口敲门"></a>22端口敲门</h3><p>登上管理员账号看看没啥发现，只有个添加记录的功能</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029164628.png" alt=""></p>
+<p>注意到提交页面之后下面有个file not exits，猜测可能是包含了file参数，试下成功任意文件读取</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029165827.png" alt=""></p>
+<h3 id="端口敲门"><a href="#端口敲门" class="headerlink" title="端口敲门"></a>端口敲门</h3><p>把之前跑出来的用户名和密码复制下来准备ssh爆破用，但之前nmap已经得知，22端口被flitered了</p>
+<p><a href="https://www.cnblogs.com/wsjhk/p/5508051.html" target="_blank" rel="noopener">Port Knocking for Ubuntu 14.04 Server</a></p>
+<blockquote>
+<p>端口敲门服务，即：knockd服务。该服务通过动态的添加iptables规则来隐藏系统开启的服务，使用自定义的一系列序列号来“敲门”，使系统开启需要访问的服务端口，才能对外访问。不使用时，再使用自定义的序列号来“关门”，将端口关闭，不对外监听。进一步提升了服务和系统的安全性。</p>
+</blockquote>
+<p>知识盲区了，通过文件读取查看etc下的knockd.conf</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029191949.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029192009.png" alt=""></p>
+<p>现在看ssh是关闭的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029192510.png" alt=""></p>
+<p>按照这个方法我们nmap访问7469,8475,9842三个端口，这里还要注意顺序</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029192423.png" alt=""></p>
+<p>现在看ssh已经打开了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029193216.png" alt=""></p>
+<h3 id="ssh爆破-1"><a href="#ssh爆破-1" class="headerlink" title="ssh爆破"></a>ssh爆破</h3><p>那么我们利用刚存好的用户名和密码在hydra里爆破</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029194148.png" alt=""></p>
+<p>挑个登录，在一个用户里又找到一份密码文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029194721.png" alt=""></p>
+<p>再复制下来跑一下，又多跑出来一个用户</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029212616.png" alt=""></p>
+<h3 id="提权-3"><a href="#提权-3" class="headerlink" title="提权"></a>提权</h3><p>登录，查看sudo -l，有个自定义的脚本</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029213605.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029213544.png" alt=""></p>
+<p>大概就是读取read部分的文件，然后把read的文件写入append文件，并且这个命令是root权限的可以写入root权限的文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029215336.png" alt=""></p>
+<p>那么如果我们往/etc/passwd中写入一个我们自己的用户，比如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blacknight::0:0:::&#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+
+<p>那么就创建了一个blacknight的用户，并且他的uid和gid都是0，其实也就是root用户</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029215514.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029215529.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#39;blacknight::0:0::&#x2F;root:&#x2F;bin&#x2F;bash&#39; &gt;&gt; &#x2F;tmp&#x2F;aaa</span><br></pre></td></tr></table></figure>
+
+<p>但这里发现个问题，那就是用户名超过一定长度就失效，后来改短了点才加进去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#39;tos::0:0::&#x2F;root:&#x2F;bin&#x2F;bash&#39; &gt; &#x2F;tmp&#x2F;aaa</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029221211.png" alt=""></p>
+<p>但即使密码设为空也无法登录，换种方式，仿照/etc/shadow的内容，使用openssl生成一个hash的密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl passwd -1 -salt tos 123456</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029223010.png" alt=""></p>
+<p>成功登录root用户</p>
+<p>得到flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029223507.png" alt=""></p>
+
         </div>
 
         
