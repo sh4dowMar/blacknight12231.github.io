@@ -650,7 +650,7 @@
 <p>输入框有长度限制，抓个包构造</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022201831.png" alt=""></p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022201853.png" alt=""></p>
-<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><p>home目录下有个txt，获得graham的密码</p>
+<h3 id="备份脚本执行"><a href="#备份脚本执行" class="headerlink" title="备份脚本执行"></a>备份脚本执行</h3><p>home目录下有个txt，获得graham的密码</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022202106.png" alt=""></p>
 <p>sudo -l得知有个jens用户的backups.sh免密</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022203444.png" alt=""></p>
@@ -662,7 +662,7 @@
 <p>那么直接nc连下</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022204150.png" alt=""></p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022204306.png" alt=""></p>
-<p>又发现nmap可以root免密执行</p>
+<h3 id="nmap命令执行提权"><a href="#nmap命令执行提权" class="headerlink" title="nmap命令执行提权"></a>nmap命令执行提权</h3><p>又发现nmap可以root免密执行</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022204333.png" alt=""></p>
 <p>那么直接创建一个脚本，利用nmap执行脚本获得一个root用户的shell</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201022205021.png" alt=""></p>
@@ -710,7 +710,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025214817.png" alt=""></p>
 <p>监听端口，save访问，成功getshell</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025215016.png" alt=""></p>
-<h3 id="提权-1"><a href="#提权-1" class="headerlink" title="提权"></a>提权</h3><p>注意到之前的脚本是root用户执行的，并且www-data可以改，那么直接往里面加内容连shell</p>
+<h3 id="定时脚本执行提取"><a href="#定时脚本执行提取" class="headerlink" title="定时脚本执行提取"></a>定时脚本执行提取</h3><p>注意到之前的脚本是root用户执行的，并且www-data可以改，那么直接往里面加内容连shell</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025215653.png" alt=""></p>
 <p>等一会即可获取root权限</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201025220112.png" alt=""></p>
@@ -736,7 +736,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027195233.png" alt=""></p>
 <p>成功弹到了shell</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027195553.png" alt=""></p>
-<h3 id="提权-2"><a href="#提权-2" class="headerlink" title="提权"></a>提权</h3><p>这里的目录文件大概是和dc1一样的，有重置密码脚本，站点下的配置文件也直接给出了数据库密码</p>
+<h3 id="exim4漏洞提权"><a href="#exim4漏洞提权" class="headerlink" title="exim4漏洞提权"></a>exim4漏洞提权</h3><p>这里的目录文件大概是和dc1s一样的，有重置密码脚本，站点下的配置文件也直接给出了数据库密码</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027200337.png" alt=""></p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201027200417.png" alt=""></p>
 <p>可以直接重置管理员密码，但我们需要的是提权</p>
@@ -800,7 +800,7 @@
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029194721.png" alt=""></p>
 <p>再复制下来跑一下，又多跑出来一个用户</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029212616.png" alt=""></p>
-<h3 id="提权-3"><a href="#提权-3" class="headerlink" title="提权"></a>提权</h3><p>登录，查看sudo -l，有个自定义的脚本</p>
+<h3 id="写入root用户提权"><a href="#写入root用户提权" class="headerlink" title="写入root用户提权"></a>写入root用户提权</h3><p>登录，查看sudo -l，有个自定义的脚本</p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029213605.png" alt=""></p>
 <p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20201029213544.png" alt=""></p>
 <p>大概就是读取read部分的文件，然后把read的文件写入append文件，并且这个命令是root权限的可以写入root权限的文件</p>
@@ -866,7 +866,7 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/10/30/vulnhub_djinn/">vulnhub——djinn系列</a>
+                <a class="prev" rel="prev" href="/2020/11/20/vulnhub_djinn/">vulnhub——djinn系列</a>
             
             
             <a class="next" rel="next" href="/2020/10/07/vulnhub_me_and_my_girlfriend/">vulnhub——me_and_my_girlfriend</a>
